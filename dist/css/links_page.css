@@ -1,0 +1,70 @@
+.abstract,
+.date,
+.forgot-password,
+.link,
+.research-title {
+    text-decoration: none;
+}
+
+.abstract:hover,
+.date:hover,
+.forgot-password:hover,
+.link:hover,
+.research-title:hover {
+    text-decoration: underline;
+}
+
+hr {
+    display: none;
+}
+
+.navbar-brand {
+    margin-right: 12rem;
+}
+
+#search {
+    width: 35rem;
+    background: rgba(255, 255, 255, 0.516);
+    border: 0;
+}
+
+#search:focus {
+    background: #fff;
+    transition: .4s;
+}
+
+.sign-in-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 23rem;
+}
+
+@media only screen and (max-width: 1200px) {
+    .citation{
+        margin-bottom: 2rem;
+    }
+    
+    .input-group {
+        margin-top: 1rem;
+    }
+
+    hr {
+        display: block;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .input-group {
+        margin-top: 1rem;
+    }
+
+    .navbar-brand {
+        margin-right: 0;
+    }
+
+    #search {
+        width: 9rem;
+    }
+}
