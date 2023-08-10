@@ -77,21 +77,32 @@
                                 <label class="font-weight-normal w-50">Title:</label>
                                 <input type="text" class="form-control" placeholder="Enter title">
                             </div>
-                            <div class="authors mb-2">
-                                <label class="font-weight-normal">Author/s:</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Enter author/s">
-                                    <button class="btn" type="button"><i class="fas fa-plus"></i></button>
-                                </div>
-                            </div>
                             <div class="date mb-2">
                                 <label class="font-weight-normal">Date:</label>
                                 <input type="date" class="form-control" placeholder="Enter date">
                             </div>
+                            <div class="authors mb-2">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label class="font-weight-normal">Author/s:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Enter author/s">
+                                            <button class="btn" type="button"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="font-weight-normal">Keyword/s:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Enter keyword/s">
+                                            <button class="btn" type="button"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="abstract mb-1">
                                 <label class="font-weight-normal">Abstract:</label>
                                 <select class="form-control">
-                                    <option value="0">Select</option>
+                                    <option value="0">Select Abstract</option>
                                     <option value="1">Plain Text</option>
                                     <option value="2">Upload Photo</option>
                                 </select>
