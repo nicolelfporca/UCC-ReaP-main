@@ -1,8 +1,8 @@
 <?php
-$server="localhost";//server name
-$user="root";		//user name ytoovumw_bscs3a
-$pass="";			//user password kaAGi]gz8H2*
-$dbname="reap";//database name
+$server="localhost";
+$user="root";		
+$pass="";		
+$dbname="reap";
 
 
 $conn= new mysqli($server,$user,$pass,$dbname);
