@@ -1,7 +1,7 @@
 <?php
 
 include 'config.php';
-// template.php
+
 if (isset($_GET['name'])) {
     $name = $_GET['name'];
  
