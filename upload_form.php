@@ -81,20 +81,54 @@
                                 <label class="font-weight-normal">Date:</label>
                                 <input type="date" class="form-control" placeholder="Enter date">
                             </div>
-                            <div class="authors mb-2">
-                                <div class="row">
-                                    <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="authors">
                                         <label class="font-weight-normal">Author/s:</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Enter author/s">
-                                            <button class="btn" type="button"><i class="fas fa-plus"></i></button>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-12">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter author/s">
+                                                    <button class="btn" type="button"><i
+                                                            class="fas fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-12">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter author/s">
+                                                    <button class="btn" type="button"><i
+                                                            class="fas fa-plus"></i></button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="keywords">
                                         <label class="font-weight-normal">Keyword/s:</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Enter keyword/s">
-                                            <button class="btn" type="button"><i class="fas fa-plus"></i></button>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-12">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter keyword/s">
+                                                    <button class="btn" type="button"><i
+                                                            class="fas fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-sm-12">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter keyword/s">
+                                                    <button class="btn" type="button"><i
+                                                            class="fas fa-plus"></i></button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
