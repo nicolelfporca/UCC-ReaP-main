@@ -130,6 +130,17 @@
                                                 </div>
                                             </div>
                                         </div>
+                                            <!-- alt + shift + F To Beautify -->
+                                        <div class="row mb-2">
+                                                <div class="col-sm-12"> 
+                                                      <div class="input-group">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter keyword/s">
+                                                    <button class="btn" type="button"><i
+                                                            class="fas fa-plus"></i></button>
+                                                 </div>
+                                            </div>
+                                                </div>
                                     </div>
                                 </div>
                             </div>
