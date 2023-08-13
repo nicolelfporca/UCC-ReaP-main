@@ -1,4 +1,5 @@
 <?php 
+//connection of database
 class Database {
     private static $host = "localhost";
     private static $dbname = "reap";
