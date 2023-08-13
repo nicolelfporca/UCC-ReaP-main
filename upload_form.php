@@ -30,8 +30,7 @@
 
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <a href="index3.html" class="brand-link">
-                <img src="dist/image/UCC.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-                    style="opacity: .8">
+                <img src="dist/image/UCC.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">UCC ReaP</span>
             </a>
 
@@ -43,8 +42,7 @@
                 </div>
 
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item menu-open">
                             <a href="upload_form.php" class="nav-link active">
                                 <i class="nav-icon fas fa-upload"></i>
@@ -85,26 +83,24 @@
                                 <div class="col-sm-6">
                                     <div class="authors">
                                         <label class="font-weight-normal">Author/s:</label>
-                                        <div class="row mb-2">
-                                            <div class="col-sm-12">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Enter author/s">
-                                                    <button class="btn" type="button"><i
-                                                            class="fas fa-plus"></i></button>
+                                        <div id="uiAuthors">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-12">
+                                                    <div class="input-group">
+                                                        <input type="text" id="authorName" class="form-control authorName" placeholder="Enter author/s">
+                                                        <button class="btn" type="button" onclick="addAuthor()"><i class="fas fa-plus"></i></button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row mb-2">
+                                        <!-- <div class="row mb-2">
                                             <div class="col-sm-12">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Enter author/s">
-                                                    <button class="btn" type="button"><i
-                                                            class="fas fa-plus"></i></button>
+                                                    <input type="text" class="form-control" placeholder="Enter author/s">
+                                                    <button class="btn" type="button"><i class="fas fa-plus"></i></button>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -113,34 +109,28 @@
                                         <div class="row mb-2">
                                             <div class="col-sm-12">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Enter keyword/s">
-                                                    <button class="btn" type="button"><i
-                                                            class="fas fa-plus"></i></button>
+                                                    <input type="text" class="form-control" placeholder="Enter keyword/s">
+                                                    <button class="btn" type="button"><i class="fas fa-plus"></i></button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row mb-2">
+                                        <!-- <div class="row mb-2">
                                             <div class="col-sm-12">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Enter keyword/s">
-                                                    <button class="btn" type="button"><i
-                                                            class="fas fa-plus"></i></button>
+                                                    <input type="text" class="form-control" placeholder="Enter keyword/s">
+                                                    <button class="btn" type="button"><i class="fas fa-plus"></i></button>
                                                 </div>
                                             </div>
-                                        </div>
-                                            <!-- alt + shift + F To Beautify -->
-                                        <div class="row mb-2">
-                                                <div class="col-sm-12"> 
-                                                      <div class="input-group">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Enter keyword/s">
-                                                    <button class="btn" type="button"><i
-                                                            class="fas fa-plus"></i></button>
-                                                 </div>
-                                            </div>
+                                        </div> -->
+                                        <!-- alt + shift + F To Beautify -->
+                                        <!-- <div class="row mb-2">
+                                            <div class="col-sm-12">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Enter keyword/s">
+                                                    <button class="btn" type="button"><i class="fas fa-plus"></i></button>
                                                 </div>
+                                            </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -186,10 +176,39 @@
     <script src="https://adminlte.io/themes/v3/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <script src="https://adminlte.io/themes/v3/dist/js/adminlte.js?v=3.2.0"></script>
     <script src="https://adminlte.io/themes/v3/dist/js/pages/dashboard.js"></script>
-    
+
     <script>
-    $( document ).ready(function() {
-    });
+        $(document).ready(function() {
+          
+
+        
+        });
+
+        function addAuthor() {
+            let allVal = [];
+            $(".authorName").each(function() {
+                allVal.push({
+                    value: this.value
+                });
+            });
+            let payload = {
+                authors: JSON.stringify(allVal),
+            }
+
+                $.ajax({
+                    type: "POST",
+                    url: 'controllers/Authors.php',
+                    data: {
+                        payload:JSON.stringify(payload),
+                        setFunction:'addAuthors'
+                    },
+                    success: function(response) {
+                        response = JSON.parse(response);
+                        alert(response); // Display a success message
+                        $('#uiAuthors').html(response);
+                    }
+                });
+            };
     </script>
 </body>
 
