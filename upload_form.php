@@ -179,9 +179,10 @@
 
     <script>
         $(document).ready(function() {
-          
-
-        
+            $(document).on("click", ".minus-button", function() {
+                var key = $(this).data("key");
+                removeAuthorDiv(this, key);
+            });
         });
 
         function addAuthor() {
@@ -192,23 +193,28 @@
                 });
             });
             let payload = {
-                authors: JSON.stringify(allVal),
+                authors: JSON.stringify(allVal)
             }
 
-                $.ajax({
-                    type: "POST",
-                    url: 'controllers/Authors.php',
-                    data: {
-                        payload:JSON.stringify(payload),
-                        setFunction:'addAuthors'
-                    },
-                    success: function(response) {
-                        response = JSON.parse(response);
-                        alert(response); // Display a success message
-                        $('#uiAuthors').html(response);
-                    }
-                });
-            };
+            $.ajax({
+                type: "POST",
+                url: 'controllers/Authors.php',
+                data: {
+                    payload: JSON.stringify(payload),
+                    setFunction: 'addAuthors'
+                },
+                success: function(response) {
+                    response = JSON.parse(response);
+                    alert(response); // Display a success message
+                    $('#uiAuthors').html(response);
+                }
+            });
+        };
+
+        function removeAuthorDiv(button, key) {
+            var divToRemove = $(button).closest(".row.mb-2");
+            divToRemove.remove();
+        };
     </script>
 </body>
 

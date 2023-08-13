@@ -9,7 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payload'])) {
     } else {
         echo "Invalid function name.";
     }
-}
+};
+
 
 
 function addAuthors($request = null)
@@ -20,7 +21,7 @@ function addAuthors($request = null)
                                 <div class='col-sm-12'>
                                     <div class='input-group'>
                                         <input type='text' id='authorName' class='form-control authorName' value = '".htmlspecialchars($author->value)."'>
-                                        <button class='btn' type='button' onclick='addAuthor()'><i class='fas fa-minus'></i></button>
+                                        <button class='btn minus-button' type='button' data-key='".htmlspecialchars($author->value)."'><i class='fas fa-minus'></i></button>
                                     </div>
                                 </div>
                             </div>";
