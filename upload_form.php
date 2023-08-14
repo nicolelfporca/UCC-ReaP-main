@@ -106,11 +106,13 @@
                                 <div class="col-sm-6">
                                     <div class="keywords">
                                         <label class="font-weight-normal">Keyword/s:</label>
-                                        <div class="row mb-2">
-                                            <div class="col-sm-12">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Enter keyword/s">
-                                                    <button class="btn" type="button"><i class="fas fa-plus"></i></button>
+                                        <div id="uiKeywords">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-12">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control keywords" placeholder="Enter keyword/s">
+                                                        <button class="btn" type="button" onclick="addKeyword()"><i class="fas fa-plus"></i></button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -179,8 +181,12 @@
 
     <script>
         $(document).ready(function() {
-            $(document).on("click", ".minus-button", function() {
+            $(document).on("click", ".minus-button-author", function() {
                 var key = $(this).data("key");
+                removeAuthorDiv(this, key);
+            });
+            $(document).on("click", ".minus-button-keyword", function() {
+                var key = $(this).data("keyword");
                 removeAuthorDiv(this, key);
             });
         });
@@ -188,13 +194,25 @@
         function addAuthor() {
             let allVal = [];
             $(".authorName").each(function() {
-                allVal.push({
-                    value: this.value
-                });
+                let val = $(this).val(); // Trim to remove leading/trailing spaces
+                if (val !== "") {
+                    allVal.push({
+                        value: val
+                    });
+                }
             });
+
+            if (allVal.length === 0) {
+                allVal.push({
+                    value: ""
+                });
+            }
+
             let payload = {
                 authors: JSON.stringify(allVal)
             }
+
+            // console.log(payload)
 
             $.ajax({
                 type: "POST",
@@ -205,15 +223,59 @@
                 },
                 success: function(response) {
                     response = JSON.parse(response);
-                    alert(response); // Display a success message
+                    // alert(response); // Display a success message
                     $('#uiAuthors').html(response);
                 }
             });
         };
 
+        function addKeyword() {
+            let allData = [];
+
+            $(".keywords").each(function() {
+                let val = $(this).val(); // Trim to remove leading/trailing spaces
+                if (val !== "") {
+                    allData.push({
+                        val: val
+                    });
+                }
+            });
+
+
+            if (allData.length === 0) {
+                allData.push({
+                    val: ""
+                });
+            }
+
+            let payload = {
+                keywordsValue: JSON.stringify(allData)
+            };
+
+            // console.log(payload)
+
+            $.ajax({
+                type: "POST",
+                url: 'controllers/Authors.php',
+                data: {
+                    payload: JSON.stringify(payload),
+                    setFunction: 'addKeywords'
+                },
+                success: function(response) {
+                    response = JSON.parse(response);
+                    $('#uiKeywords').html(response);
+                }
+            });
+        };
+
         function removeAuthorDiv(button, key) {
-            var divToRemove = $(button).closest(".row.mb-2");
-            divToRemove.remove();
+            if (key === '') {
+                var divToRemove = $(button).closest(".row.mb-2");
+                divToRemove.remove();
+            } else {
+                var divToRemove = $(button).closest(".row.mb-2");
+                divToRemove.remove();
+            }
         };
     </script>
 </body>
