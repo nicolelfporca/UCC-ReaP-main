@@ -138,16 +138,16 @@
                             </div>
                             <div class="abstract mb-1">
                                 <label class="font-weight-normal">Abstract:</label>
-                                <select class="form-control">
+                                <select class="form-control" id="selectUI" onchange="showUI()">
                                     <option value="0">Select Abstract</option>
                                     <option value="1">Plain Text</option>
                                     <option value="2">Upload Photo</option>
                                 </select>
                             </div>
-                            <div class="plain-text">
+                            <div class="plain-text" id="plainAbsUi">
                                 <textarea rows="8" class="form-control"></textarea>
                             </div>
-                            <div class="upload-photo">
+                            <div class="upload-photo" id="PicAbsUi">
                                 <label class="btn btn-secondary font-weight-normal">
                                     <input type="file" hidden />
                                     Upload Photo
@@ -181,6 +181,9 @@
 
     <script>
         $(document).ready(function() {
+            $('#plainAbsUi').hide();
+            $('#PicAbsUi').hide();
+
             $(document).on("click", ".minus-button-author", function() {
                 var key = $(this).data("key");
                 removeAuthorDiv(this, key);
@@ -275,6 +278,20 @@
             } else {
                 var divToRemove = $(button).closest(".row.mb-2");
                 divToRemove.remove();
+            }
+        };
+
+        function showUI(){
+            let num = $('#selectUI').val();
+            if(num == 1){
+                $('#plainAbsUi').show();
+                $('#PicAbsUi').hide();
+            }else if(num == 2){
+                $('#PicAbsUi').show();
+                $('#plainAbsUi').hide();
+            }else{
+                $('#PicAbsUi').hide();
+                $('#plainAbsUi').hide();
             }
         };
     </script>
