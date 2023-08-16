@@ -73,11 +73,11 @@
                         <div class="card p-4 w-100 rounded-0">
                             <div class="title mb-2">
                                 <label class="font-weight-normal w-50">Title:</label>
-                                <input type="text" class="form-control" placeholder="Enter title">
+                                <input type="text" name="titleName" class="form-control" placeholder="Enter title">
                             </div>
                             <div class="date mb-2">
                                 <label class="font-weight-normal">Date:</label>
-                                <input type="date" class="form-control" placeholder="Enter date">
+                                <input type="date" name="thesisDate" class="form-control" placeholder="Enter date">
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
@@ -145,17 +145,17 @@
                                 </select>
                             </div>
                             <div class="plain-text" id="plainAbsUi">
-                                <textarea rows="8" class="form-control"></textarea>
+                                <textarea rows="8" name="abstractText" class="form-control"></textarea>
                             </div>
                             <div class="upload-photo" id="PicAbsUi">
                                 <label class="btn btn-secondary font-weight-normal">
-                                    <input type="file" hidden />
+                                    <input type="file" name="abstractPic" hidden />
                                     Upload Photo
                                 </label>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <button class="btn btn-primary d-flex float-right">Submit</button>
+                                    <button type="button" onclick="uploadAbstract()" class="btn btn-primary d-flex float-right">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -178,6 +178,7 @@
     <script src="https://adminlte.io/themes/v3/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <script src="https://adminlte.io/themes/v3/dist/js/adminlte.js?v=3.2.0"></script>
     <script src="https://adminlte.io/themes/v3/dist/js/pages/dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(document).ready(function() {
@@ -281,18 +282,92 @@
             }
         };
 
-        function showUI(){
+        function showUI() {
             let num = $('#selectUI').val();
-            if(num == 1){
+            if (num == 1) {
                 $('#plainAbsUi').show();
                 $('#PicAbsUi').hide();
-            }else if(num == 2){
+            } else if (num == 2) {
                 $('#PicAbsUi').show();
                 $('#plainAbsUi').hide();
-            }else{
+            } else {
                 $('#PicAbsUi').hide();
                 $('#plainAbsUi').hide();
             }
+        };
+
+
+        //working ajax jquery upload image with array of object and XMLHttpRequest
+        function uploadAbstract() {
+            var titleName = $("input[name='titleName']").val();
+            var thesisDate = $("input[name='thesisDate']").val();
+            var abstractText = $("#plainAbsUi textarea[name='abstractText']").val();
+            var authors = [];
+            $(".authorName").each(function() {
+                var authorValue = $(this).val().trim();
+                if (authorValue !== "") {
+                    authors.push({
+                        value: authorValue
+                    });
+                }
+            });
+            var keywordsValue = [];
+            $(".keywords").each(function() {
+                var keywordValue = $(this).val().trim();
+                if (keywordValue !== "") {
+                    keywordsValue.push({
+                        val: keywordValue
+                    });
+                }
+            });
+
+            // Construct payload object
+            var payload = {
+                titleName: titleName,
+                thesisDate: thesisDate,
+                abstractText: abstractText,
+                authors: authors,
+                keywordsValue: keywordsValue
+            };
+
+            // Create a new FormData object
+            var formData = new FormData();
+
+            // Append payload data as JSON
+            formData.append('payload', JSON.stringify(payload));
+            formData.append('setFunction', 'uploadToDb');
+
+            // Get the selected file (input element)
+            var abstractPicInput = $("input[name='abstractPic']")[0]; // Assuming it's the first input element
+            var abstractPicFile = abstractPicInput.files[0];
+
+            // Append file to FormData object
+            formData.append('abstractPic', abstractPicFile);
+
+            // Create a new XMLHttpRequest
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "controllers/Authors.php", true);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    console.log("Server response:", xhr.responseText);
+                    if (xhr.status === 200) {
+                        // Handle success response
+                        var data = JSON.parse(xhr.responseText);
+                        console.log("Data received:", data);
+                        swal.fire(data.title, data.message, data.icon);
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 2000);
+                    } else {
+                        // Handle error
+                        console.log("Error:", xhr.statusText);
+                    }
+                }
+            };
+
+            // Send the FormData object
+            xhr.send(formData);
         };
     </script>
 </body>
