@@ -175,7 +175,33 @@ function uploadToDb($request = null)
         }
     } else {
         if ($abstractText != "") {
+            $abstractText = addcslashes($abstractText, '\'\\');
             // code for abstract text here
+            $pdo = Database::connection();
+            $sql = 'INSERT INTO user (title,author,date,keywords,abstract) VALUES(:title, :author, :date, :keywords, :abstract)';
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(
+                array(
+                    ':title' => $title,
+                    ':author' => $commaSeparatedStringAuthor,
+                    ':date' => $thesisDate,
+                    ':keywords' => $commaSeparatedStringKeyword,
+                    ':abstract' => $abstractText
+                )
+            );
+            if ($stmt->errorCode() !== '00000') {
+                $errorInfo = $stmt->errorInfo();
+                $errorMsg = "SQL Error: " . $errorInfo[2];
+                // Handle the error as needed (e.g., logging, displaying an error message)
+                $msg['title'] = "Error";
+                $msg['message'] = $errorMsg;
+                $msg['icon'] = "error";
+            } else {
+                $msg['title'] = "Successful";
+                $msg['message'] =  "Success";
+                $msg['icon'] =  "success";
+                $msg['status'] = "success";
+            }
         } else {
             $msg['title'] = "Warning";
             $msg['message'] =  "Error Please Reload The Page";
