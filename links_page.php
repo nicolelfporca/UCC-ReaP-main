@@ -16,7 +16,7 @@ if (isset($_POST['query'])) {
 
 // Prepare the query to fetch matching data from the database
 $search_query = mysqli_real_escape_string($conn, $search_query);
-$sql = "SELECT * FROM user WHERE title LIKE '%$search_query%'";
+$sql = "SELECT * FROM user WHERE title LIKE '%$search_query%' AND status = 1";
 
 // Execute the query
 $result = mysqli_query($conn, $sql);
