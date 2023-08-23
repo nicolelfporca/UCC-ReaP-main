@@ -1,6 +1,7 @@
 <?php
 include './includes/config.php';
 
+
 $pdo = Database::connection();
 
 // Get the search query from the form submission
