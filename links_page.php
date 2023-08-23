@@ -2,10 +2,7 @@
 <?php
 include './includes/config.php';
 
-// Check connection
-if (mysqli_connect_errno()) {
-    die("Database connection failed: " . mysqli_connect_error());
-}
+$pdo = Database::connection();
 
 // Get the search query from the form submission
 if (isset($_POST['query'])) {
@@ -15,11 +12,19 @@ if (isset($_POST['query'])) {
 }
 
 // Prepare the query to fetch matching data from the database
-$search_query = mysqli_real_escape_string($conn, $search_query);
-$sql = "SELECT * FROM user WHERE title LIKE '%$search_query%' AND status = 1";
+$search_query = '%'. $search_query . '%';
+$status = 1;
 
-// Execute the query
-$result = mysqli_query($conn, $sql);
+$sql= "Select * FROM user WHERE title like :search_query AND status = :status";
+$stmt = $pdo -> prepare($sql);
+
+$stmt-> execute(
+    [
+        ':search_query'=> $search_query,
+        ':status'=> $status
+    ]
+);
+
 ?>
 
 
@@ -89,7 +94,7 @@ $result = mysqli_query($conn, $sql);
 
 
             <?php
-while ($row = mysqli_fetch_assoc($result)) {
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo '<div class="card p-3 rounded-0 mb-4">';
     echo '<div class="card p-3 border-0">';
     echo '<a href="show_page.php?name=' . urlencode($row['title']) . '" class="research-title fw-semibold fs-5 mb-2">' . $row['title'] . '</a>';
