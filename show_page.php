@@ -58,7 +58,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-8">
-                    <div class="title">
+                    <div class="title"> 
                         <label class="fw-semibold h2">UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH</label>
                     </div>
                     <div class="date">
@@ -67,10 +67,6 @@
                     <div class="researchers mb-4">
                         <ul class="list-inline">
                             <li class="list-inline-item">&bull; Andre Mandantes</li>
-                            <li class="list-inline-item">&bull; Angelo Perlota</li>
-                            <li class="list-inline-item">&bull; Cedric Cruz</li>
-                            <li class="list-inline-item">&bull; Kenjie Arceo</li>
-                            <li class="list-inline-item">&bull; Nicollette Porca</li>
                         </ul>
                     </div>
                     <div class="card p-4 rounded-0 mb-4">
@@ -79,26 +75,14 @@
                         </div>
                         <div class="abstract-body">
                             <label>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                reprehenderit
-                                in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            
                             </label>
                         </div>
                     </div>
                     <div class="citation text-muted">
                         <label>Citation:</label> <br>
                         <ul class="list-inline">
-                            <li class="list-inline-item" id="authors">Arceo, K., </li>
-                            <li class="list-inline-item" id="year">(2023), </li>
-                            <li class="list-inline-item" id="title">"University of Caloocan City Title Research", </li>
-                            <li class="list-inline-item fst-italic fw-bold" id="journal-title">
-                                The New Crossroads, 
-                            </li>
-                            <li class="list-inline-item" id="pages">pp. 6969.</li>
+                            <li class="list-inline-item" id="authors"></li>
                         </ul>
                     </div>
                 </div>
@@ -119,66 +103,10 @@
                             </a>
                         </div>
                     </div>
-                    <div class="card p-1 rounded-0 mb-4">
-                        <div class="card p-3 border-0">
-                            <a href="#" class="research-title fw-semibold fs-5">
-                                UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH
-                            </a>
-                            <a href="#" class="date fst-italic text-muted">
-                                August 19, 2002
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card p-1 rounded-0 mb-4">
-                        <div class="card p-3 border-0">
-                            <a href="#" class="research-title fw-semibold fs-5">
-                                UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH
-                            </a>
-                            <a href="#" class="date fst-italic text-muted">
-                                August 19, 2002
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card p-1 rounded-0 mb-4">
-                        <div class="card p-3 border-0">
-                            <a href="#" class="research-title fw-semibold fs-5">
-                                UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH
-                            </a>
-                            <a href="#" class="date fst-italic text-muted">
-                                August 19, 2002
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card p-1 rounded-0 mb-4">
-                        <div class="card p-3 border-0">
-                            <a href="#" class="research-title fw-semibold fs-5">
-                                UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH
-                            </a>
-                            <a href="#" class="date fst-italic text-muted">
-                                August 19, 2002
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card p-1 rounded-0 mb-4">
-                        <div class="card p-3 border-0">
-                            <a href="#" class="research-title fw-semibold fs-5">
-                                UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH
-                            </a>
-                            <a href="#" class="date fst-italic text-muted">
-                                August 19, 2002
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card p-1 rounded-0 mb-4">
-                        <div class="card p-3 border-0">
-                            <a href="#" class="research-title fw-semibold fs-5">
-                                UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH
-                            </a>
-                            <a href="#" class="date fst-italic text-muted">
-                                August 19, 2002
-                            </a>
-                        </div>
-                    </div>
+                   
+                  
+                   
+               
                 </div>
             </div>
         </div>

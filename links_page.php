@@ -1,3 +1,34 @@
+
+<?php
+include './includes/config.php';
+
+$pdo = Database::connection();
+
+// Get the search query from the form submission
+if (isset($_POST['query'])) {
+    $search_query = $_POST['query'];
+} else {
+    die("No search query provided.");
+}
+
+// Prepare the query to fetch matching data from the database
+$search_query = '%'. $search_query . '%';
+$status = 1;
+
+$sql= "Select * FROM user WHERE title like :search_query AND status = :status";
+$stmt = $pdo -> prepare($sql);
+
+$stmt-> execute(
+    [
+        ':search_query'=> $search_query,
+        ':status'=> $status
+    ]
+);
+
+?>
+
+
+
 <!DOCTYPE html>
 <!-- helloworld -->
 <html lang="en">
@@ -60,69 +91,21 @@
                 <label>4 Results for "Search..."</label>
             </div>
 
-            <div class="card p-3 rounded-0 mb-4">
-                <div class="card p-3 border-0">
-                    <a href="#" class="research-title fw-semibold fs-5 mb-2">UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH</a>
-                    <a href="#" class="abstract text-black mb-2">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </a>
-                    <a href="#" class="date fst-italic text-muted">
-                        August 19, 2002
-                    </a>
-                </div>
-            </div>
-            
-            <div class="card p-3 rounded-0 mb-4">
-                <div class="card p-3 border-0">
-                    <a href="#" class="research-title fw-semibold fs-5 mb-2">UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH</a>
-                    <a href="#" class="abstract text-black mb-2">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </a>
-                    <a href="#" class="date fst-italic text-muted">
-                        August 19, 2002
-                    </a>
-                </div>
-            </div>
 
-            <div class="card p-3 rounded-0 mb-4">
-                <div class="card p-3 border-0">
-                    <a href="#" class="research-title fw-semibold fs-5 mb-2">UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH</a>
-                    <a href="#" class="abstract text-black mb-2">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </a>
-                    <a href="#" class="date fst-italic text-muted">
-                        August 19, 2002
-                    </a>
-                </div>
-            </div>
 
-            <div class="card p-3 rounded-0 mb-4">
-                <div class="card p-3 border-0">
-                    <a href="#" class="research-title fw-semibold fs-5 mb-2">UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH</a>
-                    <a href="#" class="abstract text-black mb-2">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </a>
-                    <a href="#" class="date fst-italic text-muted">
-                        August 19, 2002
-                    </a>
-                </div>
-            </div>
+            <?php
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo '<div class="card p-3 rounded-0 mb-4">';
+    echo '<div class="card p-3 border-0">';
+    echo '<a href="show_page.php?name=' . urlencode($row['title']) . '" class="research-title fw-semibold fs-5 mb-2">' . $row['title'] . '</a>';
+    echo '<div class=" text-black mb-2">' . $row['abstract'] . '</div>';
+    echo '<div class=" fst-italic text-muted">' . $row['date'] . '</div>';
+    echo '</div>';
+    echo '</div>';
+}
+?>
+
+         
         </div>
     </div>
 

@@ -1,5 +1,18 @@
 <?php 
 //connection of database
+
+
+$server="localhost";
+$user="root";		
+$pass="";		
+$dbname="reap";
+
+
+$conn= new mysqli($server,$user,$pass,$dbname);
+if($conn->connect_error){
+	die('Connection Failed'.$conn->connect_error);
+}
+
 class Database {
     private static $host = "localhost";
     private static $dbname = "reap";
@@ -9,6 +22,10 @@ class Database {
     // private static $dbname = "ucc_admission";
     // private static $user = "ucc_admin";
     // private static $pass = "e0pgATND&fj{";
+
+
+
+
 
     public static function connection()
     {
