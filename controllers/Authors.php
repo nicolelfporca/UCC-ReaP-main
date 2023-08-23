@@ -148,7 +148,7 @@ function uploadToDb($request = null)
                         ':author' => $commaSeparatedStringAuthor,
                         ':date' => $thesisDate,
                         ':keywords' => $commaSeparatedStringKeyword,
-                        ':abstract' => $targetPath,
+                        ':abstract' => $newImageName,
                         ':type' => $type
                     )
                 );

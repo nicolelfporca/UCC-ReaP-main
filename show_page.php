@@ -1,3 +1,35 @@
+<?php 
+require("./includes/config.php");
+$title = $_GET['name'];
+
+$populateUiShowPage = "SELECT * FROM user WHERE title = :title";
+$pdo = Database::connection();
+$stmt = $pdo->prepare($populateUiShowPage);
+$stmt->bindParam(':title', $title, PDO::PARAM_STR);
+$stmt->execute();
+
+if ($stmt === false) {
+    $errorInfo = $pdo->errorInfo();
+    $errorMsg = "SQL Error: " . $errorInfo[2];
+    echo "<script> alert('" . $errorMsg . "')</script>";
+} else {
+    // Debugging: Output the executed query for verification
+    // echo "Executed Query: " . $populateUiShowPage . "<br>";
+    $datas = $stmt->fetchAll();
+    // // Debugging: Output the number of rows returned by the query
+    // echo "Number of Rows Fetched: " . count($datas) . "<br>";
+    foreach ($datas as $data) {
+       $thesisTitle = $data['title'];
+       $thesisDate = $data['date'];
+       $thesisAuthor = $data['author'];
+       $abstractType = $data['type'];
+       $abstract = $data['abstract'];
+    }
+    $thesisDate = date("F j, Y", strtotime($thesisDate));
+}
+
+
+?>
 <!DOCTYPE html>
 <!-- hello world -->
 <html lang="en">
@@ -59,14 +91,14 @@
             <div class="row">
                 <div class="col-sm-8">
                     <div class="title"> 
-                        <label class="fw-semibold h2">UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH</label>
+                        <label class="fw-semibold h2"><?php echo $thesisTitle ?></label>
                     </div>
                     <div class="date">
-                        <label class="fst-italic">August 19, 2002</label>
+                        <label class="fst-italic"><?php echo $thesisDate ?></label>
                     </div>
                     <div class="researchers mb-4">
                         <ul class="list-inline">
-                            <li class="list-inline-item">&bull; Andre Mandantes</li>
+                            <li class="list-inline-item">&bull; <?php echo $thesisAuthor ?> </li>
                         </ul>
                     </div>
                     <div class="card p-4 rounded-0 mb-4">
@@ -74,9 +106,13 @@
                             <label class="fw-semibold fs-5 mb-3">ABSTRACT</label>
                         </div>
                         <div class="abstract-body">
+                            <?php if($abstractType == 1){ ?>
                             <label>
-                            
+                            <?php echo $abstract ?>
                             </label>
+                            <?php }elseif($abstractType == 2){ ?>
+                                <img src="<?php echo "webimg/".$abstract ?>" alt="Image" style="max-width: 100%; height: auto;">
+                            <?php } ?>
                         </div>
                     </div>
                     <div class="citation text-muted">
