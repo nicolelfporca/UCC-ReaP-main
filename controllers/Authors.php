@@ -35,7 +35,7 @@ function addAuthors($request = null)
     $response[] = "<div class='row mb-2'>
                     <div class='col-sm-12'>
                         <div class='input-group'>
-                            <input type='text' id='authorName' class='form-control authorName' placeholder='Enter author/s'>
+                            <input type='text' id='authorName' class='form-control authorName' placeholder='Enter authors(Surname,Firname,M.I)'>
                             <button class='btn' type='button' onclick='addAuthor()'><i class='fas fa-plus'></i></button>
                         </div>
                     </div>
