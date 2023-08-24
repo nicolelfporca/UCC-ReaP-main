@@ -35,7 +35,7 @@ function addAuthors($request = null)
     $response[] = "<div class='row mb-2'>
                     <div class='col-sm-12'>
                         <div class='input-group'>
-                            <input type='text' id='authorName' class='form-control authorName' placeholder='Enter author/s'>
+                            <input type='text' id='authorName' class='form-control authorName' placeholder='Enter authors(Surname,Firname,M.I)'>
                             <button class='btn' type='button' onclick='addAuthor()'><i class='fas fa-plus'></i></button>
                         </div>
                     </div>
@@ -77,6 +77,7 @@ function uploadToDb($request = null)
     $title = $request->titleName;
     $thesisDate = $request->thesisDate;
     $abstractText = $request->abstractText;
+    $type = $request->type;
 
     $authors = $request->authors;
     $commaSeparatedArray = [];
@@ -139,7 +140,7 @@ function uploadToDb($request = null)
                 // Image uploaded successfully
                 // ... Your existing database insertion logic ...
                 $pdo = Database::connection();
-                $sql = 'INSERT INTO user (title,author,date,keywords,abstract) VALUES(:title, :author, :date, :keywords, :abstract)';
+                $sql = 'INSERT INTO user (title,author,date,keywords,abstract,type) VALUES(:title, :author, :date, :keywords, :abstract, :type)';
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute(
                     array(
@@ -147,7 +148,8 @@ function uploadToDb($request = null)
                         ':author' => $commaSeparatedStringAuthor,
                         ':date' => $thesisDate,
                         ':keywords' => $commaSeparatedStringKeyword,
-                        ':abstract' => $targetPath
+                        ':abstract' => $newImageName,
+                        ':type' => $type
                     )
                 );
                 if ($stmt->errorCode() !== '00000') {
@@ -178,7 +180,7 @@ function uploadToDb($request = null)
             $abstractText = addcslashes($abstractText, '\'\\');
             // code for abstract text here
             $pdo = Database::connection();
-            $sql = 'INSERT INTO user (title,author,date,keywords,abstract) VALUES(:title, :author, :date, :keywords, :abstract)';
+            $sql = 'INSERT INTO user (title,author,date,keywords,abstract,type) VALUES(:title, :author, :date, :keywords, :abstract, :type)';
             $stmt = $pdo->prepare($sql);
             $stmt->execute(
                 array(
@@ -186,7 +188,8 @@ function uploadToDb($request = null)
                     ':author' => $commaSeparatedStringAuthor,
                     ':date' => $thesisDate,
                     ':keywords' => $commaSeparatedStringKeyword,
-                    ':abstract' => $abstractText
+                    ':abstract' => $abstractText,
+                    ':type' => $type
                 )
             );
             if ($stmt->errorCode() !== '00000') {

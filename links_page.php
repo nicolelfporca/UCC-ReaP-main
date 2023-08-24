@@ -1,6 +1,6 @@
-
 <?php
 include './includes/config.php';
+
 
 $pdo = Database::connection();
 

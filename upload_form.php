@@ -87,20 +87,12 @@
                                             <div class="row mb-2">
                                                 <div class="col-sm-12">
                                                     <div class="input-group">
-                                                        <input type="text" id="authorName" class="form-control authorName" placeholder="Enter author/s">
+                                                        <input type="text" id="authorName" class="form-control authorName" placeholder="Enter authors(Surname,Firname,M.I)" onkeydown="handleAuthorInput(event)">
                                                         <button class="btn" type="button" onclick="addAuthor()"><i class="fas fa-plus"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="row mb-2">
-                                            <div class="col-sm-12">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Enter author/s">
-                                                    <button class="btn" type="button"><i class="fas fa-plus"></i></button>
-                                                </div>
-                                            </div>
-                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -110,29 +102,12 @@
                                             <div class="row mb-2">
                                                 <div class="col-sm-12">
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control keywords" placeholder="Enter keyword/s">
+                                                        <input type="text" class="form-control keywords" placeholder="Enter keyword/s" onkeydown="handleKeywordInput(event)">
                                                         <button class="btn" type="button" onclick="addKeyword()"><i class="fas fa-plus"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="row mb-2">
-                                            <div class="col-sm-12">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Enter keyword/s">
-                                                    <button class="btn" type="button"><i class="fas fa-plus"></i></button>
-                                                </div>
-                                            </div>
-                                        </div> -->
-                                        <!-- alt + shift + F To Beautify -->
-                                        <!-- <div class="row mb-2">
-                                            <div class="col-sm-12">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Enter keyword/s">
-                                                    <button class="btn" type="button"><i class="fas fa-plus"></i></button>
-                                                </div>
-                                            </div>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -193,6 +168,18 @@
                 var key = $(this).data("keyword");
                 removeAuthorDiv(this, key);
             });
+
+            function handleAuthorInput(event) {
+                if (event.key === "Enter") {
+                    addAuthor();
+                }
+            }
+
+            function handleKeywordInput(event) {
+                if (event.key === "Enter") {
+                    addKeyword();
+                }
+            }
         });
 
         function addAuthor() {
@@ -302,6 +289,7 @@
             var titleName = $("input[name='titleName']").val();
             var thesisDate = $("input[name='thesisDate']").val();
             var abstractText = $("#plainAbsUi textarea[name='abstractText']").val();
+            var num = $('#selectUI').val();
             var authors = [];
             $(".authorName").each(function() {
                 var authorValue = $(this).val().trim();
@@ -327,7 +315,8 @@
                 thesisDate: thesisDate,
                 abstractText: abstractText,
                 authors: authors,
-                keywordsValue: keywordsValue
+                keywordsValue: keywordsValue,
+                type: num
             };
 
             // Create a new FormData object
