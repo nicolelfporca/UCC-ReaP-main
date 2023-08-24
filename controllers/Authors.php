@@ -85,13 +85,13 @@ function uploadToDb($request = null)
     foreach ($authors as $author) {
         $authorValue = $author->value;
         if (is_array($authorValue)) {
-            $commaSeparated = implode(',', $authorValue);
+            $commaSeparated = implode(', ', $authorValue);
         } else {
             $commaSeparated = $authorValue;
         }
         $commaSeparatedArray[] = $commaSeparated;
     }
-    $commaSeparatedStringAuthor = implode(',', $commaSeparatedArray);
+    $commaSeparatedStringAuthor = implode(', ', $commaSeparatedArray);
 
     $keywords = $request->keywordsValue;
     $keywordSeperatedArray = array();
