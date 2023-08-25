@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 10, 2023 at 06:05 AM
+-- Generation Time: Aug 25, 2023 at 03:12 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.4.22
 
@@ -42,7 +42,8 @@ CREATE TABLE `login` (
   `log_id` int(11) NOT NULL,
   `username` int(11) NOT NULL,
   `password` int(11) NOT NULL,
-  `student_no` varchar(255) NOT NULL
+  `student_no` varchar(255) NOT NULL,
+  `role` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -58,10 +59,20 @@ CREATE TABLE `user` (
   `date` date NOT NULL,
   `keywords` varchar(255) NOT NULL,
   `abstract` longtext NOT NULL,
-  `uploaded_by` int(11) NOT NULL,
-  `status` int(11) NOT NULL,
+  `uploaded_by` int(11) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `type` int(11) NOT NULL,
   `timestamp` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `title`, `author`, `date`, `keywords`, `abstract`, `uploaded_by`, `status`, `type`, `timestamp`) VALUES
+(14, 'Science', 'ced,gelo,porca', '2023-08-23', 'science,tech,math', '64e6286ea5f27.jpg', NULL, 1, 2, '2023-08-23 23:40:30'),
+(15, 'MATHEMATICS', 'jiro,daneris', '2023-08-26', 'science,tech,math', 'sdfgsdsdfs', NULL, 1, 1, '2023-08-25 14:54:57'),
+(17, 'research', 'ced,gelo,porca', '2023-08-23', 'science,tech,english', 'adfas', NULL, 1, 1, '2023-08-25 15:10:38');
 
 -- --------------------------------------------------------
 
@@ -126,7 +137,7 @@ ALTER TABLE `login`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `user_profile`
