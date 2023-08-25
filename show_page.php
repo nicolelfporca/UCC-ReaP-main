@@ -28,6 +28,42 @@ if ($stmt === false) {
     $thesisDate = date("F j, Y", strtotime($thesisDate));
 }
 
+function formatInitials($name) {
+    $parts = explode(' ', $name);
+    $formattedName = $parts[0] . ' ';
+    for ($i = 1; $i < count($parts); $i++) {
+        $formattedName .= strtoupper(substr($parts[$i], 0, 1)) . '. ';
+    }
+    return trim($formattedName);
+}
+
+
+function formatAPAAuthors($authors) {
+    $authorList = explode(',  ', $authors);
+    $numAuthors = count($authorList);
+    if ($numAuthors === 1 ) {
+        return ($authorList[0]);
+    } elseif ($numAuthors === 2) {
+        $formattedAuthors = array_map('formatInitials', $authorList);
+        return implode(' & ', $formattedAuthors);
+    } elseif ($numAuthors <= 6) {
+        $lastAuthor = array_pop($authorList);
+        $formattedAuthors = implode(', ', array_map('formatInitials', $authorList)) . ', & ' . formatInitials($lastAuthor);
+        return $formattedAuthors;
+    } else {
+        $firstSixAuthors = array_slice($authorList, 0, 6);
+        $formattedAuthors = implode(', ', array_map('formatInitials', $firstSixAuthors)) . ' et al.';
+        return $formattedAuthors;
+    }
+    
+}
+
+function generateAPAWebsiteCitation($authors, $year, $title, $url) {
+    $formattedAuthors = formatAPAAuthors($authors);
+    $citation = "$formattedAuthors ($year). $title. Retrieved from $url";
+    return $citation;
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -115,12 +151,33 @@ if ($stmt === false) {
                             <?php } ?>
                         </div>
                     </div>
+                  
                     <div class="citation text-muted">
-                        <label>Citation:</label> <br>
-                        <ul class="list-inline">
-                            <li class="list-inline-item" id="authors"></li>
-                        </ul>
-                    </div>
+    <label>Citation:</label> <br>
+    <ul class="list-inline">
+        <li class="list-inline-item" id="authors">
+            <?php
+            if (strpos($thesisAuthor, ',  ') === false) {
+                $authorsForCitation = formatInitials($thesisAuthor);
+            } else {
+                $authorsForCitation = formatAPAAuthors($thesisAuthor);
+            }
+            
+            $publicationYear = date("Y", strtotime($thesisDate));
+            $abstractTitle = $thesisTitle;
+            $websiteURL = "https://www.your-website.com/abstract-page"; // Update this URL
+            
+            // Count authors and format according to APA style
+            
+            $websiteCitation = generateAPAWebsiteCitation($authorsForCitation, $publicationYear, $abstractTitle, $websiteURL);
+
+            echo "<p class='apa-citation'>$websiteCitation</p>";
+            ?>
+        </li>
+    </ul>
+</div>
+
+
                 </div>
 
                 <hr class="container text-muted">

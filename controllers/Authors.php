@@ -91,7 +91,7 @@ function uploadToDb($request = null)
         }
         $commaSeparatedArray[] = $commaSeparated;
     }
-    $commaSeparatedStringAuthor = implode(', ', $commaSeparatedArray);
+    $commaSeparatedStringAuthor = implode(',  ', $commaSeparatedArray);
 
     $keywords = $request->keywordsValue;
     $keywordSeperatedArray = array();
