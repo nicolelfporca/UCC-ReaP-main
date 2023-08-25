@@ -1,4 +1,4 @@
-<?php 
+<?php
 require("./includes/config.php");
 $title = $_GET['name'];
 
@@ -19,14 +19,27 @@ if ($stmt === false) {
     // // Debugging: Output the number of rows returned by the query
     // echo "Number of Rows Fetched: " . count($datas) . "<br>";
     foreach ($datas as $data) {
-       $thesisTitle = $data['title'];
-       $thesisDate = $data['date'];
-       $thesisAuthor = $data['author'];
-       $abstractType = $data['type'];
-       $abstract = $data['abstract'];
+        $thesisTitle = $data['title'];
+        $thesisDate = $data['date'];
+        $thesisAuthor = $data['author'];
+        $abstractType = $data['type'];
+        $abstract = $data['abstract'];
+        $thesisKeyword = $data['keywords'];
     }
     $thesisDate = date("F j, Y", strtotime($thesisDate));
+    $newKeywordArray = explode(",", $thesisKeyword);
+
+    foreach ($newKeywordArray as $keyword) {
+        $sql[] = "keywords LIKE '%" .$keyword. "%'";
+    } 
+    // note dont foreach when you want to handle multiple data in a query
+    $relatedStudiesFetch = "SELECT DISTINCT * FROM user WHERE title != '" . $thesisTitle . "' AND (" . implode(" OR ", $sql) . ") AND status = 1";
+    // you can echo for checking for query echo $relatedStudiesFetch;
+    $stmt1 = $pdo->prepare($relatedStudiesFetch); 
+    $stmt1->execute();
+    $relatedStudiesUi = $stmt1->fetchAll();
 }
+
 
 
 ?>
@@ -54,17 +67,14 @@ if ($stmt === false) {
                     <img src="dist/image/UCC.png" alt="UCC Logo" width="50" height="55" class="me-2">
                     UCC ReaP
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item">
                             <div class="input-group">
-                                <input class="form-control me-1 rounded-5" type="search" placeholder="Search..."
-                                    aria-label="Search" id="search">
+                                <input class="form-control me-1 rounded-5" type="search" placeholder="Search..." aria-label="Search" id="search">
                                 <span class="input-group-append">
                                     <button class="btn bg-none rounded-5 text-white" type="button">
                                         <i class="fa fa-search"></i>
@@ -90,7 +100,7 @@ if ($stmt === false) {
         <div class="container">
             <div class="row">
                 <div class="col-sm-8">
-                    <div class="title"> 
+                    <div class="title">
                         <label class="fw-semibold h2"><?php echo $thesisTitle ?></label>
                     </div>
                     <div class="date">
@@ -106,12 +116,12 @@ if ($stmt === false) {
                             <label class="fw-semibold fs-5 mb-3">ABSTRACT</label>
                         </div>
                         <div class="abstract-body">
-                            <?php if($abstractType == 1){ ?>
-                            <label>
-                            <?php echo $abstract ?>
-                            </label>
-                            <?php }elseif($abstractType == 2){ ?>
-                                <img src="<?php echo "webimg/".$abstract ?>" alt="Image" style="max-width: 100%; height: auto;">
+                            <?php if ($abstractType == 1) { ?>
+                                <label>
+                                    <?php echo $abstract ?>
+                                </label>
+                            <?php } elseif ($abstractType == 2) { ?>
+                                <img src="<?php echo "webimg/" . $abstract ?>" alt="Image" style="max-width: 100%; height: auto;">
                             <?php } ?>
                         </div>
                     </div>
@@ -129,20 +139,18 @@ if ($stmt === false) {
                     <div class="related-studies">
                         <label class="text-muted fs-4 mb-3">RELATED STUDIES</label>
                     </div>
-                    <div class="card p-1 rounded-0 mb-4">
-                        <div class="card p-3 border-0">
-                            <a href="#" class="research-title fw-semibold fs-5">
-                                UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH
-                            </a>
-                            <a href="#" class="date fst-italic text-muted">
-                                August 19, 2002
-                            </a>
+                    <?php foreach ($relatedStudiesUi as $relatedStudy) { ?>
+                        <div class="card p-1 rounded-0 mb-4">
+                            <div class="card p-3 border-0">
+                                <a href=<?php echo "show_page.php?name=" . urldecode($relatedStudy['title']) ?> class="research-title fw-semibold fs-5">
+                                    <?php echo $relatedStudy['title'] ?>
+                                </a>
+                                <a href=<?php echo "show_page.php?name=" . urldecode($relatedStudy['title']) ?> class="date fst-italic text-muted">
+                                    <?php echo date("F j, Y", strtotime($relatedStudy['date'])); ?>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                   
-                  
-                   
-               
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -150,8 +158,7 @@ if ($stmt === false) {
 
     <footer class="bg-white text-center text-muted border">
         <div class="text-center p-3">
-            <strong>Copyright &copy; 2023-2024. <a href="https://www.ucc-caloocan.edu.ph/"
-                    class="link text-muted">University of Caloocan City</a>.
+            <strong>Copyright &copy; 2023-2024. <a href="https://www.ucc-caloocan.edu.ph/" class="link text-muted">University of Caloocan City</a>.
             </strong> All rights reserved.
         </div>
     </footer>
