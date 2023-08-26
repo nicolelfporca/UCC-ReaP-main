@@ -22,8 +22,6 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="upload_form.php">Upload Form</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="settings_passwords.php">Settings</a>
-            <div class="dropdown-divider"></div>
             <a class="dropdown-item text-danger" href="#">Logout</a>
         </div>
     </div>
