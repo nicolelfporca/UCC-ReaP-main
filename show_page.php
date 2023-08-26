@@ -1,4 +1,86 @@
+<?php
+require("./includes/config.php");
+$title = $_GET['name'];
+
+$populateUiShowPage = "SELECT * FROM user WHERE title = :title";
+$pdo = Database::connection();
+$stmt = $pdo->prepare($populateUiShowPage);
+$stmt->bindParam(':title', $title, PDO::PARAM_STR);
+$stmt->execute();
+
+if ($stmt === false) {
+    $errorInfo = $pdo->errorInfo();
+    $errorMsg = "SQL Error: " . $errorInfo[2];
+    echo "<script> alert('" . $errorMsg . "')</script>";
+} else {
+    // Debugging: Output the executed query for verification
+    // echo "Executed Query: " . $populateUiShowPage . "<br>";
+    $datas = $stmt->fetchAll();
+    // // Debugging: Output the number of rows returned by the query
+    // echo "Number of Rows Fetched: " . count($datas) . "<br>";
+    foreach ($datas as $data) {
+        $thesisTitle = $data['title'];
+        $thesisDate = $data['date'];
+        $thesisAuthor = $data['author'];
+        $abstractType = $data['type'];
+        $abstract = $data['abstract'];
+        $thesisKeyword = $data['keywords'];
+    }
+    $thesisDate = date("F j, Y", strtotime($thesisDate));
+    $newKeywordArray = explode(",", $thesisKeyword);
+
+    foreach ($newKeywordArray as $keyword) {
+        $sql[] = "keywords LIKE '%" .$keyword. "%'";
+    } 
+    // note dont foreach when you want to handle multiple data in a query
+    $relatedStudiesFetch = "SELECT DISTINCT * FROM user WHERE title != '" . $thesisTitle . "' AND (" . implode(" OR ", $sql) . ") AND status = 1";
+    // you can echo for checking for query echo $relatedStudiesFetch;
+    $stmt1 = $pdo->prepare($relatedStudiesFetch); 
+    $stmt1->execute();
+    $relatedStudiesUi = $stmt1->fetchAll();
+}
+
+function formatInitials($name) {
+    $parts = explode(' ', $name);
+    $formattedName = $parts[0] . ' ';
+    for ($i = 1; $i < count($parts); $i++) {
+        $formattedName .= strtoupper(substr($parts[$i], 0, 1)) . '. ';
+    }
+    return trim($formattedName);
+}
+
+
+function formatAPAAuthors($authors) {
+    $authorList = explode(',  ', $authors);
+    $numAuthors = count($authorList);
+    if ($numAuthors === 1 ) {
+        return ($authorList[0]);
+    } elseif ($numAuthors === 2) {
+        $formattedAuthors = array_map('formatInitials', $authorList);
+        return implode(' & ', $formattedAuthors);
+    } elseif ($numAuthors <= 6) {
+        $lastAuthor = array_pop($authorList);
+        $formattedAuthors = implode(', ', array_map('formatInitials', $authorList)) . ', & ' . formatInitials($lastAuthor);
+        return $formattedAuthors;
+    } else {
+        $firstSixAuthors = array_slice($authorList, 0, 6);
+        $formattedAuthors = implode(', ', array_map('formatInitials', $firstSixAuthors)) . ' et al.';
+        return $formattedAuthors;
+    }
+    
+}
+
+function generateAPAWebsiteCitation($authors, $year, $title, $url) {
+    $formattedAuthors = formatAPAAuthors($authors);
+    $citation = "$formattedAuthors ($year). $title. Retrieved from $url";
+    return $citation;
+}
+
+
+
+?>
 <!DOCTYPE html>
+<!-- hello world -->
 <html lang="en">
 
 <head>
@@ -21,17 +103,14 @@
                     <img src="dist/image/UCC.png" alt="UCC Logo" width="50" height="55" class="me-2">
                     UCC ReaP
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item">
                             <div class="input-group">
-                                <input class="form-control me-1 rounded-5" type="search" placeholder="Search..."
-                                    aria-label="Search" id="search">
+                                <input class="form-control me-1 rounded-5" type="search" placeholder="Search..." aria-label="Search" id="search">
                                 <span class="input-group-append">
                                     <button class="btn bg-none rounded-5 text-white" type="button">
                                         <i class="fa fa-search"></i>
@@ -58,18 +137,14 @@
             <div class="row">
                 <div class="col-sm-8">
                     <div class="title">
-                        <label class="fw-semibold h2">UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH</label>
+                        <label class="fw-semibold h2"><?php echo $thesisTitle ?></label>
                     </div>
                     <div class="date">
-                        <label class="fst-italic">August 19, 2002</label>
+                        <label class="fst-italic"><?php echo $thesisDate ?></label>
                     </div>
                     <div class="researchers mb-4">
                         <ul class="list-inline">
-                            <li class="list-inline-item">&bull; Andre Mandantes</li>
-                            <li class="list-inline-item">&bull; Angelo Perlota</li>
-                            <li class="list-inline-item">&bull; Cedric Cruz</li>
-                            <li class="list-inline-item">&bull; Kenjie Arceo</li>
-                            <li class="list-inline-item">&bull; Nicollette Porca</li>
+                            <li class="list-inline-item">&bull; <?php echo $thesisAuthor ?> </li>
                         </ul>
                     </div>
                     <div class="card p-4 rounded-0 mb-4">
@@ -77,29 +152,42 @@
                             <label class="fw-semibold fs-5 mb-3">ABSTRACT</label>
                         </div>
                         <div class="abstract-body">
-                            <label>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                reprehenderit
-                                in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                                cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            </label>
+                            <?php if ($abstractType == 1) { ?>
+                                <label>
+                                    <?php echo $abstract ?>
+                                </label>
+                            <?php } elseif ($abstractType == 2) { ?>
+                                <img src="<?php echo "webimg/" . $abstract ?>" alt="Image" style="max-width: 100%; height: auto;">
+                            <?php } ?>
                         </div>
                     </div>
+                  
                     <div class="citation text-muted">
-                        <label>Citation:</label> <br>
-                        <ul class="list-inline">
-                            <li class="list-inline-item" id="authors">Arceo, K., </li>
-                            <li class="list-inline-item" id="year">(2023), </li>
-                            <li class="list-inline-item" id="title">"University of Caloocan City Title Research", </li>
-                            <li class="list-inline-item fst-italic fw-bold" id="journal-title">
-                                The New Crossroads, 
-                            </li>
-                            <li class="list-inline-item" id="pages">pp. 6969.</li>
-                        </ul>
-                    </div>
+    <label>Citation:</label> <br>
+    <ul class="list-inline">
+        <li class="list-inline-item" id="authors">
+            <?php
+            if (strpos($thesisAuthor, ',  ') === false) {
+                $authorsForCitation = formatInitials($thesisAuthor);
+            } else {
+                $authorsForCitation = formatAPAAuthors($thesisAuthor);
+            }
+            
+            $publicationYear = date("Y", strtotime($thesisDate));
+            $abstractTitle = $thesisTitle;
+            $websiteURL = "https://www.your-website.com/abstract-page"; // Update this URL
+            
+            // Count authors and format according to APA style
+            
+            $websiteCitation = generateAPAWebsiteCitation($authorsForCitation, $publicationYear, $abstractTitle, $websiteURL);
+
+            echo "<p class='apa-citation'>$websiteCitation</p>";
+            ?>
+        </li>
+    </ul>
+</div>
+
+
                 </div>
 
                 <hr class="container text-muted">
@@ -108,76 +196,18 @@
                     <div class="related-studies">
                         <label class="text-muted fs-4 mb-3">RELATED STUDIES</label>
                     </div>
-                    <div class="card p-1 rounded-0 mb-4">
-                        <div class="card p-3 border-0">
-                            <a href="#" class="research-title fw-semibold fs-5">
-                                UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH
-                            </a>
-                            <a href="#" class="date fst-italic text-muted">
-                                August 19, 2002
-                            </a>
+                    <?php foreach ($relatedStudiesUi as $relatedStudy) { ?>
+                        <div class="card p-1 rounded-0 mb-4">
+                            <div class="card p-3 border-0">
+                                <a href=<?php echo "show_page.php?name=" . urldecode($relatedStudy['title']) ?> class="research-title fw-semibold fs-5">
+                                    <?php echo $relatedStudy['title'] ?>
+                                </a>
+                                <a href=<?php echo "show_page.php?name=" . urldecode($relatedStudy['title']) ?> class="date fst-italic text-muted">
+                                    <?php echo date("F j, Y", strtotime($relatedStudy['date'])); ?>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card p-1 rounded-0 mb-4">
-                        <div class="card p-3 border-0">
-                            <a href="#" class="research-title fw-semibold fs-5">
-                                UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH
-                            </a>
-                            <a href="#" class="date fst-italic text-muted">
-                                August 19, 2002
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card p-1 rounded-0 mb-4">
-                        <div class="card p-3 border-0">
-                            <a href="#" class="research-title fw-semibold fs-5">
-                                UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH
-                            </a>
-                            <a href="#" class="date fst-italic text-muted">
-                                August 19, 2002
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card p-1 rounded-0 mb-4">
-                        <div class="card p-3 border-0">
-                            <a href="#" class="research-title fw-semibold fs-5">
-                                UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH
-                            </a>
-                            <a href="#" class="date fst-italic text-muted">
-                                August 19, 2002
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card p-1 rounded-0 mb-4">
-                        <div class="card p-3 border-0">
-                            <a href="#" class="research-title fw-semibold fs-5">
-                                UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH
-                            </a>
-                            <a href="#" class="date fst-italic text-muted">
-                                August 19, 2002
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card p-1 rounded-0 mb-4">
-                        <div class="card p-3 border-0">
-                            <a href="#" class="research-title fw-semibold fs-5">
-                                UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH
-                            </a>
-                            <a href="#" class="date fst-italic text-muted">
-                                August 19, 2002
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card p-1 rounded-0 mb-4">
-                        <div class="card p-3 border-0">
-                            <a href="#" class="research-title fw-semibold fs-5">
-                                UNIVERSITY OF CALOOCAN CITY TITLE RESEARCH
-                            </a>
-                            <a href="#" class="date fst-italic text-muted">
-                                August 19, 2002
-                            </a>
-                        </div>
-                    </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -185,8 +215,7 @@
 
     <footer class="bg-white text-center text-muted border">
         <div class="text-center p-3">
-            <strong>Copyright &copy; 2023-2024. <a href="https://www.ucc-caloocan.edu.ph/"
-                    class="link text-muted">University of Caloocan City</a>.
+            <strong>Copyright &copy; 2023-2024. <a href="https://www.ucc-caloocan.edu.ph/" class="link text-muted">University of Caloocan City</a>.
             </strong> All rights reserved.
         </div>
     </footer>
