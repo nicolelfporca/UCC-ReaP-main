@@ -98,15 +98,7 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url) {
                 <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <div class="input-group">
-                                <input class="form-control me-1 rounded-5" type="search" placeholder="Search..."
-                                    aria-label="Search" id="search">
-                                <span class="input-group-append">
-                                    <button class="btn bg-none rounded-5 text-white" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
+                            
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">

@@ -15,7 +15,7 @@
 <body>
 
     <div class="s006">
-         <form action="links_page.php" method="POST">
+         <form action="links_page.php" method="GET">
             <fieldset>
                 <div class="ucc-logo mb-2">
                     <img src="dist/image/UCC.png" alt="UCC Logo" width="160" height="165"
@@ -33,7 +33,7 @@
                                 </path>
                             </svg>
                         </button>
-                        <input id="search" type="text" name="query" placeholder="Search..." required>
+                        <input id="search" type="text" name="/" placeholder="Search..." required>
                     </div>
                 </div>
             </fieldset>

@@ -5,25 +5,43 @@ include './includes/config.php';
 $pdo = Database::connection();
 
 // Get the search query from the form submission
-if (isset($_POST['query'])) {
-    $search_query = $_POST['query'];
+if (isset($_GET['/'])) {
+    $search_query = $_GET['/'];
 } else {
     die("No search query provided.");
 }
 
 // Prepare the query to fetch matching data from the database
-$search_query = '%'. $search_query . '%';
-$status = 1;
+$value = $search_query;
 
-$sql= "Select * FROM user WHERE title like :search_query AND status = :status";
+$search_query = '%' . $search_query . '%'; 
+$status = 1;
+$column= "title, keywords, abstract, date";
+
+
+
+//$sql = "SELECT $column FROM user WHERE (title LIKE :search_query OR keywords LIKE :search_query OR abstract LIKE :search_query OR author = :search_query) AND status = :status";
+$sql = "
+    SELECT $column,
+    CASE
+        WHEN title LIKE :search_query THEN 3
+        WHEN keywords LIKE :search_query THEN 2
+        WHEN author LIKE :search_query THEN 1
+        ELSE 0
+    END AS relevance
+    FROM user
+    WHERE (title LIKE :search_query OR keywords LIKE :search_query OR author LIKE :search_query)
+    AND status = :status
+    ORDER BY relevance DESC";
+
 $stmt = $pdo -> prepare($sql);
 
-$stmt-> execute(
-    [
-        ':search_query'=> $search_query,
-        ':status'=> $status
-    ]
-);
+$stmt->bindValue(':search_query', $search_query, PDO::PARAM_STR);
+$stmt->bindValue(':status', $status, PDO::PARAM_INT);
+
+$stmt-> execute();
+
+
 
 ?>
 
@@ -62,10 +80,10 @@ $stmt-> execute(
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item">
                             <div class="input-group">
-                                <input class="form-control me-1 rounded-5" type="search" placeholder="Search..."
+                                <input class="form-control me-1 rounded-5" type="search" placeholder="Search..." value= "<?php echo $value ?>"
                                     aria-label="Search" id="search">
                                 <span class="input-group-append">
-                                    <button class="btn bg-none rounded-5 text-white" type="button">
+                                    <button class="btn bg-none rounded-5 text-white" type="button" id="search-button">
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </span>
@@ -95,6 +113,8 @@ $stmt-> execute(
 
             <?php
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+  
+
     echo '<div class="card p-3 rounded-0 mb-4">';
     echo '<div class="card p-3 border-0">';
     echo '<a href="show_page.php?name=' . urlencode($row['title']) . '" class="research-title fw-semibold fs-5 mb-2">' . $row['title'] . '</a>';
@@ -119,6 +139,37 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+$(document).ready(function() {
+    const searchInput = $("#search");
+
+    // Perform search when Enter key is pressed in the search input
+    searchInput.on("keypress", function(event) {
+        if (event.key === "Enter") {
+            performSearch();
+        }
+    });
+
+    // Perform search when the search button is clicked
+    $("#search-button").on("click", function() {
+        performSearch();
+    });
+
+    function performSearch() {
+        const value = searchInput.val().trim(); // Trim whitespace from the input
+        if (value !== "") {
+            // Redirect to the search results page with the user's input as a query parameter
+            window.location.href = "links_page.php?/=" + encodeURIComponent(value);
+      
+    }
+}
+});
+</script>
+
+
 </body>
+
 
 </html>
