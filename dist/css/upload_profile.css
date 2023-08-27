@@ -3,7 +3,8 @@
 }
 
 .add-btn,
-.minus-btn {
+.minus-btn,
+.search-btn {
     background: #00000000;
 }
 
@@ -23,6 +24,17 @@
     border-radius: 5rem;
 }
 
+#search {
+    width: 30rem;
+    margin-left: 9rem;
+    background: #ffffffb1;
+}
+
+.research-title{
+    font-size: 1.8rem;
+    text-transform: uppercase;
+}
+
 @media screen and (max-width:600px) {
     .full {
         display: none;
@@ -38,5 +50,13 @@
 
     .left-column {
         margin-bottom: 1rem;
+    }
+
+    #search {
+        margin-left: 0;
+    }
+    
+    .search-input{
+        margin: 1rem 0 1rem;
     }
 }

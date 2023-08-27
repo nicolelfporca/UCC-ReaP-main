@@ -1,7 +1,6 @@
 <?php
 include './includes/config.php';
 
-
 $pdo = Database::connection();
 
 // Get the search query from the form submission
@@ -12,25 +11,21 @@ if (isset($_POST['query'])) {
 }
 
 // Prepare the query to fetch matching data from the database
-$search_query = '%'. $search_query . '%';
+$search_query = '%' . $search_query . '%';
 $status = 1;
 
-$sql= "Select * FROM user WHERE title like :search_query AND status = :status";
-$stmt = $pdo -> prepare($sql);
+$sql = "Select * FROM user WHERE title like :search_query AND status = :status";
+$stmt = $pdo->prepare($sql);
 
-$stmt-> execute(
+$stmt->execute(
     [
-        ':search_query'=> $search_query,
-        ':status'=> $status
+        ':search_query' => $search_query,
+        ':status' => $status
     ]
 );
-
 ?>
 
-
-
 <!DOCTYPE html>
-<!-- helloworld -->
 <html lang="en">
 
 <head>
@@ -38,74 +33,76 @@ $stmt-> execute(
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UCC REAP</title>
     <link rel="icon" href="dist/image/UCC.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="dist/css/all.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="dist/css/links_page.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dist/css/upload_profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
 <body class="bg-light">
 
-    <header style="background: rgb(53, 144, 53);">
-        <nav class="navbar navbar-expand-lg navbar-dark">
-            <div class="container">
-                <a class="navbar-brand fw-semibold" href="#">
-                    <img src="dist/image/UCC.png" alt="UCC Logo" width="50" height="55" class="me-2">
-                    UCC ReaP
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-                    <ul class="navbar-nav mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <div class="input-group">
-                                <input class="form-control me-1 rounded-5" type="search" placeholder="Search..."
-                                    aria-label="Search" id="search">
-                                <span class="input-group-append">
-                                    <button class="btn bg-none rounded-5 text-white" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="search_engine.php">
+                <img src="dist/image/UCC.png" alt="UCC Logo" width="50" class="mr-2">
+                <span class="full">UCC ReaP</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <div class="input-group search-input">
+                            <input class="form-control mr-1 rounded-0" type="search" placeholder="Search"
+                                aria-label="Search" id="search">
+                            <span class="input-group-append">
+                                <button class="btn search-btn text-white" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
+                        </a>
+                        <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                            <div class="for-user">
+                                <a class="dropdown-item" href="upload_form.php">Upload</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="#">Logout</a>
                             </div>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <button class="btn text-white me-1" type="submit">Join now</button>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="btn btn-outline-light rounded-5">Sign in</a>
-                        </li>
-                    </ul>
-                </div>
+                            <div class="join-sign-in" hidden>
+                                <a class="dropdown-item" href="register.php">Join now</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Sign up</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
     <div class="mt-4" id="links_page">
         <div class="container">
-            <div class="results mb-4">
-                <label>4 Results for "Search..."</label>
-            </div>
-
-
-
             <?php
-while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    echo '<div class="card p-3 rounded-0 mb-4">';
-    echo '<div class="card p-3 border-0">';
-    echo '<a href="show_page.php?name=' . urlencode($row['title']) . '" class="research-title fw-semibold fs-5 mb-2">' . $row['title'] . '</a>';
-    echo '<div class=" text-black mb-2">' . $row['abstract'] . '</div>';
-    echo '<div class=" fst-italic text-muted">' . $row['date'] . '</div>';
-    echo '</div>';
-    echo '</div>';
-}
-?>
-
-         
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo '<div class="card p-4 rounded-0 mb-4">';
+                echo '<a href="show_page.php?name=' . urlencode($row['title']) . '" class="font-weight-bold research-title mb-2">' . $row['title'] . '</a>';
+                echo '<div class="text-black mb-2">' . $row['abstract'] . ' <a class="text-muted" href="">See more.</a></div>';
+                echo '<div class="font-italic text-muted">' . $row['date'] . '</div>';
+                echo '</div>';
+                echo '</div>';
+            }
+            ?>
         </div>
     </div>
 
@@ -117,8 +114,9 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>
