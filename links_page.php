@@ -54,7 +54,7 @@ $stmt->execute(
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
+                    <li class="nav-item d-flex">
                         <div class="input-group search-input">
                             <input class="form-control mr-1 rounded-0" type="search" placeholder="Search"
                                 aria-label="Search" id="search">
@@ -97,7 +97,7 @@ $stmt->execute(
             <?php
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '<div class="card p-4 rounded-0 mb-4">';
-                echo '<a href="show_page.php?name=' . urlencode($row['title']) . '" class="font-weight-bold research-title mb-2">' . $row['title'] . '</a>';
+                echo '<a href="show_page.php?name=' . urlencode($row['title']) . '" class="research-title mb-2">' . $row['title'] . '</a>';
                 echo '<div class="text-black mb-2">' . $row['abstract'] . ' <a class="text-muted" href="">See more.</a></div>';
                 echo '<div class="font-italic text-muted">' . $row['date'] . '</div>';
                 echo '</div>';

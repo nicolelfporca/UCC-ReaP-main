@@ -33,6 +33,7 @@
 .research-title{
     font-size: 1.8rem;
     text-transform: uppercase;
+    font-weight: 700;
 }
 
 @media screen and (max-width:600px) {
@@ -54,6 +55,7 @@
 
     #search {
         margin-left: 0;
+        width: 20rem;
     }
     
     .search-input{
