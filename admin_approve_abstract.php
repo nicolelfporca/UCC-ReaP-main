@@ -54,6 +54,13 @@
                                 <p>PENDING</p>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="admin_adding_courses.php" class="nav-link ">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>Courses</p>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>

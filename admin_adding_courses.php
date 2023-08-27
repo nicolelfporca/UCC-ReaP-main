@@ -49,11 +49,19 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <a href="admin_approve_abstract.php" class="nav-link active">
+                            <a href="admin_approve_abstract.php" class="nav-link ">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>PENDING</p>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="admin_adding_courses.php" class="nav-link active">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>Courses</p>
+                            </a>
+                        </li>
+                        
                     </ul>
                 </nav>
             </div>
@@ -184,7 +192,7 @@
                     { "className": "dt-center", "targets": "_all" },
                 ],
                 'ajax': {
-                    'url': 'admid_course_tbl.php',
+                    'url': 'admin_course_tbl.php',
                     'type': 'post',
                 
                 },
