@@ -16,7 +16,7 @@
         <div class="container">
             <a class="navbar-brand" href="search_engine.php">
                 <img src="dist/image/UCC.png" alt="UCC Logo" width="50" class="mr-2">
-                <span class="full font-weight-bold">UCC Research and Publication Online</span>
+                <span class="full">UCC Research and Publication Online</span>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,7 +24,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto font-weight-bold">
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a class="nav-link ml-2" href="upload_form.php">Upload</a>
                     </li>
