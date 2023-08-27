@@ -118,7 +118,7 @@
                 <button class="btn btn-primary w-100">Create Account</button>
             </div>
             <div class="login-link text-center">
-                <a href="login.html" class="text-muted">Login here.</a>
+                <a href="login.php" class="text-muted">Login here.</a>
             </div>
         </div>
     </div>

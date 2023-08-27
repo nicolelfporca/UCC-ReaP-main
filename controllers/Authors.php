@@ -15,7 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payload'])) {
     } else {
         echo "Invalid function name.";
     }
-};
+}
+;
 
 
 
@@ -26,8 +27,8 @@ function addAuthors($request = null)
         $response[] = "<div class='row mb-2'>
                                 <div class='col-sm-12'>
                                     <div class='input-group'>
-                                        <input type='text' id='authorName' name='authorName' class='form-control authorName' value = '" . htmlspecialchars($author->value) . "'>
-                                        <button class='btn minus-button-author' type='button' data-key='" . htmlspecialchars($author->value) . "'><i class='fas fa-minus'></i></button>
+                                        <input type='text' id='authorName' name='authorName' class='form-control authorName' value = '" . htmlspecialchars($author->value) . "' placeholder='Enter name (surname, first name)'>
+                                        <button class='btn minus-btn' type='button' data-key='" . htmlspecialchars($author->value) . "'><i class='fas fa-minus'></i></button>
                                     </div>
                                 </div>
                             </div>";
@@ -35,13 +36,14 @@ function addAuthors($request = null)
     $response[] = "<div class='row mb-2'>
                     <div class='col-sm-12'>
                         <div class='input-group'>
-                            <input type='text' id='authorName' class='form-control authorName' placeholder='Enter authors(Surname,Firname,M.I)'>
-                            <button class='btn' type='button' onclick='addAuthor()'><i class='fas fa-plus'></i></button>
+                            <input type='text' id='authorName' class='form-control authorName' placeholder='Enter name (surname, first name)'>
+                            <button class='btn add-btn' type='button' onclick='addAuthor()'><i class='fas fa-plus'></i></button>
                         </div>
                     </div>
                 </div>";
     echo json_encode($response);
-};
+}
+;
 
 
 
@@ -52,8 +54,8 @@ function addKeywords($request = null)
         $response[] = " <div class='row mb-2'>
                 <div class='col-sm-12'>
                     <div class='input-group'>
-                        <input type='text' class='form-control keywords' name='keywordData' value = '" . htmlspecialchars($keyword->val) . "' >
-                        <button class='btn minus-button-keyword' type='button' data-keyword='" . htmlspecialchars($keyword->val) . "'><i class='fas fa-minus'></i></button>
+                        <input type='text' class='form-control keywords' name='keywordData' value = '" . htmlspecialchars($keyword->val) . "' placeholder='Enter keyword'>
+                        <button class='btn minus-btn' type='button' data-keyword='" . htmlspecialchars($keyword->val) . "'><i class='fas fa-minus'></i></button>
                     </div>
                 </div>
             </div>";
@@ -61,14 +63,15 @@ function addKeywords($request = null)
     $response[] = "<div class='row mb-2'>
         <div class='col-sm-12'>
             <div class='input-group'>
-                <input type='text' class='form-control keywords' placeholder='Enter keyword/s'>
-                <button class='btn' type='button' onclick='addKeyword()'><i class='fas fa-plus'></i></button>
+                <input type='text' class='form-control keywords' placeholder='Enter keyword'>
+                <button class='btn add-btn' type='button' onclick='addKeyword()'><i class='fas fa-plus'></i></button>
             </div>
         </div>
     </div>
     ";
     echo json_encode($response);
-};
+}
+;
 
 function uploadToDb($request = null)
 {
@@ -123,13 +126,13 @@ function uploadToDb($request = null)
 
         if (!in_array($imageExtension, $validImageExtensions)) {
             $msg['title'] = "Warning";
-            $msg['message'] =  "Invalid image extension";
-            $msg['icon'] =  "warning";
+            $msg['message'] = "Invalid image extension";
+            $msg['icon'] = "warning";
             $msg['status'] = "error";
         } elseif ($size > 512000) {
             $msg['title'] = "Warning";
-            $msg['message'] =  "Image size is too large";
-            $msg['icon'] =  "warning";
+            $msg['message'] = "Image size is too large";
+            $msg['icon'] = "warning";
             $msg['status'] = "error";
         } else {
             $newImageName = uniqid() . '.' . $imageExtension;
@@ -161,16 +164,16 @@ function uploadToDb($request = null)
                     $msg['icon'] = "error";
                 } else {
                     $msg['title'] = "Successful";
-                    $msg['message'] =  "Success";
-                    $msg['icon'] =  "success";
+                    $msg['message'] = "Success";
+                    $msg['icon'] = "success";
                     $msg['status'] = "success";
                 }
                 // echo json_encode($targetPath); // this should be inserted in the database
             } else {
                 // Failed to upload image
                 $msg['title'] = "Error";
-                $msg['message'] =  "Failed to move uploaded image to destination";
-                $msg['icon'] =  "error";
+                $msg['message'] = "Failed to move uploaded image to destination";
+                $msg['icon'] = "error";
                 $msg['status'] = "error";
                 $msg['debug'] = $_FILES; // Add this for debugging
             }
@@ -201,14 +204,14 @@ function uploadToDb($request = null)
                 $msg['icon'] = "error";
             } else {
                 $msg['title'] = "Successful";
-                $msg['message'] =  "Success";
-                $msg['icon'] =  "success";
+                $msg['message'] = "Success";
+                $msg['icon'] = "success";
                 $msg['status'] = "success";
             }
         } else {
             $msg['title'] = "Warning";
-            $msg['message'] =  "Error Please Reload The Page";
-            $msg['icon'] =  "warning";
+            $msg['message'] = "Error Please Reload The Page";
+            $msg['icon'] = "warning";
             $msg['status'] = "error";
         }
     }
@@ -221,4 +224,5 @@ function uploadToDb($request = null)
 
 
     echo json_encode($msg);
-};
+}
+;

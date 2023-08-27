@@ -6,165 +6,134 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UCC REAP</title>
     <link rel="icon" href="dist/image/UCC.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dist/css/font.css">
     <link rel="stylesheet" href="dist/css/all.css">
-    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="https://adminlte.io/themes/v3/dist/css/adminlte.min.css?v=3.2.0">
-    <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="bg-light">
 
-    <div class="wrapper">
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
-                </li>
-            </ul>
-        </nav>
-
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="index3.html" class="brand-link">
-                <img src="dist/image/UCC.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">UCC ReaP</span>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="search_engine.php">
+                <img src="dist/image/UCC.png" alt="UCC Logo" width="50" class="mr-2">
+                <span class="full">UCC Research and Publication Online</span>
             </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-            <div class="sidebar">
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="info">
-                        <a href="#" class="d-block">Nicollette Porca</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link ml-2 active" href="upload_form.php">Upload</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ml-2" href="settings_personal_info.php">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ml-2" href="#">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container card-container">
+        <label class="h3 font-weight-normal mb-4 text-muted">Upload Form</label>
+        <div class="row">
+            <div class="card w-100 rounded-0 p-4">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="publish-date mb-2">
+                            <label>Publish Date <span class="text-danger">*</span></label>
+                            <input type="date" name="thesisDate" class="form-control rounded-0">
+                        </div>
                     </div>
                 </div>
-
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item menu-open">
-                            <a href="upload_form.php" class="nav-link active">
-                                <i class="nav-icon fas fa-upload"></i>
-                                <p>Upload</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="settings_personal_info.php" class="nav-link">
-                                <i class="nav-icon fas fa-cog"></i>
-                                <p>Settings</p>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </aside>
-
-        <div class="content-wrapper">
-            <div class="content-header">
-                <div class="container">
-                    <h1 class="font-weight-normal">Upload Form</h1>
+                <div class="title mb-2">
+                    <label>Title <span class="text-danger">*</span></label>
+                    <input type="text" name="titleName" class="form-control rounded-0" placeholder="Enter title">
                 </div>
-            </div>
-
-            <section class="content">
-                <div class="container">
-                    <div class="row">
-                        <div class="card p-4 w-100 rounded-0">
-                            <div class="title mb-2">
-                                <label class="font-weight-normal w-50">Title:</label>
-                                <input type="text" name="titleName" class="form-control" placeholder="Enter title">
-                            </div>
-                            <div class="date mb-2">
-                                <label class="font-weight-normal">Date:</label>
-                                <input type="date" name="thesisDate" class="form-control" placeholder="Enter date">
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="authors">
-                                        <label class="font-weight-normal">Author/s:</label>
-                                        <div id="uiAuthors">
-                                            <div class="row mb-2">
-                                                <div class="col-sm-12">
-                                                    <div class="input-group">
-                                                        <input type="text" id="authorName" class="form-control authorName" placeholder="Enter authors(Surname,Firname,M.I)" onkeydown="handleAuthorInput(event)">
-                                                        <button class="btn" type="button" onclick="addAuthor()"><i class="fas fa-plus"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="keywords">
-                                        <label class="font-weight-normal">Keyword/s:</label>
-                                        <div id="uiKeywords">
-                                            <div class="row mb-2">
-                                                <div class="col-sm-12">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control keywords" placeholder="Enter keyword/s" onkeydown="handleKeywordInput(event)">
-                                                        <button class="btn" type="button" onclick="addKeyword()"><i class="fas fa-plus"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="authors">
+                            <label>Author(s) <span class="text-danger">*</span></label>
+                            <div id="uiAuthors">
+                                <div class="row mb-2">
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <input type="text" id="authorName" class="form-control rounded-0 authorName"
+                                                placeholder="Enter name (surname, first name)"
+                                                onkeydown="handleAuthorInput(event)">
+                                            <button class="btn add-btn" type="button" onclick="addAuthor()">
+                                                <i class="fa-solid fa-plus"></i>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="abstract mb-1">
-                                <label class="font-weight-normal">Abstract:</label>
-                                <select class="form-control" id="selectUI" onchange="showUI()">
-                                    <option value="0">Select Abstract</option>
-                                    <option value="1">Plain Text</option>
-                                    <option value="2">Upload Photo</option>
-                                </select>
-                            </div>
-                            <div class="plain-text" id="plainAbsUi">
-                                <textarea rows="8" name="abstractText" class="form-control"></textarea>
-                            </div>
-                            <div class="upload-photo" id="PicAbsUi">
-                                <label class="btn btn-secondary font-weight-normal">
-                                    <input type="file" name="abstractPic" hidden />
-                                    Upload Photo
-                                </label>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <button type="button" onclick="uploadAbstract()" class="btn btn-primary d-flex float-right">Submit</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="keywords">
+                            <label>Keyword(s) <span class="text-danger">*</span></label>
+                            <div id="uiKeywords">
+                                <div class="row mb-2">
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control rounded-0 keywords"
+                                                placeholder="Enter keyword" onkeydown="handleKeywordInput(event)">
+                                            <button class="btn add-btn" type="button" onclick="addKeyword()">
+                                                <i class="fa-solid fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
+                <div class="abstract mb-2">
+                    <label>Abstract <span class="text-danger">*</span></label>
+                    <select class="form-control rounded-0" id="selectUI" onchange="showUI()">
+                        <option value="0">Select Abstract</option>
+                        <option value="1">Plain Text</option>
+                        <option value="2">Upload Photo</option>
+                    </select>
+                </div>
+                <div class="plain-text mb-1" id="plainAbsUi">
+                    <textarea rows="8" name="abstractText" class="form-control rounded-0"></textarea>
+                </div>
+                <div class="upload-photo mb-1" id="PicAbsUi">
+                    <label class="btn btn-secondary">
+                        <input type="file" name="abstractPic" hidden>Upload Photo
+                    </label>
+                </div>
+                <div class="submit-button">
+                    <button type="button" onclick="uploadAbstract()"
+                        class="btn btn-primary d-flex float-right">Submit</button>
+                </div>
+            </div>
         </div>
-
-        <footer class="main-footer">
-            <strong>Copyright &copy; 2023-2024.
-                <a href="https://www.ucc-caloocan.edu.ph/" class="text-muted" target="blank">
-                    University of Caloocan City
-                </a>.
-            </strong> All rights reserved.
-        </footer>
     </div>
 
-    <script src="https://adminlte.io/themes/v3/plugins/jquery/jquery.min.js"></script>
-    <script src="https://adminlte.io/themes/v3/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="https://adminlte.io/themes/v3/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-    <script src="https://adminlte.io/themes/v3/dist/js/adminlte.js?v=3.2.0"></script>
-    <script src="https://adminlte.io/themes/v3/dist/js/pages/dashboard.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#plainAbsUi').hide();
             $('#PicAbsUi').hide();
 
-            $(document).on("click", ".minus-button-author", function() {
+            $(document).on("click", ".minus-button-author", function () {
                 var key = $(this).data("key");
                 removeAuthorDiv(this, key);
             });
-            $(document).on("click", ".minus-button-keyword", function() {
+            $(document).on("click", ".minus-button-keyword", function () {
                 var key = $(this).data("keyword");
                 removeAuthorDiv(this, key);
             });
@@ -184,7 +153,7 @@
 
         function addAuthor() {
             let allVal = [];
-            $(".authorName").each(function() {
+            $(".authorName").each(function () {
                 let val = $(this).val(); // Trim to remove leading/trailing spaces
                 if (val !== "") {
                     allVal.push({
@@ -212,7 +181,7 @@
                     payload: JSON.stringify(payload),
                     setFunction: 'addAuthors'
                 },
-                success: function(response) {
+                success: function (response) {
                     response = JSON.parse(response);
                     // alert(response); // Display a success message
                     $('#uiAuthors').html(response);
@@ -223,7 +192,7 @@
         function addKeyword() {
             let allData = [];
 
-            $(".keywords").each(function() {
+            $(".keywords").each(function () {
                 let val = $(this).val(); // Trim to remove leading/trailing spaces
                 if (val !== "") {
                     allData.push({
@@ -252,7 +221,7 @@
                     payload: JSON.stringify(payload),
                     setFunction: 'addKeywords'
                 },
-                success: function(response) {
+                success: function (response) {
                     response = JSON.parse(response);
                     $('#uiKeywords').html(response);
                 }
@@ -291,7 +260,7 @@
             var abstractText = $("#plainAbsUi textarea[name='abstractText']").val();
             var num = $('#selectUI').val();
             var authors = [];
-            $(".authorName").each(function() {
+            $(".authorName").each(function () {
                 var authorValue = $(this).val().trim();
                 if (authorValue !== "") {
                     authors.push({
@@ -300,7 +269,7 @@
                 }
             });
             var keywordsValue = [];
-            $(".keywords").each(function() {
+            $(".keywords").each(function () {
                 var keywordValue = $(this).val().trim();
                 if (keywordValue !== "") {
                     keywordsValue.push({
@@ -337,7 +306,7 @@
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "controllers/Authors.php", true);
 
-            xhr.onreadystatechange = function() {
+            xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
                     console.log("Server response:", xhr.responseText);
                     if (xhr.status === 200) {
@@ -345,7 +314,7 @@
                         var data = JSON.parse(xhr.responseText);
                         console.log("Data received:", data);
                         swal.fire(data.title, data.message, data.icon);
-                        setTimeout(function() {
+                        setTimeout(function () {
                             window.location.reload();
                         }, 2000);
                     } else {
@@ -360,7 +329,5 @@
         };
     </script>
 </body>
-
-
 
 </html>
