@@ -19,8 +19,24 @@
     transform: translate(-50%, -50%);
 }
 
+.user-profile {
+    border-radius: 5rem;
+}
+
 @media screen and (max-width:600px) {
     .full {
         display: none;
+    }
+
+    .card-container {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: translate(0, 0);
+        margin-top: 1rem;
+    }
+
+    .left-column {
+        margin-bottom: 1rem;
     }
 }

@@ -20,7 +20,7 @@
         <div class="dropdown-menu border-0 rounded-0 text-center" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="upload_form.php">Upload Form</a>
+            <a class="dropdown-item" href="upload_form.php">Upload</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item text-danger" href="#">Logout</a>
         </div>

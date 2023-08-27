@@ -7,8 +7,7 @@
     <title>UCC REAP</title>
     <link rel="icon" href="dist/image/UCC.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="dist/css/font.css">
-    <link rel="stylesheet" href="dist/css/upload_form2.css">
+    <link rel="stylesheet" href="dist/css/upload_profile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
@@ -18,7 +17,7 @@
         <div class="container">
             <a class="navbar-brand" href="#">
                 <img src="dist/image/UCC.png" alt="UCC Logo" width="50" class="mr-2">
-                <span class="full">UCC Research and Publication Online</span>
+                <span class="full font-weight-bold">UCC Research and Publication Online</span>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,9 +25,9 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto font-weight-bold">
                     <li class="nav-item">
-                        <a class="nav-link ml-2 active" href="upload_form.php">Upload Form</a>
+                        <a class="nav-link ml-2 active" href="upload_form.php">Upload</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link ml-2" href="settings_personal_info.php">Profile</a>
@@ -41,7 +40,7 @@
         </div>
     </nav>
 
-    <div class="container card-container upload-form mt-4">
+    <div class="container card-container">
         <label class="h3 font-weight-normal mb-4 text-muted">Upload Form</label>
         <div class="row">
             <div class="card w-100 rounded-0 p-4">
