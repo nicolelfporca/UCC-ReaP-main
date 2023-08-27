@@ -30,10 +30,23 @@
     background: #ffffffb1;
 }
 
-.research-title{
+.research-title {
     font-size: 1.8rem;
-    text-transform: uppercase;
     font-weight: 700;
+}
+
+.related-studies-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+hr {
+    display: none;
+}
+
+.research-title,
+.related-studies-title {
+    text-transform: uppercase;
 }
 
 @media screen and (max-width:600px) {
@@ -57,8 +70,12 @@
         margin-left: 0;
         width: 20rem;
     }
-    
-    .search-input{
+
+    .search-input {
         margin: 1rem 0 1rem;
+    }
+
+    hr {
+        display: block;
     }
 }
