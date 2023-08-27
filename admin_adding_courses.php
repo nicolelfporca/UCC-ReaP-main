@@ -49,18 +49,19 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <a href="admin_approve_abstract.php" class="nav-link active">
+                            <a href="admin_approve_abstract.php" class="nav-link ">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>PENDING</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="admin_adding_courses.php" class="nav-link ">
+                            <a href="admin_adding_courses.php" class="nav-link active">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>Courses</p>
                             </a>
                         </li>
+                        
                     </ul>
                 </nav>
             </div>
@@ -75,23 +76,24 @@
 
             <section class="content">
                 <div class="container">
+                
                     <div class="card p-3 rounded-0">
-                        <!-- <div class="print-button mb-3">
-                            <button class="btn btn-primary">Print</button>
-                        </div> -->
-
+                        <div class="print-button mb-3">
+                        <button class="btn btn-primary mb-3" id="add-department" data-toggle="modal"
+                        data-target="#add_course">Add Course</button>
+                       
+                        </div> 
+                     
+                        
                         <div class="card p-3 rounded-0">
-                            <table id="Pending_abstacts" class="table table-striped table-bordered" style="width:100%">
+                            <table id="Course" class="table table-striped table-bordered" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Title</th>
-                                        <th>Author</th>
-                                        <th>Uploaded By:</th>
+                                        <th>Course</th>
                                         <th>Status</th>
                                         <th>Action</th>     
                                     </tr>
                                 </thead>
-                              
                             </table>
                         </div>
                     </div>
@@ -100,8 +102,36 @@
         </div>
 
         
+         <!-- add department modal -->
+        <div class="modal fade" id="add_course" tabindex="-1" role="dialog" aria-labelledby="addDepartmentModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addDepartmentModalLabel">Add Courses</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="course">Course:</label>
+                            <input type="text" class="form-control" id="course"
+                                placeholder="Enter Course Name">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                onclick="Add_courses()">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <!-- edit details modal -->
-        <div class="modal fade" id="update" tabindex="-1" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="update_course" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -111,23 +141,23 @@
                     <div class="modal-body">
                         <div class="mb-3">
 
-                            <label for="">Title:</label>
-                            <input type="text" class="form-control" id="Update_title"
-                        disabled>
+                            <label for="">Course:</label>
+                            <input type="text" class="form-control" id="update_coursess"
+                        >
 
                             <label for="" class="mt-2">Status:</label>
-                            <select class="form-control" name="" id="update_status">
-                                <option value="" readonly>Select</option>
-                                <option value="1">Approved</option>
-                                <option value="0">PENDING</option>
+                            <select class="form-control" name="" id="update_course_status">
+                                <option value="" readonly selected disabled>Select</option>
+                                <option value="1">Available</option>
+                                <option value="0">CLOSED</option>
                             </select>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" data-dismiss="modal"
-                            onclick="update1()">Update</button>
-                        <input type="hidden" id="hiddendata">
+                            onclick="course_update()">Update</button>
+                        <input type="hidden" id="hiddendata_course">
                     </div>
                 </div>
             </div>
@@ -154,7 +184,7 @@
     <script>
   $(document).ready(function () {
 
-        $('#Pending_abstacts').DataTable({
+        $('#Course').DataTable({
                 'serverside': true,
                 'processing': true,
                 'paging': true,
@@ -162,37 +192,65 @@
                     { "className": "dt-center", "targets": "_all" },
                 ],
                 'ajax': {
-                    'url': 'pending_abstract_tbl.php',
+                    'url': 'admin_course_tbl.php',
                     'type': 'post',
                 
                 },
             });
         });
 
-        function update(update) {
-            $('#hiddendata').val(update);
-            $.post("admin_update_status.php", { update: update }, function (data,
-                status) {
-                var userid = JSON.parse(data);
-                $('#Update_title').val(userid.title);
-                $('#update_status option[value="' + userid.status + '"]').prop('selected', true); // Use this line
-              
+
+        
+        function Add_courses() {
+            $.ajax({
+                url: 'admin_add_course.php',
+                method: 'POST',
+                data: {
+                    course: $('#course').val(),
+                },
+                success: function (response) {
+                    var data = JSON.parse(response);
+                    if (data.status == 'data_exist') {
+                        alert('Data already exists.');
+                    } else if (data.status == 'success') {
+                        var c = $('#Course').DataTable().ajax.reload();
+                        alert('Data added successfully.');
+                    } else {
+                        alert('Failed to add data.');
+                    }
+                    $('#course').val('');
+                },
+                error: function (xhr, status, error) {
+                    alert('Error: ' + error);
+                }
             });
-            $('#update').modal("show");
         }
 
-        function update1(status) {
-            var status = $('#update_status').val()
-            var title = $('#Update_title').val();
-            var hiddendata = $('#hiddendata').val();
+        function update_c(update) {
+            $('#hiddendata_course').val(update);
+            $.post("admin_update_course.php", { update: update }, function (data,
+                status) {
+                var userids = JSON.parse(data);
+                $('#update_coursess').val(userids.course_name);
+               $('#update_course_status option[value="' + userids.status + '"]').prop('selected', true); // Use this line
+              
+            });
+            $('#update_course').modal("show");
+        }
 
-            $.post("admin_update_status.php", {
-                 status: status,  hiddendata: hiddendata
+        function course_update(status) {
+            var status = $('#update_course_status').val()
+            var course = $('#update_coursess').val();
+            var hiddendata = $('#hiddendata_course').val();
+           
+
+            $.post("admin_update_course.php", {
+                 status: status,  hiddendata: hiddendata, course:course
             }, function (data, status) {
                 var jsons = JSON.parse(data);
                 status = jsons.status;
                 if (status == 'success') {
-                    var update = $('#Pending_abstacts').DataTable().ajax.reload();
+                    var update = $('#Course').DataTable().ajax.reload();
                 }
             });
         

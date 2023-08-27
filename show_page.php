@@ -30,18 +30,17 @@ if ($stmt === false) {
     $newKeywordArray = explode(",", $thesisKeyword);
 
     foreach ($newKeywordArray as $keyword) {
-        $sql[] = "keywords LIKE '%" . $keyword . "%'";
-    }
+        $sql[] = "keywords LIKE '%" .$keyword. "%'";
+    } 
     // note dont foreach when you want to handle multiple data in a query
     $relatedStudiesFetch = "SELECT DISTINCT * FROM user WHERE title != '" . $thesisTitle . "' AND (" . implode(" OR ", $sql) . ") AND status = 1";
     // you can echo for checking for query echo $relatedStudiesFetch;
-    $stmt1 = $pdo->prepare($relatedStudiesFetch);
+    $stmt1 = $pdo->prepare($relatedStudiesFetch); 
     $stmt1->execute();
     $relatedStudiesUi = $stmt1->fetchAll();
 }
 
-function formatInitials($name)
-{
+function formatInitials($name) {
     $parts = explode(' ', $name);
     $formattedName = $parts[0] . ' ';
     for ($i = 1; $i < count($parts); $i++) {
@@ -51,11 +50,10 @@ function formatInitials($name)
 }
 
 
-function formatAPAAuthors($authors)
-{
+function formatAPAAuthors($authors) {
     $authorList = explode(',  ', $authors);
     $numAuthors = count($authorList);
-    if ($numAuthors === 1) {
+    if ($numAuthors === 1 ) {
         return ($authorList[0]);
     } elseif ($numAuthors === 2) {
         $formattedAuthors = array_map('formatInitials', $authorList);
@@ -69,18 +67,20 @@ function formatAPAAuthors($authors)
         $formattedAuthors = implode(', ', array_map('formatInitials', $firstSixAuthors)) . ' et al.';
         return $formattedAuthors;
     }
-
+    
 }
 
-function generateAPAWebsiteCitation($authors, $year, $title, $url)
-{
+function generateAPAWebsiteCitation($authors, $year, $title, $url) {
     $formattedAuthors = formatAPAAuthors($authors);
     $citation = "$formattedAuthors ($year). $title. Retrieved from $url";
     return $citation;
 }
-?>
 
+
+
+?>
 <!DOCTYPE html>
+<!-- hello world -->
 <html lang="en">
 
 <head>
@@ -88,90 +88,56 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UCC REAP</title>
     <link rel="icon" href="dist/image/UCC.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="dist/css/font.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="dist/css/all.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dist/css/links_page.css">
 </head>
 
 <body class="bg-light">
 
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="search_engine.php">
-                <img src="dist/image/UCC.png" alt="UCC Logo" width="50" class="mr-2">
-                <span class="full">UCC ReaP</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li class="nav-item d-flex">
-                        <div class="input-group search-input">
-                            <input class="form-control mr-1 rounded-0" type="search" placeholder="Search"
-                                aria-label="Search" id="search">
-                            <span class="input-group-append">
-                                <button class="btn search-btn text-white" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
-                        </a>
-                        <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
-                            <div class="for-user">
-                                <a class="dropdown-item" href="upload_form.php">Upload</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-danger" href="#">Logout</a>
-                            </div>
-                            <div class="join-sign-in" hidden>
-                                <a class="dropdown-item" href="register.php">Join now</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Sign up</a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+    <header style="background: rgb(53, 144, 53);">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand fw-semibold" href="#">
+                    <img src="dist/image/UCC.png" alt="UCC Logo" width="50" height="55" class="me-2">
+                    UCC ReaP
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <button class="btn text-white me-1" type="submit">Join now</button>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="btn btn-outline-light rounded-5">Sign in</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
-    <div class="mt-4">
+    <div class="mt-4 mb-4">
         <div class="container">
             <div class="row">
                 <div class="col-sm-8">
                     <div class="title">
-                        <label class="research-title">
-                            <?php echo $thesisTitle ?>
-                        </label>
+                        <label class="fw-semibold h2"><?php echo $thesisTitle ?></label>
                     </div>
                     <div class="date">
-                        <label class="font-italic text-muted">
-                            <?php echo $thesisDate ?>
-                        </label>
+                        <label class="fst-italic"><?php echo $thesisDate ?></label>
                     </div>
-                    <div class="researchers">
-                        <ul class="list-inline text-muted">
-                            <li class="list-inline-item">
-                                <?php echo '&bull; ' . $thesisAuthor ?>
-                            </li>
+                    <div class="researchers mb-4">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">&bull; <?php echo $thesisAuthor ?> </li>
                         </ul>
                     </div>
-
                     <div class="card p-4 rounded-0 mb-4">
-                        <div class="abstract-title">
-                            <label class="h3 mb-3">ABSTRACT</label>
+                        <div class="abstract-text">
+                            <label class="fw-semibold fs-5 mb-3">ABSTRACT</label>
                         </div>
                         <div class="abstract-body">
                             <?php if ($abstractType == 1) { ?>
@@ -179,53 +145,55 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
                                     <?php echo $abstract ?>
                                 </label>
                             <?php } elseif ($abstractType == 2) { ?>
-                                <img src="<?php echo "webimg/" . $abstract ?>" alt="Image" width="100">
+                                <img src="<?php echo "webimg/" . $abstract ?>" alt="Image" style="max-width: 100%; height: auto;">
                             <?php } ?>
                         </div>
                     </div>
-
+                  
                     <div class="citation text-muted">
-                        <label>Citation:</label>
-                        <ul class="list-inline">
-                            <li class="list-inline-item" id="authors">
-                                <?php
-                                if (strpos($thesisAuthor, ',  ') === false) {
-                                    $authorsForCitation = formatInitials($thesisAuthor);
-                                } else {
-                                    $authorsForCitation = formatAPAAuthors($thesisAuthor);
-                                }
+    <label>Citation:</label> <br>
+    <ul class="list-inline">
+        <li class="list-inline-item" id="authors">
+            <?php
+            if (strpos($thesisAuthor, ',  ') === false) {
+                $authorsForCitation = formatInitials($thesisAuthor);
+            } else {
+                $authorsForCitation = formatAPAAuthors($thesisAuthor);
+            }
+            
+            $publicationYear = date("Y", strtotime($thesisDate));
+            $abstractTitle = $thesisTitle;
+            $websiteURL = "https://www.your-website.com/abstract-page"; // Update this URL
+            
+            // Count authors and format according to APA style
+            
+            $websiteCitation = generateAPAWebsiteCitation($authorsForCitation, $publicationYear, $abstractTitle, $websiteURL);
 
-                                $publicationYear = date("Y", strtotime($thesisDate));
-                                $abstractTitle = $thesisTitle;
-                                $websiteURL = "https://www.your-website.com/abstract-page"; // Update this URL
-                                
-                                // Count authors and format according to APA style
-                                
-                                $websiteCitation = generateAPAWebsiteCitation($authorsForCitation, $publicationYear, $abstractTitle, $websiteURL);
+            echo "<p class='apa-citation'>$websiteCitation</p>";
+            ?>
+        </li>
+    </ul>
+</div>
 
-                                echo "<p class='apa-citation'>$websiteCitation</p>";
-                                ?>
-                            </li>
-                        </ul>
-                    </div>
+
                 </div>
 
                 <hr class="container text-muted">
 
-                <div class="col-sm-4 mt-2">
+                <div class="col-sm-4">
                     <div class="related-studies">
-                        <label class="h3 mb-3">RELATED STUDIES</label>
+                        <label class="text-muted fs-4 mb-3">RELATED STUDIES</label>
                     </div>
                     <?php foreach ($relatedStudiesUi as $relatedStudy) { ?>
-                        <div class="card related-studies-card p-3 rounded-0 mb-4">
-                            <a href=<?php echo "show_page.php?name=" . urldecode($relatedStudy['title']) ?>
-                                class="related-studies-title">
-                                <?php echo $relatedStudy['title'] ?>
-                            </a>
-                            <a href=<?php echo "show_page.php?name=" . urldecode($relatedStudy['title']) ?>
-                                class="related-studies-date font-italic text-muted">
-                                <?php echo date("F j, Y", strtotime($relatedStudy['date'])); ?>
-                            </a>
+                        <div class="card p-1 rounded-0 mb-4">
+                            <div class="card p-3 border-0">
+                                <a href=<?php echo "show_page.php?name=" . urldecode($relatedStudy['title']) ?> class="research-title fw-semibold fs-5">
+                                    <?php echo $relatedStudy['title'] ?>
+                                </a>
+                                <a href=<?php echo "show_page.php?name=" . urldecode($relatedStudy['title']) ?> class="date fst-italic text-muted">
+                                    <?php echo date("F j, Y", strtotime($relatedStudy['date'])); ?>
+                                </a>
+                            </div>
                         </div>
                     <?php } ?>
                 </div>
@@ -235,15 +203,13 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
 
     <footer class="bg-white text-center text-muted border">
         <div class="text-center p-3">
-            <strong>Copyright &copy; 2023-2024. <a href="https://www.ucc-caloocan.edu.ph/"
-                    class="link text-muted">University of Caloocan City</a>.
+            <strong>Copyright &copy; 2023-2024. <a href="https://www.ucc-caloocan.edu.ph/" class="link text-muted">University of Caloocan City</a>.
             </strong> All rights reserved.
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    
 </body>
 
 </html>
