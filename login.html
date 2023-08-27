@@ -42,7 +42,7 @@
                 <button class="btn btn-primary w-100">Login</button>
             </div>
             <div class="register-link text-center">
-                <a href="register.html" class="text-muted">Register here.</a>
+                <a href="register.php" class="text-muted">Register here.</a>
             </div>
         </div>
     </div>
