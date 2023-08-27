@@ -15,7 +15,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="search_engine.php">
                 <img src="dist/image/UCC.png" alt="UCC Logo" width="50" class="mr-2">
                 <span class="full font-weight-bold">UCC Research and Publication Online</span>
             </a>
