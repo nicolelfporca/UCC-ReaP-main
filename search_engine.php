@@ -7,13 +7,14 @@
     <title>UCC REAP</title>
     <link rel="icon" href="dist/image/UCC.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dist/css/font.css">
     <link rel="stylesheet" href="dist/css/search_engine.css">
 </head>
 
 <body>
 
     <div class="dropdown d-flex justify-content-end mt-2">
-        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        <button class="btn dropdown-toggle text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
         </button>
