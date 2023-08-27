@@ -1,21 +1,22 @@
-<?php 
-    require('./includes/config.php');
-    $populateUiDropDown = "SELECT * FROM course";
-    $pdo = Database::connection();
-    $stmt = $pdo->prepare($populateUiDropDown);
-    $stmt->execute();
-    if ($stmt === false) {
-        $errorInfo = $pdo->errorInfo();
-        $errorMsg = "SQL Error: " . $errorInfo[2];
-        echo "<script> alert('" . $errorMsg . "')</script>";
-    } 
-        $datas = $stmt->fetchAll();
-       
-    
+<?php
+require('./includes/config.php');
+$populateUiDropDown = "SELECT * FROM course";
+$pdo = Database::connection();
+$stmt = $pdo->prepare($populateUiDropDown);
+$stmt->execute();
+if ($stmt === false) {
+    $errorInfo = $pdo->errorInfo();
+    $errorMsg = "SQL Error: " . $errorInfo[2];
+    echo "<script> alert('" . $errorMsg . "')</script>";
+}
+$datas = $stmt->fetchAll();
 
-    ?>
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,7 +78,7 @@
                     <div class="col-sm-6">
                         <div class="academic-year mb-3">
                             <label>Academic Year <span class="text-danger">*</span></label>
-                             <input class="form-control" type="text" id="date"> 
+                            <input class="form-control" type="text" id="date">
                         </div>
                     </div>
                 </div>
@@ -86,14 +87,10 @@
                         <div class="course mb-3">
                             <label>Course <span class="text-danger">*</span></label>
                             <select id="course" class="form-control">
-                            <?php  foreach ($datas as $data) {
-                                echo $data['course_id'];
-                            ?>
-                                <option value="<?php echo $data['course_id'] ?>"><?php echo $data['course_name'] ?></option>
-                                <option value="1">BSCS</option>
-                                <option value="2">BSIT</option>
-                                <option value="3">BSIS</option>
-                                <option value="4">BSEMC</option>
+                                <?php foreach ($datas as $data) {
+                                    echo $data['course_id'];
+                                ?>
+                                    <option value="<?php echo $data['course_id'] ?>"><?php echo $data['course_name'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -115,7 +112,7 @@
                 </div>
             </form>
             <div class="register-button mb-3">
-                <button class="btn btn-primary w-100">Create Account</button>
+                <button class="btn btn-primary w-100" onclick="regis()">Create Account</button>
             </div>
             <div class="login-link text-center">
                 <a href="login.php" class="text-muted">Login here.</a>
@@ -128,6 +125,7 @@
     <script src="https://adminlte.io/themes/v3/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(function() {
             $("#date").datepicker({
@@ -135,7 +133,46 @@
             });
         });
 
-        
+        function regis() {
+            let campus = $("#campus").val();
+            let stdno = $("#student_no").val();
+            let fname = $("#f_name").val();
+            let mname = $("#m_name").val();
+            let lname = $("#l_name").val();
+            let acadYear = $("#date").val();
+            let course = $("#course").val();
+            let email = $("#email").val();
+            let pass = $("#pass").val();
+            // console.log(campus,stdno,fname,mname,lname,acadYear,course,email,pass)
+
+            var payload = {
+                campus: campus,
+                stdno: stdno,
+                fname: fname,
+                mname: mname,
+                lname: lname,
+                acadYear: acadYear,
+                course: course,
+                email: email,
+                pass: pass
+            };
+
+            $.ajax({
+                type: "POST",
+                url: 'controllers/registration.php',
+                data: {
+                    payload: JSON.stringify(payload),
+                    setFunction: 'regisToDb'
+                },
+                success: function(response) {
+                    data = JSON.parse(response);
+                    swal.fire(data.title, data.message, data.icon);
+                    setTimeout(function () {
+                            window.location.reload();
+                        }, 2000);
+                }
+            });
+        };
     </script>
 
 </body>

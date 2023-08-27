@@ -117,7 +117,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     echo '<div class="card p-3 rounded-0 mb-4">';
     echo '<div class="card p-3 border-0">';
-    echo '<a href="show_page.php?name=' . urlencode($row['title']) . '" class="research-title fw-semibold fs-5 mb-2">' . $row['title'] . '</a>';
+    echo '<a href="show_page.php?name=' . urldecode($row['title']) . '" class="research-title fw-semibold fs-5 mb-2">' . $row['title'] . '</a>';
     echo '<div class=" text-black mb-2">' . $row['abstract'] . '</div>';
     echo '<div class=" fst-italic text-muted">' . $row['date'] . '</div>';
     echo '</div>';

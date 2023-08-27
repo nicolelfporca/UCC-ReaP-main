@@ -30,17 +30,17 @@ if ($stmt === false) {
     $newKeywordArray = explode(",", $thesisKeyword);
 
     foreach ($newKeywordArray as $keyword) {
-        $sql[] = "keywords LIKE '%" .$keyword. "%'";
-    } 
+        $sql[] = "keywords LIKE '%" . $keyword . "%'";
+    }
     // note dont foreach when you want to handle multiple data in a query
     $relatedStudiesFetch = "SELECT DISTINCT * FROM user WHERE title != '" . $thesisTitle . "' AND (" . implode(" OR ", $sql) . ") AND status = 1";
     // you can echo for checking for query echo $relatedStudiesFetch;
-    $stmt1 = $pdo->prepare($relatedStudiesFetch); 
+    $stmt1 = $pdo->prepare($relatedStudiesFetch);
     $stmt1->execute();
-    $relatedStudiesUi = $stmt1->fetchAll();
 }
 
-function formatInitials($name) {
+function formatInitials($name)
+{
     $parts = explode(' ', $name);
     $formattedName = $parts[0] . ' ';
     for ($i = 1; $i < count($parts); $i++) {
@@ -50,10 +50,11 @@ function formatInitials($name) {
 }
 
 
-function formatAPAAuthors($authors) {
+function formatAPAAuthors($authors)
+{
     $authorList = explode(',  ', $authors);
     $numAuthors = count($authorList);
-    if ($numAuthors === 1 ) {
+    if ($numAuthors === 1) {
         return ($authorList[0]);
     } elseif ($numAuthors === 2) {
         $formattedAuthors = array_map('formatInitials', $authorList);
@@ -67,10 +68,10 @@ function formatAPAAuthors($authors) {
         $formattedAuthors = implode(', ', array_map('formatInitials', $firstSixAuthors)) . ' et al.';
         return $formattedAuthors;
     }
-    
 }
 
-function generateAPAWebsiteCitation($authors, $year, $title, $url) {
+function generateAPAWebsiteCitation($authors, $year, $title, $url)
+{
     $formattedAuthors = formatAPAAuthors($authors);
     $citation = "$formattedAuthors ($year). $title. Retrieved from $url";
     return $citation;
@@ -149,31 +150,31 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url) {
                             <?php } ?>
                         </div>
                     </div>
-                  
-                    <div class="citation text-muted">
-    <label>Citation:</label> <br>
-    <ul class="list-inline">
-        <li class="list-inline-item" id="authors">
-            <?php
-            if (strpos($thesisAuthor, ',  ') === false) {
-                $authorsForCitation = formatInitials($thesisAuthor);
-            } else {
-                $authorsForCitation = formatAPAAuthors($thesisAuthor);
-            }
-            
-            $publicationYear = date("Y", strtotime($thesisDate));
-            $abstractTitle = $thesisTitle;
-            $websiteURL = "https://www.your-website.com/abstract-page"; // Update this URL
-            
-            // Count authors and format according to APA style
-            
-            $websiteCitation = generateAPAWebsiteCitation($authorsForCitation, $publicationYear, $abstractTitle, $websiteURL);
 
-            echo "<p class='apa-citation'>$websiteCitation</p>";
-            ?>
-        </li>
-    </ul>
-</div>
+                    <div class="citation text-muted">
+                        <label>Citation:</label> <br>
+                        <ul class="list-inline">
+                            <li class="list-inline-item" id="authors">
+                                <?php
+                                if (strpos($thesisAuthor, ',  ') === false) {
+                                    $authorsForCitation = formatInitials($thesisAuthor);
+                                } else {
+                                    $authorsForCitation = formatAPAAuthors($thesisAuthor);
+                                }
+
+                                $publicationYear = date("Y", strtotime($thesisDate));
+                                $abstractTitle = $thesisTitle;
+                                $websiteURL = "https://www.your-website.com/abstract-page"; // Update this URL
+
+                                // Count authors and format according to APA style
+
+                                $websiteCitation = generateAPAWebsiteCitation($authorsForCitation, $publicationYear, $abstractTitle, $websiteURL);
+
+                                echo "<p class='apa-citation'>$websiteCitation</p>";
+                                ?>
+                            </li>
+                        </ul>
+                    </div>
 
 
                 </div>
@@ -184,14 +185,14 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url) {
                     <div class="related-studies">
                         <label class="text-muted fs-4 mb-3">RELATED STUDIES</label>
                     </div>
-                    <?php foreach ($relatedStudiesUi as $relatedStudy) { ?>
+                    <?php while ($row = $stmt1->fetch(PDO::FETCH_ASSOC)) { ?>
                         <div class="card p-1 rounded-0 mb-4">
                             <div class="card p-3 border-0">
-                                <a href=<?php echo "show_page.php?name=" . urldecode($relatedStudy['title']) ?> class="research-title fw-semibold fs-5">
-                                    <?php echo $relatedStudy['title'] ?>
+                                <a href=<?php echo "show_page.php?name=" . urlencode($row['title']); ?> class="research-title fw-semibold fs-5">
+                                    <?php echo $row['title']; ?>
                                 </a>
-                                <a href=<?php echo "show_page.php?name=" . urldecode($relatedStudy['title']) ?> class="date fst-italic text-muted">
-                                    <?php echo date("F j, Y", strtotime($relatedStudy['date'])); ?>
+                                <a href=<?php echo "show_page.php?name=" . urlencode($row['title']); ?> class="date fst-italic text-muted">
+                                    <?php echo date("F j, Y", strtotime($row['date'])); ?>
                                 </a>
                             </div>
                         </div>
@@ -209,7 +210,7 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url) {
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    
+
 </body>
 
 </html>

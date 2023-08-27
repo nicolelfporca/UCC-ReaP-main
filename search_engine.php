@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- helloworld -->
 <html lang="en">
 
 <head>
@@ -7,21 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UCC REAP</title>
     <link rel="icon" href="dist/image/UCC.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="dist/css/all.css">
-    <link rel="stylesheet" href="dist/css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dist/css/font.css">
+    <link rel="stylesheet" href="dist/css/search_engine.css">
 </head>
 
 <body>
 
+    <div class="dropdown d-flex justify-content-end mt-2">
+        <button class="btn dropdown-toggle text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
+        </button>
+        <div class="dropdown-menu border-0 rounded-0 text-center" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="upload_form.php">Upload</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-danger" href="#">Logout</a>
+        </div>
+    </div>
+
     <div class="s006">
-         <form action="links_page.php" method="GET">
+        <form action="links_page.php" method="GET">
             <fieldset>
-                <div class="ucc-logo mb-2">
-                    <img src="dist/image/UCC.png" alt="UCC Logo" width="160" height="165"
-                        class="rounded mx-auto d-block">
+                <div class="ucc-logo mb-3">
+                    <img src="dist/image/UCC.png" alt="UCC Logo" width="160" class="rounded mx-auto d-block">
                 </div>
-                <div class="reap text-white text-center mb-4" style="font-size: 2rem;">
+                <div class="reap text-center text-white mb-4 h1">
                     <b>UCC Research and Publication Online</b>
                 </div>
                 <div class="inner-form">
@@ -40,18 +52,24 @@
         </form>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
     <script src="dist/js/script.js"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+    <script src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
+         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
         gtag('config', 'UA-23581568-13');
     </script>
-    <script defer
+    <script
         src="https://static.cloudflareinsights.com/beacon.min.js/v8b253dfea2ab4077af8c6f58422dfbfd1689876627854"></script>
 </body>
 
 </html>
+
+<script>
+</script>
+</head>
