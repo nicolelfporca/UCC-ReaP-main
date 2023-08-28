@@ -1,5 +1,5 @@
 <?php
-require("./includes/config.php");
+require_once("./includes/config.php");
 $title = $_GET['name'];
 
 $populateUiShowPage = "SELECT * FROM user WHERE title = :title";
@@ -116,6 +116,27 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
                             <a href="#" class="btn btn-outline-light rounded-5">Sign in</a>
                         </li>
                     </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
+                            </a>
+                            <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                                <div class="for-user">
+                                    <a class="dropdown-item" href="upload_form.php">Upload</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger" href="#">Logout</a>
+                                </div>
+                                <div class="join-sign-in" hidden>
+                                    <a class="dropdown-item" href="register.php">Join now</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Sign up</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -144,6 +165,7 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
                             <?php if ($abstractType == 1) { ?>
                                 <label>
                                     <?php echo $abstract ?>
+                                    <div> <a class="text-muted d-flex justify-content-center" href="">See more.</a></div>
                                 </label>
                             <?php } elseif ($abstractType == 2) { ?>
                                 <img src="<?php echo "webimg/" . $abstract ?>" alt="Image" style="max-width: 100%; height: auto;">
@@ -210,6 +232,9 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
 
 </body>
 

@@ -106,7 +106,7 @@ $datas = $stmt->fetchAll();
                     <div class="col-sm-12">
                         <div class="email mb-3">
                             <label>Password <span class="text-danger">*</span></label>
-                            <input type="password" id="pass" class="form-control" placeholder="Enter email">
+                            <input type="password" id="pass" class="form-control" placeholder="Enter password">
                         </div>
                     </div>
                 </div>
