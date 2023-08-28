@@ -89,60 +89,103 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UCC REAP</title>
     <link rel="icon" href="dist/image/UCC.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dist/font.css">
     <link rel="stylesheet" href="dist/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="dist/css/links_page.css">
 </head>
 
 <body class="bg-light">
 
-    <header style="background: rgb(53, 144, 53);">
-        <nav class="navbar navbar-expand-lg navbar-dark">
-            <div class="container">
-                <a class="navbar-brand fw-semibold" href="#">
-                    <img src="dist/image/UCC.png" alt="UCC Logo" width="50" height="55" class="me-2">
-                    UCC ReaP
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <button class="btn text-white me-1" type="submit">Join now</button>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="btn btn-outline-light rounded-5">Sign in</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
-                            </a>
-                            <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
-                                <div class="for-user">
-                                    <a class="dropdown-item" href="upload_form.php">Upload</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="#">Logout</a>
-                                </div>
-                                <div class="join-sign-in" hidden>
-                                    <a class="dropdown-item" href="register.php">Join now</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Sign up</a>
-                                </div>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="search_engine.php">
+                <img src="dist/image/UCC.png" alt="UCC Logo" width="50" class="mr-2">
+                <span class="full">UCC ReaP</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item d-flex">
+                        <div class="input-group search-input">
+                            <input class="form-control mr-1 rounded-0" type="search" placeholder="Search" aria-label="Search" id="search">
+                            <span class="input-group-append">
+                                <button class="btn search-btn text-white" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
+                        </a>
+                        <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                            <!-- ito ibahin sa login -->
+                            <div class="for-user" hidden>
+                                <a class="dropdown-item" href="upload_form.php">Upload</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="#">Logout</a>
                             </div>
-                        </li>
-                    </ul>
+                            <div class="join-sign-in">
+                                <a class="dropdown-item" href="register.php">Join now</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">Sign up</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- sign in modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body p-5">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="logo text-center mb-4">
+                        <img src="dist/image/UCC.png" alt="" width="100">
+                    </div>
+                    <form>
+                        <div class="email mb-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="enevelope">
+                                <span class="input-group-text" id="envelope"><i class="far fa-envelope"></i></span>
+                            </div>
+                        </div>
+                        <div class="password mb-3">
+                            <div class="input-group">
+                                <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="lock">
+                                <span class="input-group-text" id="lock"><i class="fa-solid fa-lock"></i></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="forgot-password mb-3">
+                        <a href="" class="text-muted">Forgot Password?</a>
+                    </div>
+                    <div class="login-button mb-3">
+                        <button class="btn btn-primary w-100">Login</button>
+                    </div>
+                    <div class="register-link text-center">
+                        <a href="register.php" class="text-muted">Register here.</a>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </div>
 
-    <div class="mt-4 mb-4">
+    <div class="mt-4">
         <div class="container">
             <div class="row">
                 <div class="col-sm-8">
@@ -165,10 +208,11 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
                             <?php if ($abstractType == 1) { ?>
                                 <label>
                                     <?php echo $abstract ?>
-                                    <div> <a class="text-muted d-flex justify-content-center" href="">See more.</a></div>
+                                    <div> <a class="text-muted d-flex justify-content-center" href="" data-toggle="modal" data-target="#exampleModalCenter">See more.</a></div>
                                 </label>
                             <?php } elseif ($abstractType == 2) { ?>
                                 <img src="<?php echo "webimg/" . $abstract ?>" alt="Image" style="max-width: 100%; height: auto;">
+                                <div> <a class="text-muted d-flex justify-content-center" href="" data-toggle="modal" data-target="#exampleModalCenter">See more.</a></div>
                             <?php } ?>
                         </div>
                     </div>
@@ -231,11 +275,10 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </body>
 
 </html>

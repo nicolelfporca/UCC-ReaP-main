@@ -22,12 +22,9 @@ $datas = $stmt->fetchAll();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UCC REAP</title>
     <link rel="icon" href="dist/image/UCC.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dist/css/font.css">
     <link rel="stylesheet" href="dist/css/all.css">
-    <link rel="stylesheet" href="dist/css/login-register.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 </head>
 
 <body class="bg-light">
@@ -56,29 +53,29 @@ $datas = $stmt->fetchAll();
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
+                        <div class="academic-year mb-3">
+                            <label>Academic Year <span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" id="date" placeholder="Enter academic year">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
                         <div class="first-name mb-3">
                             <label>First Name <span class="text-danger">*</span></label>
                             <input type="text" id="f_name" class="form-control" placeholder="Enter first name">
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="second-name mb-3">
                             <label>Middle Name <span class="text-danger">*</span></label>
                             <input type="text" id="m_name" class="form-control" placeholder="Enter second name">
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="first-name mb-3">
                             <label>Last Name <span class="text-danger">*</span></label>
                             <input type="text" id="l_name" class="form-control" placeholder="Enter last name">
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="academic-year mb-3">
-                            <label>Academic Year <span class="text-danger">*</span></label>
-                            <input class="form-control" type="text" id="date">
                         </div>
                     </div>
                 </div>
@@ -120,11 +117,10 @@ $datas = $stmt->fetchAll();
         </div>
     </div>
 
-    <script src="https://adminlte.io/themes/v3/plugins/jquery/jquery.min.js"></script>
-    <script src="https://adminlte.io/themes/v3/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="https://adminlte.io/themes/v3/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(function() {
@@ -167,14 +163,13 @@ $datas = $stmt->fetchAll();
                 success: function(response) {
                     data = JSON.parse(response);
                     swal.fire(data.title, data.message, data.icon);
-                    setTimeout(function () {
-                            window.location.reload();
-                        }, 2000);
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 2000);
                 }
             });
         };
     </script>
-
 </body>
 
 </html>
