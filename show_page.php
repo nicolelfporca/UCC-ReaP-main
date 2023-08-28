@@ -128,17 +128,18 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
                             <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
                         </a>
                         <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
-                            <div class="for-user">
+                            <div class="for-user" hidden>
                                 <a class="dropdown-item" href="upload_form.php">Upload</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item text-danger" href="#">Logout</a>
                             </div>
-                            <div class="join-sign-in" hidden>
+                            <div class="join-sign-in">
                                 <a class="dropdown-item" href="register.php">Join now</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Sign up</a>
+                                <a class="dropdown-item" href="#" data-toggle="modal"
+                                    data-target="#exampleModalCenter">Sign up</a>
                             </div>
                         </div>
                     </li>
@@ -146,6 +147,48 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
             </div>
         </div>
     </nav>
+
+    <!-- sign in modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body p-5">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="logo text-center mb-4">
+                        <img src="dist/image/UCC.png" alt="" width="100">
+                    </div>
+                    <form>
+                        <div class="email mb-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Email" aria-label="Email"
+                                    aria-describedby="enevelope">
+                                <span class="input-group-text" id="envelope"><i class="far fa-envelope"></i></span>
+                            </div>
+                        </div>
+                        <div class="password mb-3">
+                            <div class="input-group">
+                                <input type="password" class="form-control" placeholder="Password" aria-label="Password"
+                                    aria-describedby="lock">
+                                <span class="input-group-text" id="lock"><i class="fa-solid fa-lock"></i></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="forgot-password mb-3">
+                        <a href="" class="text-muted">Forgot Password?</a>
+                    </div>
+                    <div class="login-button mb-3">
+                        <button class="btn btn-primary w-100">Login</button>
+                    </div>
+                    <div class="register-link text-center">
+                        <a href="register.php" class="text-muted">Register here.</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="mt-4">
         <div class="container">

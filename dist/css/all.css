@@ -13,7 +13,9 @@
     box-shadow: none;
 }
 
-.card-container {
+.card-container,
+.login-card,
+.register-card {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -49,6 +51,14 @@ hr {
     text-transform: uppercase;
 }
 
+.login-card {
+    width: 24rem;
+}
+
+.register-card {
+    width: 50rem;
+}
+
 @media screen and (max-width:600px) {
     .full {
         display: none;
@@ -77,5 +87,10 @@ hr {
 
     hr {
         display: block;
+    }
+
+    .register-card {
+        width: 24rem;
+        margin: 2rem 0 2rem;
     }
 }
