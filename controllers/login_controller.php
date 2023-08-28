@@ -47,6 +47,8 @@ function checkUserDb($request = null){
            $_SESSION['course'] = $data['course_id'];
            $_SESSION['email'] = $data['email'];
            $_SESSION['stdno'] = $data['student_no'];
+           $_SESSION['id'] = $data['prof_id'];
+           $_SESSION['ac_year'] = $data['ac_year'];
         }
         
 

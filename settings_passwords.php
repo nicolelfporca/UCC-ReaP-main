@@ -1,3 +1,32 @@
+<?php 
+session_start();
+require('./includes/config.php');
+
+if (!isset($_SESSION['stdno'])) {
+    header('Location: search_engine.php');
+    exit;
+}
+$course = $_SESSION['course'];
+
+$courseQuery = "SELECT user_profile.*, course.*
+FROM user_profile
+JOIN course ON user_profile.course_id = course.course_id
+WHERE user_profile.course_id = $course  AND course.course_id = $course";
+$pdo = Database::connection();
+$stmt1 = $pdo->prepare($courseQuery);
+$stmt1->execute();
+if ($stmt1 === false) {
+    $errorInfo = $pdo->errorInfo();
+    $errorMsg = "SQL Error: " . $errorInfo[2];
+    echo "<script> alert('" . $errorMsg . "')</script>";
+}
+$datas1 = $stmt1->fetchAll();
+
+foreach($datas1 as $data1){
+    $courseId = $data1['course_id'];
+    $courseName = $data1['course_name'];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,27 +78,22 @@
                         <img src="dist/image/unknown.jpg" alt="Profile Picture" width="150" class="user-profile">
                     </div>
                     <div class="user-name mb-2 text-center">
-                        <label class="h4 font-weight-normal">Nicollette Loanne F. Porca</label>
+                        <label class="h4 font-weight-normal"><?php echo $_SESSION['fname']. ' ' .$_SESSION['lname'] ?></label>
                     </div>
-                    <div class="upload-photo text-center">
+                    <!-- <div class="upload-photo text-center">
                         <label class="btn btn-secondary">
-                            <input type="file" hidden>
+                            <input type="file" name="abstractPic" hidden>
                             Upload Photo
                         </label>
-                    </div>
+                    </div> -->
                     <hr>
                     <div class="student-no mb-3">
                         <label class="font-weight-bold m-0">Student No.</label> <br>
-                        <label class="m-0">20200108-M</label>
+                        <label class="m-0"><?php echo $_SESSION['stdno'] ?></label>
                     </div>
                     <div class="course mb-3">
                         <label class="font-weight-bold m-0">Course</label> <br>
-                        <label class="m-0">Bachelor of Science in Computer Science</label>
-                    </div>
-                    <div class="year-section">
-                        <label class="font-weight-bold m-0">Year & Section</label> <br>
-                        <label class="m-0">4TH - </label>
-                        <label class="m-0">A</label>
+                        <label class="m-0"><?php echo $courseName ?></label>
                     </div>
                 </div>
             </div>

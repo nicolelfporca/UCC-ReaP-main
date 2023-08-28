@@ -1,8 +1,11 @@
 <?php
+session_start();
 require_once("../includes/config.php");
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
+
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payload'])) {
@@ -76,6 +79,7 @@ function addKeywords($request = null)
 function uploadToDb($request = null)
 {
     $msg = array();
+    $userid = $_SESSION['id'];
 
     $title = $request->titleName;
     $thesisDate = $request->thesisDate;
@@ -143,7 +147,7 @@ function uploadToDb($request = null)
                 // Image uploaded successfully
                 // ... Your existing database insertion logic ...
                 $pdo = Database::connection();
-                $sql = 'INSERT INTO user (title,author,date,keywords,abstract,type) VALUES(:title, :author, :date, :keywords, :abstract, :type)';
+                $sql = 'INSERT INTO user (title,author,date,keywords,abstract,uploaded_by,type) VALUES(:title, :author, :date, :keywords, :abstract, :userid, :type)';
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute(
                     array(
@@ -152,6 +156,7 @@ function uploadToDb($request = null)
                         ':date' => $thesisDate,
                         ':keywords' => $commaSeparatedStringKeyword,
                         ':abstract' => $newImageName,
+                        ':userid' => $userid,
                         ':type' => $type
                     )
                 );
@@ -183,7 +188,7 @@ function uploadToDb($request = null)
             $abstractText = addcslashes($abstractText, '\'\\');
             // code for abstract text here
             $pdo = Database::connection();
-            $sql = 'INSERT INTO user (title,author,date,keywords,abstract,type) VALUES(:title, :author, :date, :keywords, :abstract, :type)';
+            $sql = 'INSERT INTO user (title,author,date,keywords,abstract,uploaded_by,type) VALUES(:title, :author, :date, :keywords, :abstract, :userid, :type)';
             $stmt = $pdo->prepare($sql);
             $stmt->execute(
                 array(
@@ -192,6 +197,7 @@ function uploadToDb($request = null)
                     ':date' => $thesisDate,
                     ':keywords' => $commaSeparatedStringKeyword,
                     ':abstract' => $abstractText,
+                    ':userid' => $userid,
                     ':type' => $type
                 )
             );
@@ -224,5 +230,8 @@ function uploadToDb($request = null)
 
 
     echo json_encode($msg);
-}
-;
+};
+
+function updateUserProfile($request = null){
+    $msg = array();
+};
