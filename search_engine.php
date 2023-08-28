@@ -1,3 +1,9 @@
+<?php 
+session_start();
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(0);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,18 +25,21 @@
         </button>
         <div class="dropdown-menu border-0 rounded-0 text-center" aria-labelledby="dropdownMenuButton">
             <!-- ito ibahin pag naka log in na -->
-            <div class="for-user" hidden>
+            <?php if ($_SESSION['stdno'] != "") { ?>
+            <div class="for-user">
                 <a class="dropdown-item" href="upload_form.php">Upload</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item text-danger" href="#">Logout</a>
+                <a class="dropdown-item text-danger" href="logout.php">Logout</a>
             </div>
+            <?php } else { ?>
             <div class="join-sign-in">
                 <a class="dropdown-item" href="register.php">Join now</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">Sign up</a>
             </div>
+            <?php } ?>
         </div>
     </div>
 
@@ -49,24 +58,21 @@
                     <form>
                         <div class="email mb-3">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Email" aria-label="Email"
+                                <input type="text" class="form-control" id="username" placeholder="Username" aria-label="Email"
                                     aria-describedby="enevelope">
                                 <span class="input-group-text" id="envelope"><i class="far fa-envelope"></i></span>
                             </div>
                         </div>
                         <div class="password mb-3">
                             <div class="input-group">
-                                <input type="password" class="form-control" placeholder="Password" aria-label="Password"
+                                <input type="password" class="form-control" id="pass" placeholder="Password" aria-label="Password"
                                     aria-describedby="lock">
                                 <span class="input-group-text" id="lock"><i class="fa-solid fa-lock"></i></span>
                             </div>
                         </div>
                     </form>
-                    <div class="forgot-password mb-3">
-                        <a href="" class="text-muted">Forgot Password?</a>
-                    </div>
                     <div class="login-button mb-3">
-                        <button class="btn btn-primary w-100">Login</button>
+                        <button class="btn btn-primary w-100" onclick="login()">Login</button>
                     </div>
                     <div class="register-link text-center">
                         <a href="register.php" class="text-muted">Register here.</a>
@@ -105,6 +111,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
     <script src="dist/js/script.js"></script>
     <script src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -114,6 +122,33 @@
         gtag('js', new Date());
 
         gtag('config', 'UA-23581568-13');
+
+        function login() {
+            var username = $("#username").val();
+            var pass = $("#pass").val();
+
+            var payload = {
+                username: username,
+                pass: pass
+            };
+
+            $.ajax({
+                type: "POST",
+                url: 'controllers/login_controller.php',
+                data: {
+                    payload: JSON.stringify(payload),
+                    setFunction: 'checkUserDb'
+                },
+                success: function(response) {
+                    data = JSON.parse(response);
+                    swal.fire(data.title, data.message, data.icon);
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 2000);
+                }
+            });
+
+        };
     </script>
     <script src="https://static.cloudflareinsights.com/beacon.min.js/v8b253dfea2ab4077af8c6f58422dfbfd1689876627854"></script>
 </body>

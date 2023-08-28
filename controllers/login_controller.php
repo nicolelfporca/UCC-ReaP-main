@@ -40,6 +40,13 @@ function checkUserDb($request = null){
     }else{
         foreach($datas as $data){
            $role = $data['role'];
+           $_SESSION['campus'] = $data['campus'];
+           $_SESSION['fname'] = $data['first_name'];
+           $_SESSION['mname'] = $data['middle_name'];
+           $_SESSION['lname'] = $data['last_name'];
+           $_SESSION['course'] = $data['course_id'];
+           $_SESSION['email'] = $data['email'];
+           $_SESSION['stdno'] = $data['student_no'];
         }
         
 

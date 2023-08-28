@@ -1,5 +1,9 @@
 <?php
 include './includes/config.php';
+session_start();
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(0);
 
 
 $pdo = Database::connection();
@@ -94,18 +98,21 @@ $stmt->execute();
                             </a>
                             <div class="dropdown-menu text-center rounded-0" aria-labelledby="navbarDropdown">
                                 <!-- ito ibahin pag naka log in na -->
-                                <div class="for-user" hidden>
-                                    <a class="dropdown-item" href="upload_form.php">Upload</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="#">Logout</a>
-                                </div>
-                                <div class="join-sign-in">
-                                    <a class="dropdown-item" href="register.php">Join now</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">Sign up</a>
-                                </div>
+                                <?php if ($_SESSION['stdno'] != "") { ?>
+                                    <div class="for-user">
+                                        <a class="dropdown-item" href="upload_form.php">Upload</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item text-danger" href="logout.php">Logout</a>
+                                    </div>
+                                <?php } else { ?>
+                                    <div class="join-sign-in">
+                                        <a class="dropdown-item" href="register.php">Join now</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">Sign up</a>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </li>
                     </ul>
@@ -128,22 +135,19 @@ $stmt->execute();
                     <form>
                         <div class="email mb-3">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="enevelope">
+                                <input type="text" class="form-control" id="username" placeholder="Username" aria-label="Email" aria-describedby="enevelope">
                                 <span class="input-group-text" id="envelope"><i class="far fa-envelope"></i></span>
                             </div>
                         </div>
                         <div class="password mb-3">
                             <div class="input-group">
-                                <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="lock">
+                                <input type="password" class="form-control" id="pass" placeholder="Password" aria-label="Password" aria-describedby="lock">
                                 <span class="input-group-text" id="lock"><i class="fa-solid fa-lock"></i></span>
                             </div>
                         </div>
                     </form>
-                    <div class="forgot-password mb-3">
-                        <a href="" class="text-muted">Forgot Password?</a>
-                    </div>
                     <div class="login-button mb-3">
-                        <button class="btn btn-primary w-100">Login</button>
+                        <button class="btn btn-primary w-100" onclick="login()">Login</button>
                     </div>
                     <div class="register-link text-center">
                         <a href="register.php" class="text-muted">Register here.</a>
@@ -166,7 +170,7 @@ $stmt->execute();
                 echo '<div class="card p-3 rounded-0 mb-4">';
                 echo '<div class="card p-3 border-0">';
                 echo '<a href="show_page.php?name=' . urldecode($row['title']) . '" class="research-title fw-semibold fs-5 mb-2">' . $row['title'] . '</a>';
-                echo '<div class=" text-black mb-2">' . $row['abstract'] . '</div>';
+                echo '<div class=" text-black mb-2">' . substr($row['abstract'], 0, 20) . "'...'" . '</div>';
                 echo '<div class=" fst-italic text-muted">' . $row['date'] . '</div>';
                 echo '</div>';
                 echo '</div>';
@@ -189,6 +193,7 @@ $stmt->execute();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(document).ready(function() {
@@ -215,6 +220,33 @@ $stmt->execute();
                 }
             }
         });
+
+        function login() {
+            var username = $("#username").val();
+            var pass = $("#pass").val();
+
+            var payload = {
+                username: username,
+                pass: pass
+            };
+
+            $.ajax({
+                type: "POST",
+                url: 'controllers/login_controller.php',
+                data: {
+                    payload: JSON.stringify(payload),
+                    setFunction: 'checkUserDb'
+                },
+                success: function(response) {
+                    data = JSON.parse(response);
+                    swal.fire(data.title, data.message, data.icon);
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 2000);
+                }
+            });
+
+        };
     </script>
 
 

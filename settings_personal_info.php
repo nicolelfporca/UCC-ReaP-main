@@ -33,7 +33,7 @@
                         <a class="nav-link ml-2 active" href="settings_personal_info.php">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ml-2" href="#">Logout</a>
+                        <a class="nav-link ml-2" href="logout.php">Logout</a>
                     </li>
                 </ul>
             </div>

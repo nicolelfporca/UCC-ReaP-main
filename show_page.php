@@ -1,6 +1,11 @@
 <?php
+session_start();
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(0);
 require_once("./includes/config.php");
 $title = $_GET['name'];
+// echo $_SESSION['stdno'];
 
 $populateUiShowPage = "SELECT * FROM user WHERE title = :title";
 $pdo = Database::connection();
@@ -93,6 +98,12 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
     <link rel="stylesheet" href="dist/font.css">
     <link rel="stylesheet" href="dist/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .blur-image {
+            filter: blur(15px);
+            /* Adjust blur intensity */
+        }
+    </style>
 </head>
 
 <body class="bg-light">
@@ -108,18 +119,6 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li class="nav-item d-flex">
-                        <div class="input-group search-input">
-                            <input class="form-control mr-1 rounded-0" type="search" placeholder="Search" aria-label="Search" id="search">
-                            <span class="input-group-append">
-                                <button class="btn search-btn text-white" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </li>
-                </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -127,18 +126,21 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
                         </a>
                         <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
                             <!-- ito ibahin sa login -->
-                            <div class="for-user" hidden>
-                                <a class="dropdown-item" href="upload_form.php">Upload</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-danger" href="#">Logout</a>
-                            </div>
-                            <div class="join-sign-in">
-                                <a class="dropdown-item" href="register.php">Join now</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">Sign up</a>
-                            </div>
+                            <?php if ($_SESSION['stdno'] != "") { ?>
+                                <div class="for-user">
+                                    <a class="dropdown-item" href="upload_form.php">Upload</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger" href="logout.php">Logout</a>
+                                </div>
+                            <?php } else { ?>
+                                <div class="join-sign-in">
+                                    <a class="dropdown-item" href="register.php">Join now</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">Sign up</a>
+                                </div>
+                            <?php } ?>
                         </div>
                     </li>
                 </ul>
@@ -160,22 +162,19 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
                     <form>
                         <div class="email mb-3">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="enevelope">
+                                <input type="text" class="form-control" id="username" placeholder="Username" aria-label="Email" aria-describedby="enevelope">
                                 <span class="input-group-text" id="envelope"><i class="far fa-envelope"></i></span>
                             </div>
                         </div>
                         <div class="password mb-3">
                             <div class="input-group">
-                                <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="lock">
+                                <input type="password" class="form-control" id="pass" placeholder="Password" aria-label="Password" aria-describedby="lock">
                                 <span class="input-group-text" id="lock"><i class="fa-solid fa-lock"></i></span>
                             </div>
                         </div>
                     </form>
-                    <div class="forgot-password mb-3">
-                        <a href="" class="text-muted">Forgot Password?</a>
-                    </div>
                     <div class="login-button mb-3">
-                        <button class="btn btn-primary w-100">Login</button>
+                        <button class="btn btn-primary w-100" onclick="login()">Login</button>
                     </div>
                     <div class="register-link text-center">
                         <a href="register.php" class="text-muted">Register here.</a>
@@ -207,13 +206,19 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
                         <div class="abstract-body">
                             <?php if ($abstractType == 1) { ?>
                                 <label>
-                                    <?php echo $abstract ?>
-                                    <div> <a class="text-muted d-flex justify-content-center" href="" data-toggle="modal" data-target="#exampleModalCenter">See more.</a></div>
+                                    <?php echo $abstract = $_SESSION['stdno'] == "" ?  substr($abstract, 0, 100) . "...." : $abstract ?>
+                                    <?php if ($_SESSION['stdno'] == "") { ?>
+                                        <div> <a class="text-muted d-flex justify-content-center" href="" data-toggle="modal" data-target="#exampleModalCenter">See more.</a></div>
+                                    <?php } ?>
                                 </label>
-                            <?php } elseif ($abstractType == 2) { ?>
-                                <img src="<?php echo "webimg/" . $abstract ?>" alt="Image" style="max-width: 100%; height: auto;">
-                                <div> <a class="text-muted d-flex justify-content-center" href="" data-toggle="modal" data-target="#exampleModalCenter">See more.</a></div>
-                            <?php } ?>
+                                <?php } elseif ($abstractType == 2) {
+                                if ($_SESSION['stdno'] == "") { ?>
+                                    <img src="<?php echo "webimg/" . $abstract ?>" alt="Image" style="max-width: 100%; height: auto;" class="blur-image">
+                                    <div> <a class="text-muted d-flex justify-content-center" href="" data-toggle="modal" data-target="#exampleModalCenter">See more.</a></div>
+                                <?php } else { ?>
+                                    <img src="<?php echo "webimg/" . $abstract ?>" alt="Image" style="max-width: 100%; height: auto;">
+                            <?php  }
+                            } ?>
                         </div>
                     </div>
 
@@ -279,6 +284,35 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+         function login() {
+            var username = $("#username").val();
+            var pass = $("#pass").val();
+
+            var payload = {
+                username: username,
+                pass: pass
+            };
+
+            $.ajax({
+                type: "POST",
+                url: 'controllers/login_controller.php',
+                data: {
+                    payload: JSON.stringify(payload),
+                    setFunction: 'checkUserDb'
+                },
+                success: function(response) {
+                    data = JSON.parse(response);
+                    swal.fire(data.title, data.message, data.icon);
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 2000);
+                }
+            });
+
+        };
+    </script>
 </body>
 
 </html>
