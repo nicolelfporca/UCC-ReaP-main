@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
@@ -21,31 +21,34 @@ error_reporting(0);
 <body>
     <div class="dropdown d-flex justify-content-end mt-2">
         <button class="btn dropdown-toggle text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
+            <?php if ($_SESSION['photo'] == "") { ?>
+                <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
+            <?php  } else { ?>
+                <img src="<?php echo "webimg/" . $_SESSION['photo'] ?>" alt="User Profile" width="50" class="user-profile">
+            <?php } ?>
         </button>
         <div class="dropdown-menu border-0 rounded-0 text-center" aria-labelledby="dropdownMenuButton">
             <!-- ito ibahin pag naka log in na -->
             <?php if ($_SESSION['stdno'] != "") { ?>
-            <div class="for-user">
-                <a class="dropdown-item" href="upload_form.php">Upload</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item text-danger" href="logout.php">Logout</a>
-            </div>
+                <div class="for-user">
+                    <a class="dropdown-item" href="upload_form.php">Upload</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger" href="logout.php">Logout</a>
+                </div>
             <?php } else { ?>
-            <div class="join-sign-in">
-                <a class="dropdown-item" href="register.php">Join now</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">Sign up</a>
-            </div>
+                <div class="join-sign-in">
+                    <a class="dropdown-item" href="register.php">Join now</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">Sign up</a>
+                </div>
             <?php } ?>
         </div>
     </div>
 
     <!-- sign in modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body p-5">
@@ -58,15 +61,13 @@ error_reporting(0);
                     <form>
                         <div class="email mb-3">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="username" placeholder="Username" aria-label="Email"
-                                    aria-describedby="enevelope">
+                                <input type="text" class="form-control" id="username" placeholder="Username" aria-label="Email" aria-describedby="enevelope">
                                 <span class="input-group-text" id="envelope"><i class="far fa-envelope"></i></span>
                             </div>
                         </div>
                         <div class="password mb-3">
                             <div class="input-group">
-                                <input type="password" class="form-control" id="pass" placeholder="Password" aria-label="Password"
-                                    aria-describedby="lock">
+                                <input type="password" class="form-control" id="pass" placeholder="Password" aria-label="Password" aria-describedby="lock">
                                 <span class="input-group-text" id="lock"><i class="fa-solid fa-lock"></i></span>
                             </div>
                         </div>
@@ -81,7 +82,7 @@ error_reporting(0);
             </div>
         </div>
     </div>
-    
+
     <div class="s006">
         <form action="links_page.php" method="GET">
             <fieldset>
@@ -142,9 +143,9 @@ error_reporting(0);
                 success: function(response) {
                     data = JSON.parse(response);
                     swal.fire(data.title, data.message, data.icon);
-                        setTimeout(function() {
-                            window.location.reload();
-                        }, 2000);
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 2000);
                 }
             });
 

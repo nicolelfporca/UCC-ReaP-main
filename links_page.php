@@ -94,7 +94,11 @@ $stmt->execute();
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
+                                <?php if ($_SESSION['photo'] == "") { ?>
+                                    <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
+                                <?php  } else { ?>
+                                    <img src="<?php echo "webimg/" . $_SESSION['photo'] ?>" alt="User Profile" width="50" class="user-profile">
+                                <?php } ?>
                             </a>
                             <div class="dropdown-menu text-center rounded-0" aria-labelledby="navbarDropdown">
                                 <!-- ito ibahin pag naka log in na -->

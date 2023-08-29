@@ -49,9 +49,9 @@ function checkUserDb($request = null){
            $_SESSION['stdno'] = $data['student_no'];
            $_SESSION['id'] = $data['prof_id'];
            $_SESSION['ac_year'] = $data['ac_year'];
+           $_SESSION['log_id'] = $data['log_id'];
+           $_SESSION['photo'] = $data['photo'];
         }
-        
-
         $msg['title'] = "Successful";
         $msg['message'] = "Welcome";
         $msg['icon'] = "success";

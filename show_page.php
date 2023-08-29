@@ -122,7 +122,11 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
+                            <?php if ($_SESSION['photo'] == "") { ?>
+                                <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
+                            <?php  } else { ?>
+                                <img src="<?php echo "webimg/" . $_SESSION['photo'] ?>" alt="User Profile" width="50" class="user-profile">
+                            <?php } ?>
                         </a>
                         <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
                             <!-- ito ibahin sa login -->
@@ -286,7 +290,7 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-         function login() {
+        function login() {
             var username = $("#username").val();
             var pass = $("#pass").val();
 

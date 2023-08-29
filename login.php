@@ -76,6 +76,10 @@
                         setTimeout(function() {
                             window.location.href = "search_engine.php"
                         }, 2000);
+                    }else{
+                        setTimeout(function() {
+                            window.location.href = "admin_approve_abstract.php"
+                        }, 2000);
                     }
 
                 }

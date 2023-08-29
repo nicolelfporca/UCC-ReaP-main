@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 require('./includes/config.php');
 
@@ -22,7 +22,7 @@ if ($stmt1 === false) {
 }
 $datas1 = $stmt1->fetchAll();
 
-foreach($datas1 as $data1){
+foreach ($datas1 as $data1) {
     $courseId = $data1['course_id'];
     $courseName = $data1['course_name'];
 }
@@ -48,8 +48,7 @@ foreach($datas1 as $data1){
                 <img src="dist/image/UCC.png" alt="UCC Logo" width="50" class="mr-2">
                 <span class="full">UCC Research and Publication Online</span>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -75,10 +74,14 @@ foreach($datas1 as $data1){
             <div class="col-sm-4 left-column">
                 <div class="card rounded-0 p-4">
                     <div class="profile-picture text-center">
-                        <img src="dist/image/unknown.jpg" alt="Profile Picture" width="150" class="user-profile">
+                        <?php if ($_SESSION['photo'] == "") { ?>
+                            <img src="dist/image/unknown.jpg" alt="Profile Picture" width="150" class="user-profile">
+                        <?php } else { ?>
+                            <img src="<?php echo "webimg/" . $_SESSION['photo']  ?>" alt="Profile Picture" width="150" class="user-profile">
+                        <?php } ?>
                     </div>
                     <div class="user-name mb-2 text-center">
-                        <label class="h4 font-weight-normal"><?php echo $_SESSION['fname']. ' ' .$_SESSION['lname'] ?></label>
+                        <label class="h4 font-weight-normal"><?php echo $_SESSION['fname'] . ' ' . $_SESSION['lname'] ?></label>
                     </div>
                     <!-- <div class="upload-photo text-center">
                         <label class="btn btn-secondary">
@@ -114,8 +117,7 @@ foreach($datas1 as $data1){
                             <div class="col-sm-6">
                                 <div class="current-password mb-2">
                                     <label>Current Password <span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control rounded-0"
-                                        placeholder="Enter current password">
+                                    <input type="password" class="form-control rounded-0" placeholder="Enter current password">
                                 </div>
                             </div>
                         </div>
@@ -124,15 +126,13 @@ foreach($datas1 as $data1){
                             <div class="col-sm-6">
                                 <div class="new-password mb-2">
                                     <label>New Password <span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control rounded-0"
-                                        placeholder="Enter new password">
+                                    <input type="password" class="form-control rounded-0" placeholder="Enter new password">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="confirm-password mb-3">
                                     <label>Confirm Password <span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control rounded-0"
-                                        placeholder="Enter confirm password">
+                                    <input type="password" class="form-control rounded-0" placeholder="Enter confirm password">
                                 </div>
                             </div>
                         </div>

@@ -6,6 +6,9 @@ if (!isset($_SESSION['stdno'])) {
     header('Location: search_engine.php');
     exit;
 }
+$id = $_SESSION['id'];
+$log_id = $_SESSION['log_id'];
+
 
 $populateUiDropDown = "SELECT * FROM course";
 $pdo = Database::connection();
@@ -33,10 +36,43 @@ if ($stmt1 === false) {
 }
 $datas1 = $stmt1->fetchAll();
 
-foreach($datas1 as $data1){
+foreach ($datas1 as $data1) {
     $courseId = $data1['course_id'];
     $courseName = $data1['course_name'];
 }
+
+
+// $uiQuery = "SELECT login.*, user_profile.*
+//         FROM login
+//         JOIN user_profile ON login.username = user_profile.student_no 
+//         WHERE login.log_id = :log_id AND user_profile.prof_id = :prof_id";
+// $pdo = Database::connection();
+// $stmt = $pdo->prepare($uiQuery);
+// $stmt->bindParam(':log_id', $username, PDO::PARAM_STR);
+// $stmt->bindParam(':prof_id', $id, PDO::PARAM_STR);
+// $stmt->execute();
+// $datas  = $stmt->fetchAll();
+// $numRows = $stmt->rowCount();
+
+// if ($numRows == 0) {
+//     $msg['title'] = "Waning";
+//     $msg['message'] = "There's no such user";
+//     $msg['icon'] = "info";
+// } else {
+//     foreach ($datas as $data) {
+//         $role = $data['role'];
+//         $_SESSION['campus'] = $data['campus'];
+//         $_SESSION['fname'] = $data['first_name'];
+//         $_SESSION['mname'] = $data['middle_name'];
+//         $_SESSION['lname'] = $data['last_name'];
+//         $_SESSION['course'] = $data['course_id'];
+//         $_SESSION['email'] = $data['email'];
+//         $_SESSION['stdno'] = $data['student_no'];
+//         $_SESSION['id'] = $data['prof_id'];
+//         $_SESSION['ac_year'] = $data['ac_year'];
+//         $_SESSION['log_id'] = $data['log_id'];
+//     }
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,10 +123,14 @@ foreach($datas1 as $data1){
             <div class="col-sm-4 left-column">
                 <div class="card rounded-0 p-4">
                     <div class="profile-picture text-center">
-                        <img src="dist/image/unknown.jpg" alt="Profile Picture" width="150" class="user-profile">
+                        <?php if ($_SESSION['photo'] == "") { ?>
+                            <img src="dist/image/unknown.jpg" alt="Profile Picture" width="150" class="user-profile">
+                        <?php } else { ?>
+                            <img src="<?php echo "webimg/" . $_SESSION['photo']  ?>" alt="Profile Picture" width="150" class="user-profile">
+                        <?php } ?>
                     </div>
                     <div class="user-name mb-2 text-center">
-                        <label class="h4 font-weight-normal"><?php echo $_SESSION['fname']. ' ' .$_SESSION['lname'] ?></label>
+                        <label class="h4 font-weight-normal"><?php echo $_SESSION['fname'] . ' ' . $_SESSION['lname'] ?></label>
                     </div>
                     <div class="upload-photo text-center">
                         <label class="btn btn-secondary">
@@ -165,7 +205,7 @@ foreach($datas1 as $data1){
                                 <div class="course mb-2">
                                     <label>Course <span class="text-danger">*</span></label>
                                     <select id="course" class="form-control rounded-0">
-                                        <option value="<?php echo $courseId?>"><?php echo $courseName ?></option>
+                                        <option value="<?php echo $courseId ?>"><?php echo $courseName ?></option>
                                         <?php foreach ($datas as $data) { ?>
                                             <option value="<?php echo $data['course_id'] ?>"><?php echo $data['course_name'] ?></option>
                                         <?php } ?>
@@ -238,7 +278,7 @@ foreach($datas1 as $data1){
                 lname: lname,
                 course: course,
                 date: date,
-                email:email
+                email: email
             };
 
             // Create a new FormData object
@@ -259,7 +299,7 @@ foreach($datas1 as $data1){
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "controllers/Authors.php", true);
 
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     console.log("Server response:", xhr.responseText);
                     if (xhr.status === 200) {
@@ -267,7 +307,7 @@ foreach($datas1 as $data1){
                         var data = JSON.parse(xhr.responseText);
                         console.log("Data received:", data);
                         swal.fire(data.title, data.message, data.icon);
-                        setTimeout(function () {
+                        setTimeout(function() {
                             window.location.reload();
                         }, 2000);
                     } else {

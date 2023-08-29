@@ -6,8 +6,6 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 
-
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payload'])) {
     $receivedData = json_decode($_POST['payload']);
     $receivedFunction = $_POST['setFunction'];
@@ -45,8 +43,7 @@ function addAuthors($request = null)
                     </div>
                 </div>";
     echo json_encode($response);
-}
-;
+};
 
 
 
@@ -73,8 +70,7 @@ function addKeywords($request = null)
     </div>
     ";
     echo json_encode($response);
-}
-;
+};
 
 function uploadToDb($request = null)
 {
@@ -160,6 +156,7 @@ function uploadToDb($request = null)
                         ':type' => $type
                     )
                 );
+                $datas  = $stmt->fetchAll();
                 if ($stmt->errorCode() !== '00000') {
                     $errorInfo = $stmt->errorInfo();
                     $errorMsg = "SQL Error: " . $errorInfo[2];
@@ -232,6 +229,210 @@ function uploadToDb($request = null)
     echo json_encode($msg);
 };
 
-function updateUserProfile($request = null){
+function updateUserProfile($request = null)
+{
     $msg = array();
+    $campus = $request->campus;
+    $stdno = $request->stdno;
+    $fname = $request->fname;
+    $lname = $request->lname;
+    $course = $request->course;
+    $date = $request->date;
+    $email = $request->email;
+    $id = $_SESSION['id'];
+    $log_id = $_SESSION['log_id'];
+
+
+
+
+    // Handle uploaded image
+    if (!empty($_FILES['abstractPic']['name'])) {
+        $filename = $_FILES['abstractPic']['name'];
+        $size = $_FILES['abstractPic']['size'];
+        $tmp_name = $_FILES['abstractPic']['tmp_name'];
+
+        $validImageExtensions = ['jpg', 'jpeg', 'png'];
+        $imageExtension = pathinfo($filename, PATHINFO_EXTENSION);
+        $imageExtension = strtolower($imageExtension);
+
+        if (!in_array($imageExtension, $validImageExtensions)) {
+            $msg['title'] = "Warning";
+            $msg['message'] = "Invalid image extension";
+            $msg['icon'] = "warning";
+            $msg['status'] = "error";
+        } elseif ($size > 512000) {
+            $msg['title'] = "Warning";
+            $msg['message'] = "Image size is too large";
+            $msg['icon'] = "warning";
+            $msg['status'] = "error";
+        } else {
+            $newImageName = uniqid() . '.' . $imageExtension;
+            $targetDirectory = '../webimg/';
+            $targetPath = $targetDirectory . $newImageName;
+
+            if (move_uploaded_file($tmp_name, $targetPath)) {
+                // Image uploaded successfully
+                // ... Your existing database insertion logic ...
+                $updateUserQuery = "UPDATE user_profile SET campus = :campus, first_name = :fname, last_name = :lname, course_id = :course, ac_year = :date, student_no = :stdno, email = :email, photo = :photo WHERE prof_id = :id ";
+                $pdo = Database::connection();
+                $stmt = $pdo->prepare($updateUserQuery);
+                $stmt->execute();
+                if ($stmt === false) {
+                    $errorInfo = $pdo->errorInfo();
+                    $errorMsg = "SQL Error: " . $errorInfo[2];
+                    echo "<script> alert('" . $errorMsg . "')</script>";
+                }
+                $stmt->execute(
+                    array(
+                        ':campus' => $campus,
+                        ':fname' => $fname,
+                        ':lname' => $lname,
+                        ':course' => $course,
+                        ':date' => $date,
+                        ':stdno' => $stdno,
+                        ':email' => $email,
+                        ':photo' => $newImageName,
+                        ':id' => $id
+                    )
+                );
+                // Update session variables
+                $_SESSION['campus'] = $campus;
+                $_SESSION['stdno'] = $stdno;
+                $_SESSION['fname'] = $fname;
+                $_SESSION['lname'] = $lname;
+                $_SESSION['course'] = $course;
+                $_SESSION['ac_year'] = $date;
+                $_SESSION['email'] = $email;
+                $_SESSION['photo'] = $newImageName;
+
+                // Regenerate the session ID for improved security
+                session_regenerate_id();
+                if ($stmt->errorCode() !== '00000') {
+                    $errorInfo = $stmt->errorInfo();
+                    $errorMsg = "SQL Error: " . $errorInfo[2];
+                    // Handle the error as needed (e.g., logging, displaying an error message)
+                    $msg['title'] = "Error";
+                    $msg['message'] = $errorMsg;
+                    $msg['icon'] = "error";
+                } else {
+                    $updateUserQuery1 = "UPDATE login SET username = :username WHERE log_id = :id";
+                    $pdo = Database::connection();
+                    $stmt = $pdo->prepare($updateUserQuery1);
+                    $stmt->execute();
+                    if ($stmt === false) {
+                        $errorInfo = $pdo->errorInfo();
+                        $errorMsg = "SQL Error: " . $errorInfo[2];
+                        echo "<script> alert('" . $errorMsg . "')</script>";
+                    }
+                    $stmt->execute(
+                        array(
+                            ':username' => $stdno,
+                            ':id' => $log_id
+                        )
+                    );
+                    if ($stmt->errorCode() !== '00000') {
+                        $errorInfo = $stmt->errorInfo();
+                        $errorMsg = "SQL Error: " . $errorInfo[2];
+                        // Handle the error as needed (e.g., logging, displaying an error message)
+                        $msg['title'] = "Error";
+                        $msg['message'] = $errorMsg;
+                        $msg['icon'] = "error";
+                    } else {
+                        $msg['title'] = "Successful";
+                        $msg['message'] = "Success";
+                        $msg['icon'] = "success";
+                        $msg['status'] = "success";
+                    }
+                }
+                // echo json_encode($targetPath); // this should be inserted in the database
+            } else {
+                // Failed to upload image
+                $msg['title'] = "Error";
+                $msg['message'] = "Failed to move uploaded image to destination";
+                $msg['icon'] = "error";
+                $msg['status'] = "error";
+                $msg['debug'] = $_FILES; // Add this for debugging
+            }
+        }
+    } else {
+        $updateUserQuery = "UPDATE user_profile SET campus = :campus, first_name = :fname, last_name = :lname, course_id = :course, ac_year = :date, student_no = :stdno, email = :email WHERE prof_id = :id";
+        $pdo = Database::connection();
+        $stmt = $pdo->prepare($updateUserQuery);
+        $stmt->execute();
+        if ($stmt === false) {
+            $errorInfo = $pdo->errorInfo();
+            $errorMsg = "SQL Error: " . $errorInfo[2];
+            echo "<script> alert('" . $errorMsg . "')</script>";
+        }
+        $stmt->execute(
+            array(
+                ':campus' => $campus,
+                ':fname' => $fname,
+                ':lname' => $lname,
+                ':course' => $course,
+                ':date' => $date,
+                ':stdno' => $stdno,
+                ':email' => $email,
+                ':id' => $id
+            )
+            
+        );
+         // Update session variables
+         $_SESSION['campus'] = $campus;
+         $_SESSION['stdno'] = $stdno;
+         $_SESSION['fname'] = $fname;
+         $_SESSION['lname'] = $lname;
+         $_SESSION['course'] = $course;
+         $_SESSION['ac_year'] = $date;
+         $_SESSION['email'] = $email;
+
+         // Regenerate the session ID for improved security
+         session_regenerate_id();
+        if ($stmt->errorCode() !== '00000') {
+            $errorInfo = $stmt->errorInfo();
+            $errorMsg = "SQL Error: " . $errorInfo[2];
+            // Handle the error as needed (e.g., logging, displaying an error message)
+            $msg['title'] = "Error";
+            $msg['message'] = $errorMsg;
+            $msg['icon'] = "error";
+        } else {
+            $updateUserQuery1 = "UPDATE login SET username = :username WHERE log_id = :id";
+            $pdo = Database::connection();
+            $stmt = $pdo->prepare($updateUserQuery1);
+            $stmt->execute();
+            if ($stmt === false) {
+                $errorInfo = $pdo->errorInfo();
+                $errorMsg = "SQL Error: " . $errorInfo[2];
+                echo "<script> alert('" . $errorMsg . "')</script>";
+            }
+            $stmt->execute(
+                array(
+                    ':username' => $stdno,
+                    ':id' => $log_id
+                )
+            );
+            if ($stmt->errorCode() !== '00000') {
+                $errorInfo = $stmt->errorInfo();
+                $errorMsg = "SQL Error: " . $errorInfo[2];
+                // Handle the error as needed (e.g., logging, displaying an error message)
+                $msg['title'] = "Error";
+                $msg['message'] = $errorMsg;
+                $msg['icon'] = "error";
+            } else {
+                $msg['title'] = "Successful";
+                $msg['message'] = "Success";
+                $msg['icon'] = "success";
+                $msg['status'] = "success";
+            }
+        }
+    }
+
+    // Print the error message if status is "error"
+    if ($msg['status'] === 'error') {
+        echo json_encode($msg);
+        return;
+    }
+
+
+    echo json_encode($msg);
 };
