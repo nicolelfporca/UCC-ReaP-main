@@ -49,7 +49,7 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <a href="admin_approve_abstract.php" class="nav-link active">
+                            <a href="admin_approve_abstract.php" class="nav-link ">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>PENDING</p>
                             </a>
@@ -63,11 +63,12 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="admin_add_account.php" class="nav-link ">
+                            <a href="admin_add_account.php" class="nav-link active">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>Account</p>
                             </a>
                         </li>
+                        
                     </ul>
                 </nav>
             </div>
@@ -82,23 +83,24 @@
 
             <section class="content">
                 <div class="container">
+                
                     <div class="card p-3 rounded-0">
-                        <!-- <div class="print-button mb-3">
-                            <button class="btn btn-primary">Print</button>
-                        </div> -->
-
+                        <div class="print-button mb-3">
+                        <button class="btn btn-primary mb-3" id="add_account_admin" data-toggle="modal"
+                        data-target="#add_account">Add Account</button>
+                       
+                        </div> 
+                     
+                        
                         <div class="card p-3 rounded-0">
-                            <table id="Pending_abstacts" class="table table-striped table-bordered" style="width:100%">
+                            <table id="admin_account" class="table table-striped table-bordered" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Title</th>
-                                        <th>Author</th>
-                                        <th>Uploaded By:</th>
-                                        <th>Status</th>
+                                        <th>Username</th>
+                                        <th>Password</th>
                                         <th>Action</th>     
                                     </tr>
                                 </thead>
-                              
                             </table>
                         </div>
                     </div>
@@ -107,8 +109,48 @@
         </div>
 
         
+         <!-- add department modal -->
+        <div class="modal fade" id="add_account" tabindex="-1" role="dialog" aria-labelledby="addDepartmentModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addDepartmentModalLabel">Add Username</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="course">Username:</label>
+                            <input type="text" class="form-control" id="username"
+                                placeholder="Set Username">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="course">Password:</label>
+                            <input type="password" class="form-control" id="password"
+                                placeholder="Set Password">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="professorName" class="mt-2">Confirm Password:</label>
+                            <input type="password" class="form-control" id="passconfirm"
+                                placeholder="Enter Confirm Password">
+                                </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                onclick="Add_admin()">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <!-- edit details modal -->
-        <div class="modal fade" id="update" tabindex="-1" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="update_account" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -118,23 +160,27 @@
                     <div class="modal-body">
                         <div class="mb-3">
 
-                            <label for="">Title:</label>
-                            <input type="text" class="form-control" id="Update_title"
-                        disabled>
+                            <label for="">Username:</label>
+                            <input type="text" class="form-control" id="update_username"
+                        >
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="mt-2">Password:</label>
+                            <input type="password" class="form-control" id="update_password"
+                        >
+                        </div>
 
-                            <label for="" class="mt-2">Status:</label>
-                            <select class="form-control" name="" id="update_status">
-                                <option value="" readonly>Select</option>
-                                <option value="1">Approved</option>
-                                <option value="0">PENDING</option>
-                            </select>
+                        <div class="mb-3">
+                            <label for="" class="mt-2">Confirm Password:</label>
+                            <input type="password" class="form-control" id="update_Cpassword"
+                        >
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" data-dismiss="modal"
-                            onclick="update1()">Update</button>
-                        <input type="hidden" id="hiddendata">
+                            onclick="course_update()">Update</button>
+                        <input type="hidden" id="hiddendata_account">
                     </div>
                 </div>
             </div>
@@ -161,7 +207,7 @@
     <script>
   $(document).ready(function () {
 
-        $('#Pending_abstacts').DataTable({
+        $('#admin_account').DataTable({
                 'serverside': true,
                 'processing': true,
                 'paging': true,
@@ -169,39 +215,87 @@
                     { "className": "dt-center", "targets": "_all" },
                 ],
                 'ajax': {
-                    'url': 'pending_abstract_tbl.php',
+                    'url': 'admin_account_tbl.php',
                     'type': 'post',
                 
                 },
             });
         });
 
-        function update(update) {
-            $('#hiddendata').val(update);
-            $.post("admin_update_status.php", { update: update }, function (data,
-                status) {
-                var userid = JSON.parse(data);
-                $('#Update_title').val(userid.title);
-                $('#update_status option[value="' + userid.status + '"]').prop('selected', true); // Use this line
-              
-            });
-            $('#update').modal("show");
+
+        
+     
+
+        function Add_admin() {
+            var username = $('#username').val();
+            var password = $('#password').val();
+            var passconfirm = $('#passconfirm').val();
+
+            if (password != passconfirm) {
+                alert("Password not match!");
+            } else {
+                $.ajax({
+                    url: "admin_add_admin.php",
+                    type: 'post',
+                    data: {
+                        username: username,
+                        password: password,
+                        passconfirm: passconfirm
+                    },
+                    success: function (data) {
+                        var data = JSON.parse(data);
+                        if (data.status == 'data_exist') {
+                             alert('Data already exists.');
+                            $('#username').val("");
+                            $('#password').val("");
+                            $('#passconfirm').val("");
+                        } else if (data.status == 'success') {
+                            $('#admin_account').DataTable().ajax.reload();
+                            // alert('Data added successfully.');
+                            $('#username').val("");
+                            $('#password').val("");
+                            $('#passconfirm').val("");
+                        } else {
+                            alert('Failed to add data.');
+                        }
+                    }
+                })
+            }
         }
 
-        function update1(status) {
-            var status = $('#update_status').val()
-            var title = $('#Update_title').val();
-            var hiddendata = $('#hiddendata').val();
 
-            $.post("admin_update_status.php", {
-                 status: status,  hiddendata: hiddendata
+        function update_admin_password(update) {
+            $('#hiddendata_account').val(update);
+            $.post("admin_update_account.php", { update: update }, function (data,
+                status) {
+                var userids = JSON.parse(data);
+                $('#update_username').val(userids.username);
+              
+              
+            });
+            $('#update_account').modal("show");
+        }
+
+        function course_update(status) {
+            var username = $('#update_username').val();
+            var password = $('#update_password').val();
+            var passconfirm = $('#update_Cpassword').val();
+            var hiddendata =   $('#hiddendata_account').val();
+            
+            if (password != passconfirm) {
+                alert("Password not match!");
+            } else {
+
+            $.post("admin_update_account.php", {
+                 username: username,  hiddendata: hiddendata, password:password
             }, function (data, status) {
                 var jsons = JSON.parse(data);
                 status = jsons.status;
                 if (status == 'success') {
-                    var update = $('#Pending_abstacts').DataTable().ajax.reload();
+                    var update = $('#admin_account').DataTable().ajax.reload();
                 }
             });
+        }
         
         }
     </script>

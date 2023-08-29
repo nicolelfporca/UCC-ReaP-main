@@ -61,6 +61,13 @@
                                 <p>Courses</p>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="admin_add_account.php" class="nav-link ">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>Account</p>
+                            </a>
+                        </li>
                         
                     </ul>
                 </nav>

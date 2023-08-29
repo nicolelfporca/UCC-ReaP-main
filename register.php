@@ -1,8 +1,11 @@
 <?php
 require('./includes/config.php');
-$populateUiDropDown = "SELECT * FROM course";
+$status= "1";
+$populateUiDropDown = "SELECT * FROM course WHERE status = :status";
 $pdo = Database::connection();
 $stmt = $pdo->prepare($populateUiDropDown);
+
+$stmt->bindValue(':status', $status, PDO::PARAM_STR);
 $stmt->execute();
 if ($stmt === false) {
     $errorInfo = $pdo->errorInfo();
