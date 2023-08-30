@@ -1,3 +1,10 @@
+<?php 
+session_start();
+if (!isset($_SESSION['admin_user'])) {
+    header('Location: login.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <!-- helloworld -->
 <html lang="en">
@@ -41,7 +48,7 @@
             <div class="sidebar">
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="info">
-                        <a href="#" class="d-block">Nicollette Porca</a>
+                        <a href="#" class="d-block"><?php echo $_SESSION['admin_user'] ?></a>
                     </div>
                 </div>
 

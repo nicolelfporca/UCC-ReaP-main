@@ -375,19 +375,19 @@ function updateUserProfile($request = null)
                 ':email' => $email,
                 ':id' => $id
             )
-            
-        );
-         // Update session variables
-         $_SESSION['campus'] = $campus;
-         $_SESSION['stdno'] = $stdno;
-         $_SESSION['fname'] = $fname;
-         $_SESSION['lname'] = $lname;
-         $_SESSION['course'] = $course;
-         $_SESSION['ac_year'] = $date;
-         $_SESSION['email'] = $email;
 
-         // Regenerate the session ID for improved security
-         session_regenerate_id();
+        );
+        // Update session variables
+        $_SESSION['campus'] = $campus;
+        $_SESSION['stdno'] = $stdno;
+        $_SESSION['fname'] = $fname;
+        $_SESSION['lname'] = $lname;
+        $_SESSION['course'] = $course;
+        $_SESSION['ac_year'] = $date;
+        $_SESSION['email'] = $email;
+
+        // Regenerate the session ID for improved security
+        session_regenerate_id();
         if ($stmt->errorCode() !== '00000') {
             $errorInfo = $stmt->errorInfo();
             $errorMsg = "SQL Error: " . $errorInfo[2];
@@ -434,5 +434,120 @@ function updateUserProfile($request = null)
     }
 
 
+    echo json_encode($msg);
+};
+
+function updatePass($request = null)
+{
+    $oldPass = $request->oldPass;
+    $newPass = $request->newPass;
+    $hashedOldPass = sha1($oldPass);
+    $hashedNewPass = sha1($newPass);
+    $userId = $_SESSION['log_id'];
+
+    $validateOldPass = "SELECT *
+    FROM login
+    WHERE log_id = :id AND password = :pass";
+    $pdo = Database::connection();
+    $stmt = $pdo->prepare($validateOldPass);
+    $stmt->bindParam(':id', $userId, PDO::PARAM_STR);
+    $stmt->bindParam(':pass', $hashedOldPass, PDO::PARAM_STR);
+    $stmt->execute();
+    $numRows = $stmt->rowCount();
+
+    if ($numRows == 0) {
+        $msg['title'] = "Waning";
+        $msg['message'] = "Please Enter The Correct Old Password";
+        $msg['icon'] = "warning";
+        echo json_encode($msg);
+    } else {
+        $updatePassQuery = "UPDATE login SET password = :newpass WHERE log_id = :log_id";
+        $pdo = Database::connection();
+        $stmt = $pdo->prepare($updatePassQuery);
+        $stmt->execute();
+        if ($stmt === false) {
+            $errorInfo = $pdo->errorInfo();
+            $errorMsg = "SQL Error: " . $errorInfo[2];
+            echo "<script> alert('" . $errorMsg . "')</script>";
+        }
+        $stmt->execute(
+            array(
+                ':newpass' => $hashedNewPass,
+                ':log_id' => $userId
+            )
+        );
+        if ($stmt->errorCode() !== '00000') {
+            $errorInfo = $stmt->errorInfo();
+            $errorMsg = "SQL Error: " . $errorInfo[2];
+            // Handle the error as needed (e.g., logging, displaying an error message)
+            $msg['title'] = "Error";
+            $msg['message'] = $errorMsg;
+            $msg['icon'] = "error";
+        } else {
+            $msg['title'] = "Successful";
+            $msg['message'] = "Success";
+            $msg['icon'] = "success";
+            $msg['status'] = "success";
+        }
+        echo json_encode($msg);
+    }
+};
+
+function deleteUser($request = null)
+{
+    $id = $request->id;
+    $delteUser = "DELETE FROM login WHERE log_id = :id";
+    $pdo = Database::connection();
+    $stmt = $pdo->prepare($delteUser);
+    $stmt->execute();
+    if ($stmt === false) {
+        $errorInfo = $pdo->errorInfo();
+        $errorMsg = "SQL Error: " . $errorInfo[2];
+        echo "<script> alert('" . $errorMsg . "')</script>";
+    }
+    $stmt->execute(
+        array(
+            ':id' => $id
+        )
+    );
+    if ($stmt->errorCode() !== '00000') {
+        $errorInfo = $stmt->errorInfo();
+        $errorMsg = "SQL Error: " . $errorInfo[2];
+        // Handle the error as needed (e.g., logging, displaying an error message)
+        $msg['title'] = "Error";
+        $msg['message'] = $errorMsg;
+        $msg['icon'] = "error";
+    } else {
+        $profid = $_SESSION['id'];
+        $delteUser1 = "DELETE FROM user_profile WHERE prof_id = :id";
+        $pdo = Database::connection();
+        $stmt = $pdo->prepare($delteUser1);
+        $stmt->execute();
+        if ($stmt === false) {
+            $errorInfo = $pdo->errorInfo();
+            $errorMsg = "SQL Error: " . $errorInfo[2];
+            echo "<script> alert('" . $errorMsg . "')</script>";
+        }
+        $stmt->execute(
+            array(
+                ':id' => $profid
+            )
+        );
+        if ($stmt->errorCode() !== '00000') {
+            $errorInfo = $stmt->errorInfo();
+            $errorMsg = "SQL Error: " . $errorInfo[2];
+            // Handle the error as needed (e.g., logging, displaying an error message)
+            $msg['title'] = "Error";
+            $msg['message'] = $errorMsg;
+            $msg['icon'] = "error";
+        } else {
+            $msg['title'] = "Successful";
+            $msg['message'] = "Success";
+            $msg['icon'] = "success";
+            $msg['status'] = "success";
+        }
+    }
+    session_unset(); // Unset all session variables
+    session_destroy(); // Destroy the session
     echo json_encode($msg);
 };

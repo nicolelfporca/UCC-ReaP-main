@@ -1,6 +1,6 @@
 <?php
 require('./includes/config.php');
-$status= "1";
+$status = "1";
 $populateUiDropDown = "SELECT * FROM course WHERE status = :status";
 $pdo = Database::connection();
 $stmt = $pdo->prepare($populateUiDropDown);
@@ -127,7 +127,7 @@ $datas = $stmt->fetchAll();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <!-- wag alisin -->
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> 
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(function() {
@@ -171,7 +171,7 @@ $datas = $stmt->fetchAll();
                     data = JSON.parse(response);
                     swal.fire(data.title, data.message, data.icon);
                     setTimeout(function() {
-                        window.location.reload();
+                        window.location.href = 'login.php';
                     }, 2000);
                 }
             });

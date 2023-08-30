@@ -117,7 +117,7 @@ foreach ($datas1 as $data1) {
                             <div class="col-sm-6">
                                 <div class="current-password mb-2">
                                     <label>Current Password <span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control rounded-0" placeholder="Enter current password">
+                                    <input type="password" id="pass" class="form-control rounded-0" placeholder="Enter current password">
                                 </div>
                             </div>
                         </div>
@@ -126,13 +126,13 @@ foreach ($datas1 as $data1) {
                             <div class="col-sm-6">
                                 <div class="new-password mb-2">
                                     <label>New Password <span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control rounded-0" placeholder="Enter new password">
+                                    <input type="password" id="new_pass" class="form-control rounded-0" placeholder="Enter new password">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="confirm-password mb-3">
                                     <label>Confirm Password <span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control rounded-0" placeholder="Enter confirm password">
+                                    <input type="password" id="con_pass" class="form-control rounded-0" placeholder="Enter confirm password">
                                 </div>
                             </div>
                         </div>
@@ -140,8 +140,8 @@ foreach ($datas1 as $data1) {
                         <div class="row d-flex float-right">
                             <div class="col-sm-12">
                                 <div class="buttons">
-                                    <button class="btn btn-danger">Delete Account</button>
-                                    <button class="btn btn-primary">Save Changes</button>
+                                    <button class="btn btn-danger" onclick="deleteUser()">Delete Account</button>
+                                    <button class="btn btn-primary" onclick="updatePass()">Save Changes</button>
                                 </div>
                             </div>
                         </div>
@@ -155,6 +155,63 @@ foreach ($datas1 as $data1) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function updatePass() {
+            var oldPass = $('#pass').val();
+            var newPass = $('#new_pass').val();
+            var conPass = $('#con_pass').val();
+
+            if (newPass == conPass) {
+                var payload = {
+                    oldPass: oldPass,
+                    newPass: newPass
+                };
+                $.ajax({
+                    type: "POST",
+                    url: 'controllers/Authors.php',
+                    data: {
+                        payload: JSON.stringify(payload),
+                        setFunction: 'updatePass'
+                    },
+                    success: function(response) {
+                        data = JSON.parse(response);
+                        swal.fire(data.title, data.message, data.icon);
+                        window.location.reload();
+                    }
+                });
+            } else {
+                Swal.fire(
+                    'WARNING',
+                    "Old password and New password didn't match",
+                    'warning'
+                )
+            }
+        };
+
+        function deleteUser() {
+            var id = <?php echo $_SESSION['log_id'] ?>;
+            var payload = {
+                id: id,
+            };
+
+            $.ajax({
+                type: "POST",
+                url: 'controllers/Authors.php',
+                data: {
+                    payload: JSON.stringify(payload),
+                    setFunction: 'deleteUser'
+                },
+                success: function(response) {
+                    data = JSON.parse(response);
+                    swal.fire(data.title, data.message, data.icon);
+                    setTimeout(function() {
+                        window.location.href = "search_engine.php"
+                    }, 2000);
+                }
+            });
+        };
+    </script>
 </body>
 
 </html>

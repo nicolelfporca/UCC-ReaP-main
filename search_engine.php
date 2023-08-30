@@ -142,10 +142,23 @@ error_reporting(0);
                 },
                 success: function(response) {
                     data = JSON.parse(response);
-                    swal.fire(data.title, data.message, data.icon);
-                    setTimeout(function() {
-                        window.location.reload();
-                    }, 2000);
+                    if (data.role == 1) {
+                        swal.fire(data.title, data.message, data.icon);
+                        setTimeout(function() {
+                            window.location.href = "search_engine.php"
+                        }, 2000);
+                    } else if(data.role == 2) {
+                        Swal.fire(
+                            'Welcome',
+                            'Successfully login',
+                            'success'
+                        )
+                        setTimeout(function() {
+                            window.location.href = "admin_approve_abstract.php"
+                        }, 2000);
+                    }else{
+                        swal.fire(data.title, data.message, data.icon);
+                    }
                 }
             });
 
