@@ -61,7 +61,7 @@ error_reporting(0);
                     <form>
                         <div class="email mb-3">
                             <div class="input-group">
-                                <input type="number" class="form-control" id="username" placeholder="Student no." aria-label="Email" aria-describedby="enevelope">
+                                <input type="text" class="form-control" id="username" placeholder="Student no." aria-label="Email" aria-describedby="enevelope">
                                 <span class="input-group-text" id="envelope"><i class="far fa-envelope"></i></span>
                             </div>
                         </div>
