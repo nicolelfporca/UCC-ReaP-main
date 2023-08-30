@@ -97,7 +97,8 @@ foreach ($datas1 as $data1) {
                 <img src="dist/image/UCC.png" alt="UCC Logo" width="50" class="mr-2">
                 <span class="full">UCC Research and Publication Online</span>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -122,15 +123,18 @@ foreach ($datas1 as $data1) {
         <div class="row">
             <div class="col-sm-4 left-column">
                 <div class="card rounded-0 p-4">
-                    <div class="profile-picture text-center">
+                    <div class="profile-picture text-center mb-2">
                         <?php if ($_SESSION['photo'] == "") { ?>
                             <img src="dist/image/unknown.jpg" alt="Profile Picture" width="150" class="user-profile">
                         <?php } else { ?>
-                            <img src="<?php echo "webimg/" . $_SESSION['photo']  ?>" alt="Profile Picture" width="150" class="user-profile">
+                            <img src="<?php echo "webimg/" . $_SESSION['photo'] ?>" alt="Profile Picture" width="150"
+                                class="user-profile">
                         <?php } ?>
                     </div>
-                    <div class="user-name mb-2 text-center">
-                        <label class="h4 font-weight-normal"><?php echo $_SESSION['fname'] . ' ' . $_SESSION['lname'] ?></label>
+                    <div class="user-name mb-1 text-center">
+                        <label class="h4 font-weight-normal">
+                            <?php echo $_SESSION['fname'] . ' ' . $_SESSION['lname'] ?>
+                        </label>
                     </div>
                     <div class="upload-photo text-center">
                         <label class="btn btn-secondary">
@@ -138,14 +142,20 @@ foreach ($datas1 as $data1) {
                             Upload Photo
                         </label>
                     </div>
+
                     <hr>
+                    
                     <div class="student-no mb-3">
                         <label class="font-weight-bold m-0">Student No.</label> <br>
-                        <label class="m-0"><?php echo $_SESSION['stdno'] ?></label>
+                        <label class="m-0">
+                            <?php echo $_SESSION['stdno'] ?>
+                        </label>
                     </div>
-                    <div class="course mb-3">
+                    <div class="course">
                         <label class="font-weight-bold m-0">Course</label> <br>
-                        <label class="m-0"><?php echo $courseName ?></label>
+                        <label class="m-0">
+                            <?php echo $courseName ?>
+                        </label>
                     </div>
                 </div>
             </div>
@@ -180,7 +190,8 @@ foreach ($datas1 as $data1) {
                             <div class="col-sm-6">
                                 <div class="student-no2 mb-2">
                                     <label>Student No. <span class="text-danger">*</span></label>
-                                    <input type="text" id="stdno" class="form-control rounded-0" value="<?php echo $_SESSION['stdno'] ?>">
+                                    <input type="number" id="stdno" class="form-control rounded-0"
+                                        value="<?php echo $_SESSION['stdno'] ?>">
                                 </div>
                             </div>
                         </div>
@@ -189,13 +200,15 @@ foreach ($datas1 as $data1) {
                             <div class="col-sm-6">
                                 <div class="first-name mb-2">
                                     <label>First Name <span class="text-danger">*</span></label>
-                                    <input type="text" id="fname" class="form-control rounded-0" value="<?php echo $_SESSION['fname'] ?>">
+                                    <input type="text" id="fname" class="form-control rounded-0"
+                                        value="<?php echo $_SESSION['fname'] ?>">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="last-name mb-2">
                                     <label>Last Name <span class="text-danger">*</span></label>
-                                    <input type="text" id="lname" class="form-control rounded-0" value="<?php echo $_SESSION['lname'] ?>">
+                                    <input type="text" id="lname" class="form-control rounded-0"
+                                        value="<?php echo $_SESSION['lname'] ?>">
                                 </div>
                             </div>
                         </div>
@@ -218,7 +231,8 @@ foreach ($datas1 as $data1) {
                             <div class="col-sm-6">
                                 <div class="academic-year mb-2">
                                     <label>Academic Year <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" id="date" value="<?php echo $_SESSION['ac_year'] ?>">
+                                    <input class="form-control" type="number" id="date"
+                                        value="<?php echo $_SESSION['ac_year'] ?>">
                                 </div>
                             </div>
                         </div>
@@ -227,7 +241,8 @@ foreach ($datas1 as $data1) {
                             <div class="col-sm-12">
                                 <div class="email mb-3">
                                     <label>Email <span class="text-danger">*</span></label>
-                                    <input type="email" id="email" class="form-control rounded-0" value="<?php echo  $_SESSION['email'] ?>">
+                                    <input type="email" id="email" class="form-control rounded-0"
+                                        value="<?php echo $_SESSION['email'] ?>">
                                 </div>
                             </div>
                         </div>
@@ -255,11 +270,11 @@ foreach ($datas1 as $data1) {
 
 
     <script>
-        $(function() {
-            $("#date").datepicker({
-                dateFormat: 'yy'
-            });
-        });
+        // $(function () {
+        //     $("#date").datepicker({
+        //         dateFormat: 'yy'
+        //     });
+        // });
 
         function updateUser() {
             var campus = $('#campus').val();
@@ -299,7 +314,7 @@ foreach ($datas1 as $data1) {
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "controllers/Authors.php", true);
 
-            xhr.onreadystatechange = function() {
+            xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
                     console.log("Server response:", xhr.responseText);
                     if (xhr.status === 200) {
@@ -307,7 +322,7 @@ foreach ($datas1 as $data1) {
                         var data = JSON.parse(xhr.responseText);
                         console.log("Data received:", data);
                         swal.fire(data.title, data.message, data.icon);
-                        setTimeout(function() {
+                        setTimeout(function () {
                             window.location.reload();
                         }, 2000);
                     } else {

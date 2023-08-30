@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
-<body class="bg-light">
+<body class="login-body">
 
     <div class="container">
         <div class="card login-card rounded-0 p-4">
@@ -22,22 +22,21 @@
             <form>
                 <div class="email mb-3">
                     <div class="input-group">
-                        <input type="text" class="form-control" id="username" placeholder="Username" aria-label="Email" aria-describedby="enevelope">
-                        <span class="input-group-text" id="envelope"><i class="far fa-envelope"></i></span>
+                        <input type="number" class="form-control rounded-0" id="username" placeholder="Student no."
+                            aria-label="Email" aria-describedby="enevelope">
+                        <span class="input-group-text rounded-0" id="envelope"><i class="far fa-envelope"></i></span>
                     </div>
                 </div>
                 <div class="password mb-3">
                     <div class="input-group">
-                        <input type="password" class="form-control" id="pass" placeholder="Password" aria-label="Password" aria-describedby="lock">
-                        <span class="input-group-text" id="lock"><i class="fa-solid fa-lock"></i></span>
+                        <input type="password" class="form-control rounded-0" id="pass" placeholder="Password"
+                            aria-label="Password" aria-describedby="lock">
+                        <span class="input-group-text rounded-0" id="lock"><i class="fa-solid fa-lock"></i></span>
                     </div>
                 </div>
             </form>
-            <!-- <div class="forgot-password mb-3">
-                <a href="" class="text-muted">Forgot Password?</a>
-            </div> -->
             <div class="login-button mb-3">
-                <button class="btn btn-primary w-100" onclick="login()">Login</button>
+                <button class="btn btn-primary w-100 rounded-0" onclick="login()">Login</button>
             </div>
             <div class="register-link text-center">
                 <a href="register.php" class="text-muted">Register here.</a>
@@ -69,23 +68,23 @@
                     payload: JSON.stringify(payload),
                     setFunction: 'checkUserDb'
                 },
-                success: function(response) {
+                success: function (response) {
                     data = JSON.parse(response);
                     if (data.role == 1) {
                         swal.fire(data.title, data.message, data.icon);
-                        setTimeout(function() {
+                        setTimeout(function () {
                             window.location.href = "search_engine.php"
                         }, 2000);
-                    } else if(data.role == 2) {
+                    } else if (data.role == 2) {
                         Swal.fire(
                             'Welcome',
                             'Successfully login',
                             'success'
                         )
-                        setTimeout(function() {
+                        setTimeout(function () {
                             window.location.href = "admin_approve_abstract.php"
                         }, 2000);
-                    }else{
+                    } else {
                         swal.fire(data.title, data.message, data.icon);
                     }
                 }

@@ -1,4 +1,6 @@
-.navbar {
+.navbar,
+.login-body,
+.register-body {
     background: rgb(53, 144, 53);
 }
 
@@ -43,7 +45,7 @@
     font-weight: 700;
 }
 
-hr {
+.hr-display {
     display: none;
 }
 
@@ -86,7 +88,7 @@ hr {
         margin: 1rem 0 1rem;
     }
 
-    hr {
+    .hr-display {
         display: block;
     }
 

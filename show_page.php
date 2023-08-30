@@ -254,7 +254,7 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
 
                 </div>
 
-                <hr class="container text-muted">
+                <hr class="container hr-display text-muted">
 
                 <div class="col-sm-4">
                     <div class="related-studies">

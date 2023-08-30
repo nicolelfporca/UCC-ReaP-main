@@ -73,28 +73,28 @@ foreach ($datas1 as $data1) {
         <div class="row">
             <div class="col-sm-4 left-column">
                 <div class="card rounded-0 p-4">
-                    <div class="profile-picture text-center">
+                    <div class="profile-picture text-center mb-2">
                         <?php if ($_SESSION['photo'] == "") { ?>
                             <img src="dist/image/unknown.jpg" alt="Profile Picture" width="150" class="user-profile">
                         <?php } else { ?>
                             <img src="<?php echo "webimg/" . $_SESSION['photo']  ?>" alt="Profile Picture" width="150" class="user-profile">
                         <?php } ?>
                     </div>
-                    <div class="user-name mb-2 text-center">
+                    <div class="user-name mb-1 text-center">
                         <label class="h4 font-weight-normal"><?php echo $_SESSION['fname'] . ' ' . $_SESSION['lname'] ?></label>
                     </div>
-                    <!-- <div class="upload-photo text-center">
+                    <div class="upload-photo text-center">
                         <label class="btn btn-secondary">
                             <input type="file" name="abstractPic" hidden>
                             Upload Photo
                         </label>
-                    </div> -->
+                    </div>
                     <hr>
                     <div class="student-no mb-3">
                         <label class="font-weight-bold m-0">Student No.</label> <br>
                         <label class="m-0"><?php echo $_SESSION['stdno'] ?></label>
                     </div>
-                    <div class="course mb-3">
+                    <div class="course">
                         <label class="font-weight-bold m-0">Course</label> <br>
                         <label class="m-0"><?php echo $courseName ?></label>
                     </div>
@@ -177,7 +177,9 @@ foreach ($datas1 as $data1) {
                     success: function(response) {
                         data = JSON.parse(response);
                         swal.fire(data.title, data.message, data.icon);
-                        window.location.reload();
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 2000);
                     }
                 });
             } else {

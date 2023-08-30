@@ -41,7 +41,7 @@ error_reporting(0);
                 <div class="join-sign-in">
                     <a class="dropdown-item" href="register.php">Join now</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">Sign up</a>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">Sign in</a>
                 </div>
             <?php } ?>
         </div>
@@ -61,7 +61,7 @@ error_reporting(0);
                     <form>
                         <div class="email mb-3">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="username" placeholder="Username" aria-label="Email" aria-describedby="enevelope">
+                                <input type="number" class="form-control" id="username" placeholder="Student no." aria-label="Email" aria-describedby="enevelope">
                                 <span class="input-group-text" id="envelope"><i class="far fa-envelope"></i></span>
                             </div>
                         </div>

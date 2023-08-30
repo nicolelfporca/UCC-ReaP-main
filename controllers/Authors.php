@@ -276,12 +276,12 @@ function updateUserProfile($request = null)
                 $updateUserQuery = "UPDATE user_profile SET campus = :campus, first_name = :fname, last_name = :lname, course_id = :course, ac_year = :date, student_no = :stdno, email = :email, photo = :photo WHERE prof_id = :id ";
                 $pdo = Database::connection();
                 $stmt = $pdo->prepare($updateUserQuery);
-                $stmt->execute();
-                if ($stmt === false) {
-                    $errorInfo = $pdo->errorInfo();
-                    $errorMsg = "SQL Error: " . $errorInfo[2];
-                    echo "<script> alert('" . $errorMsg . "')</script>";
-                }
+                // $stmt->execute();
+                // if ($stmt === false) {
+                //     $errorInfo = $pdo->errorInfo();
+                //     $errorMsg = "SQL Error: " . $errorInfo[2];
+                //     echo "<script> alert('" . $errorMsg . "')</script>";
+                // }
                 $stmt->execute(
                     array(
                         ':campus' => $campus,
@@ -318,12 +318,12 @@ function updateUserProfile($request = null)
                     $updateUserQuery1 = "UPDATE login SET username = :username WHERE log_id = :id";
                     $pdo = Database::connection();
                     $stmt = $pdo->prepare($updateUserQuery1);
-                    $stmt->execute();
-                    if ($stmt === false) {
-                        $errorInfo = $pdo->errorInfo();
-                        $errorMsg = "SQL Error: " . $errorInfo[2];
-                        echo "<script> alert('" . $errorMsg . "')</script>";
-                    }
+                    // $stmt->execute();
+                    // if ($stmt === false) {
+                    //     $errorInfo = $pdo->errorInfo();
+                    //     $errorMsg = "SQL Error: " . $errorInfo[2];
+                    //     echo "<script> alert('" . $errorMsg . "')</script>";
+                    // }
                     $stmt->execute(
                         array(
                             ':username' => $stdno,
@@ -358,12 +358,12 @@ function updateUserProfile($request = null)
         $updateUserQuery = "UPDATE user_profile SET campus = :campus, first_name = :fname, last_name = :lname, course_id = :course, ac_year = :date, student_no = :stdno, email = :email WHERE prof_id = :id";
         $pdo = Database::connection();
         $stmt = $pdo->prepare($updateUserQuery);
-        $stmt->execute();
-        if ($stmt === false) {
-            $errorInfo = $pdo->errorInfo();
-            $errorMsg = "SQL Error: " . $errorInfo[2];
-            echo "<script> alert('" . $errorMsg . "')</script>";
-        }
+        // $stmt->execute();
+        // if ($stmt === false) {
+        //     $errorInfo = $pdo->errorInfo();
+        //     $errorMsg = "SQL Error: " . $errorInfo[2];
+        //     echo "<script> alert('" . $errorMsg . "')</script>";
+        // }
         $stmt->execute(
             array(
                 ':campus' => $campus,
@@ -399,12 +399,12 @@ function updateUserProfile($request = null)
             $updateUserQuery1 = "UPDATE login SET username = :username WHERE log_id = :id";
             $pdo = Database::connection();
             $stmt = $pdo->prepare($updateUserQuery1);
-            $stmt->execute();
-            if ($stmt === false) {
-                $errorInfo = $pdo->errorInfo();
-                $errorMsg = "SQL Error: " . $errorInfo[2];
-                echo "<script> alert('" . $errorMsg . "')</script>";
-            }
+            // $stmt->execute();
+            // if ($stmt === false) {
+            //     $errorInfo = $pdo->errorInfo();
+            //     $errorMsg = "SQL Error: " . $errorInfo[2];
+            //     echo "<script> alert('" . $errorMsg . "')</script>";
+            // }
             $stmt->execute(
                 array(
                     ':username' => $stdno,
@@ -464,12 +464,12 @@ function updatePass($request = null)
         $updatePassQuery = "UPDATE login SET password = :newpass WHERE log_id = :log_id";
         $pdo = Database::connection();
         $stmt = $pdo->prepare($updatePassQuery);
-        $stmt->execute();
-        if ($stmt === false) {
-            $errorInfo = $pdo->errorInfo();
-            $errorMsg = "SQL Error: " . $errorInfo[2];
-            echo "<script> alert('" . $errorMsg . "')</script>";
-        }
+        // $stmt->execute();
+        // if ($stmt === false) {
+        //     $errorInfo = $pdo->errorInfo();
+        //     $errorMsg = "SQL Error: " . $errorInfo[2];
+        //     echo "<script> alert('" . $errorMsg . "')</script>";
+        // }
         $stmt->execute(
             array(
                 ':newpass' => $hashedNewPass,
@@ -499,12 +499,12 @@ function deleteUser($request = null)
     $delteUser = "DELETE FROM login WHERE log_id = :id";
     $pdo = Database::connection();
     $stmt = $pdo->prepare($delteUser);
-    $stmt->execute();
-    if ($stmt === false) {
-        $errorInfo = $pdo->errorInfo();
-        $errorMsg = "SQL Error: " . $errorInfo[2];
-        echo "<script> alert('" . $errorMsg . "')</script>";
-    }
+    // $stmt->execute();
+    // if ($stmt === false) {
+    //     $errorInfo = $pdo->errorInfo();
+    //     $errorMsg = "SQL Error: " . $errorInfo[2];
+    //     echo "<script> alert('" . $errorMsg . "')</script>";
+    // }
     $stmt->execute(
         array(
             ':id' => $id
@@ -522,12 +522,12 @@ function deleteUser($request = null)
         $delteUser1 = "DELETE FROM user_profile WHERE prof_id = :id";
         $pdo = Database::connection();
         $stmt = $pdo->prepare($delteUser1);
-        $stmt->execute();
-        if ($stmt === false) {
-            $errorInfo = $pdo->errorInfo();
-            $errorMsg = "SQL Error: " . $errorInfo[2];
-            echo "<script> alert('" . $errorMsg . "')</script>";
-        }
+        // $stmt->execute();
+        // if ($stmt === false) {
+        //     $errorInfo = $pdo->errorInfo();
+        //     $errorMsg = "SQL Error: " . $errorInfo[2];
+        //     echo "<script> alert('" . $errorMsg . "')</script>";
+        // }
         $stmt->execute(
             array(
                 ':id' => $profid
