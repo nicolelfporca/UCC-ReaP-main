@@ -78,7 +78,7 @@ function formatAPAAuthors($authors)
 function generateAPAWebsiteCitation($authors, $year, $title, $url)
 {
     $formattedAuthors = formatAPAAuthors($authors);
-    $citation = "$formattedAuthors ($year). $title. Retrieved from $url";
+    $citation = "$formattedAuthors ($year). <i>$title</i>. Retrieved from $url";
     return $citation;
 }
 
@@ -247,7 +247,7 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
                         </div>
                     </div>
 
-                    <div class="citation text-muted font-italic">
+                    <div class="citation text-muted">
                         <label>Citation:</label> <br>
                         <ul class="list-inline">
                             <li class="list-inline-item" id="authors">

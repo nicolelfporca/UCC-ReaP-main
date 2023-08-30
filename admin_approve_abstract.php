@@ -14,6 +14,7 @@ if (!isset($_SESSION['admin_user'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UCC REAP</title>
     <link rel="icon" href="dist/image/UCC.png">
+    <link rel="stylesheet" href="dist/css/all.css">
     <link rel="stylesheet" href="dist/css/font.css">
     <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="https://adminlte.io/themes/v3/dist/css/adminlte.min.css?v=3.2.0">
@@ -44,15 +45,15 @@ if (!isset($_SESSION['admin_user'])) {
                     style="opacity: .8">
                 <span class="brand-text font-weight-light">UCC ReaP</span>
             </a>
+
             <div class="sidebar">
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="info">
                         <a href="#" class="d-block">
-                            <?php echo strtoupper($_SESSION['admin_user']) ?>
+                            <?php echo $_SESSION['admin_user'] ?>
                         </a>
                     </div>
                 </div>
-
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
@@ -95,7 +96,7 @@ if (!isset($_SESSION['admin_user'])) {
                                         <tr>
                                             <th>Title</th>
                                             <th>Author</th>
-                                            <th>Uploaded by</th>
+                                            <th>Uploaded By:</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -109,6 +110,24 @@ if (!isset($_SESSION['admin_user'])) {
         </div>
     </div>
 
+    <!-- show abstract modal -->
+    <div class="modal fade" id="viewAbstract" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Abstract</h5>
+                </div>
+                <div class="modal-body view">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="hidden" id="hiddendata">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- edit details modal -->
     <div class="modal fade" id="update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -119,8 +138,10 @@ if (!isset($_SESSION['admin_user'])) {
                 <div class="modal-body">
                     <div class="title mb-2">
                         <label>Title <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="Update_title" placeholder="Enter title" disabled>
+                        <input type="text" class="form-control" id="Update_title" placeholder="Enter new title"
+                            disabled>
                     </div>
+
                     <div class="status">
                         <label>Status <span class="text-danger">*</span></label>
                         <select class="form-control" name="" id="update_status">
@@ -139,6 +160,7 @@ if (!isset($_SESSION['admin_user'])) {
             </div>
         </div>
     </div>
+
 
     <footer class="main-footer">
         <strong>Copyright &copy; 2023-2024.
@@ -174,6 +196,22 @@ if (!isset($_SESSION['admin_user'])) {
             });
         });
 
+
+        function view(views) {
+            $('#hiddendata').val(views);
+
+            $.ajax({
+                url: 'admin_view_abstract.php',
+                type: 'post',
+                data: { views: views }, // Change 'update' to 'views'
+                success: function (response) {
+                    $('.modal-body.view').html(response); // Correct the selector for modal-body
+                }
+            });
+
+            $('#viewAbstract').modal("show");
+        }
+
         function update(update) {
             $('#hiddendata').val(update);
             $.post("admin_update_status.php", { update: update }, function (data,
@@ -200,6 +238,7 @@ if (!isset($_SESSION['admin_user'])) {
                     var update = $('#Pending_abstacts').DataTable().ajax.reload();
                 }
             });
+
         }
     </script>
 </body>
