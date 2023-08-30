@@ -122,7 +122,7 @@ foreach ($datas1 as $data1) {
         <label class="h3 font-weight-normal mb-4 text-muted">Profile Settings</label>
         <div class="row">
             <div class="col-sm-4 left-column">
-                <div class="card rounded-0 p-4">
+                <div class="card p-4">
                     <div class="profile-picture text-center mb-2">
                         <?php if ($_SESSION['photo'] == "") { ?>
                             <img src="dist/image/unknown.jpg" alt="Profile Picture" width="150" class="user-profile">
@@ -160,7 +160,7 @@ foreach ($datas1 as $data1) {
                 </div>
             </div>
             <div class="col-sm-8">
-                <div class="card rounded-0">
+                <div class="card">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
@@ -176,7 +176,7 @@ foreach ($datas1 as $data1) {
                             <div class="col-sm-6">
                                 <div class="campus mb-2">
                                     <label>Campus <span class="text-danger">*</span></label>
-                                    <select class="form-control rounded-0" id="campus">
+                                    <select class="form-control" id="campus">
                                         <?php if ($_SESSION['campus'] == 1) { ?>
                                             <option value="1">Main</option>
                                         <?php } else { ?>
@@ -190,7 +190,7 @@ foreach ($datas1 as $data1) {
                             <div class="col-sm-6">
                                 <div class="student-no2 mb-2">
                                     <label>Student No. <span class="text-danger">*</span></label>
-                                    <input type="number" id="stdno" class="form-control rounded-0"
+                                    <input type="number" id="stdno" class="form-control"
                                         value="<?php echo $_SESSION['stdno'] ?>">
                                 </div>
                             </div>
@@ -200,14 +200,14 @@ foreach ($datas1 as $data1) {
                             <div class="col-sm-6">
                                 <div class="first-name mb-2">
                                     <label>First Name <span class="text-danger">*</span></label>
-                                    <input type="text" id="fname" class="form-control rounded-0"
+                                    <input type="text" id="fname" class="form-control"
                                         value="<?php echo $_SESSION['fname'] ?>">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="last-name mb-2">
                                     <label>Last Name <span class="text-danger">*</span></label>
-                                    <input type="text" id="lname" class="form-control rounded-0"
+                                    <input type="text" id="lname" class="form-control"
                                         value="<?php echo $_SESSION['lname'] ?>">
                                 </div>
                             </div>
@@ -217,7 +217,7 @@ foreach ($datas1 as $data1) {
                             <div class="col-sm-12">
                                 <div class="course mb-2">
                                     <label>Course <span class="text-danger">*</span></label>
-                                    <select id="course" class="form-control rounded-0">
+                                    <select id="course" class="form-control">
                                         <option value="<?php echo $courseId ?>"><?php echo $courseName ?></option>
                                         <?php foreach ($datas as $data) { ?>
                                             <option value="<?php echo $data['course_id'] ?>"><?php echo $data['course_name'] ?></option>
@@ -241,7 +241,7 @@ foreach ($datas1 as $data1) {
                             <div class="col-sm-12">
                                 <div class="email mb-3">
                                     <label>Email <span class="text-danger">*</span></label>
-                                    <input type="email" id="email" class="form-control rounded-0"
+                                    <input type="email" id="email" class="form-control"
                                         value="<?php echo $_SESSION['email'] ?>">
                                 </div>
                             </div>

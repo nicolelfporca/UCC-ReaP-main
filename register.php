@@ -14,9 +14,8 @@ if ($stmt === false) {
 }
 $datas = $stmt->fetchAll();
 
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,14 +34,14 @@ $datas = $stmt->fetchAll();
 <body class="register-body">
 
     <div class="container">
-        <div class="card register-card rounded-0 p-4">
+        <div class="card register-card p-4">
             <label class="text-center pb-2 text-secondary">Register your account</label>
             <form action="">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="campus mb-3">
                             <label>Campus <span class="text-danger">*</span></label>
-                            <select id="campus" class="form-control rounded-0">
+                            <select id="campus" class="form-control">
                                 <option value="0">Select Campus</option>
                                 <option value="1">Main</option>
                                 <option value="2">North</option>
@@ -52,7 +51,7 @@ $datas = $stmt->fetchAll();
                     <div class="col-sm-6">
                         <div class="student-no mb-3">
                             <label>Student No. <span class="text-danger">*</span></label>
-                            <input type="number" id="student_no" class="form-control rounded-0" placeholder="Enter student no.">
+                            <input type="number" id="student_no" class="form-control" placeholder="Enter student no.">
                         </div>
                     </div>
                 </div>
@@ -60,7 +59,7 @@ $datas = $stmt->fetchAll();
                     <div class="col-sm-6">
                         <div class="academic-year mb-3">
                             <label>Academic Year <span class="text-danger">*</span></label>
-                            <input class="form-control rounded-0" type="number" id="date" placeholder="Enter academic year">
+                            <input class="form-control" type="number" id="date" placeholder="Enter academic year">
                         </div>
                     </div>
                 </div>
@@ -68,19 +67,19 @@ $datas = $stmt->fetchAll();
                     <div class="col-sm-4">
                         <div class="first-name mb-3">
                             <label>First Name <span class="text-danger">*</span></label>
-                            <input type="text" id="f_name" class="form-control rounded-0" placeholder="Enter first name">
+                            <input type="text" id="f_name" class="form-control" placeholder="Enter first name">
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="second-name mb-3">
                             <label>Middle Name <span class="text-danger">*</span></label>
-                            <input type="text" id="m_name" class="form-control rounded-0" placeholder="Enter second name">
+                            <input type="text" id="m_name" class="form-control" placeholder="Enter second name">
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="first-name mb-3">
                             <label>Last Name <span class="text-danger">*</span></label>
-                            <input type="text" id="l_name" class="form-control rounded-0" placeholder="Enter last name">
+                            <input type="text" id="l_name" class="form-control" placeholder="Enter last name">
                         </div>
                     </div>
                 </div>
@@ -88,11 +87,12 @@ $datas = $stmt->fetchAll();
                     <div class="col-sm-12">
                         <div class="course mb-3">
                             <label>Course <span class="text-danger">*</span></label>
-                            <select id="course" class="form-control rounded-0">
+                            <select id="course" class="form-control">
                                 <?php foreach ($datas as $data) {
                                     echo $data['course_id'];
                                     ?>
-                                    <option value="<?php echo $data['course_id'] ?>"><?php echo $data['course_name'] ?>
+                                    <option value="<?php echo $data['course_id'] ?>">
+                                        <?php echo $data['course_name'] ?>
                                     </option>
                                 <?php } ?>
                             </select>
@@ -103,19 +103,20 @@ $datas = $stmt->fetchAll();
                     <div class="col-sm-12">
                         <div class="email mb-3">
                             <label>Email <span class="text-danger">*</span></label>
-                            <input type="email" id="email" class="form-control rounded-0" placeholder="Enter email">
+                            <input type="email" id="email" class="form-control" placeholder="Enter email">
                         </div>
                     </div>
                     <div class="col-sm-12">
                         <div class="email mb-3">
                             <label>Password <span class="text-danger">*</span></label>
-                            <input type="password" id="pass" class="form-control rounded-0" placeholder="Enter password">
+                            <input type="password" id="pass" class="form-control"
+                                placeholder="Enter password">
                         </div>
                     </div>
                 </div>
             </form>
             <div class="register-button mb-3">
-                <button class="btn btn-primary w-100 rounded-0" onclick="regis()">Create Account</button>
+                <button class="btn btn-primary w-100" onclick="regis()">Create Account</button>
             </div>
             <div class="login-link text-center">
                 <a href="login.php" class="text-muted">Login here.</a>

@@ -20,10 +20,11 @@ error_reporting(0);
 
 <body>
     <div class="dropdown d-flex justify-content-end mt-2">
-        <button class="btn dropdown-toggle text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn dropdown-toggle text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
             <?php if ($_SESSION['photo'] == "") { ?>
                 <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
-            <?php  } else { ?>
+            <?php } else { ?>
                 <img src="<?php echo "webimg/" . $_SESSION['photo'] ?>" alt="User Profile" width="50" class="user-profile">
             <?php } ?>
         </button>
@@ -48,7 +49,8 @@ error_reporting(0);
     </div>
 
     <!-- sign in modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body p-5">
@@ -61,13 +63,15 @@ error_reporting(0);
                     <form>
                         <div class="email mb-3">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="username" placeholder="Student no." aria-label="Email" aria-describedby="enevelope">
+                                <input type="text" class="form-control" id="username" placeholder="Student no."
+                                    aria-label="Email" aria-describedby="enevelope">
                                 <span class="input-group-text" id="envelope"><i class="far fa-envelope"></i></span>
                             </div>
                         </div>
                         <div class="password mb-3">
                             <div class="input-group">
-                                <input type="password" class="form-control" id="pass" placeholder="Password" aria-label="Password" aria-describedby="lock">
+                                <input type="password" class="form-control" id="pass" placeholder="Password"
+                                    aria-label="Password" aria-describedby="lock">
                                 <span class="input-group-text" id="lock"><i class="fa-solid fa-lock"></i></span>
                             </div>
                         </div>
@@ -96,7 +100,8 @@ error_reporting(0);
                     <div class="input-field">
                         <button class="btn-search" type="submit" value="search">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
+                                <path
+                                    d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
                                 </path>
                             </svg>
                         </button>
@@ -140,23 +145,23 @@ error_reporting(0);
                     payload: JSON.stringify(payload),
                     setFunction: 'checkUserDb'
                 },
-                success: function(response) {
+                success: function (response) {
                     data = JSON.parse(response);
                     if (data.role == 1) {
                         swal.fire(data.title, data.message, data.icon);
-                        setTimeout(function() {
+                        setTimeout(function () {
                             window.location.href = "search_engine.php"
                         }, 2000);
-                    } else if(data.role == 2) {
+                    } else if (data.role == 2) {
                         Swal.fire(
                             'Welcome',
                             'Successfully login',
                             'success'
                         )
-                        setTimeout(function() {
+                        setTimeout(function () {
                             window.location.href = "admin_approve_abstract.php"
                         }, 2000);
-                    }else{
+                    } else {
                         swal.fire(data.title, data.message, data.icon);
                     }
                 }
@@ -164,11 +169,8 @@ error_reporting(0);
 
         };
     </script>
-    <script src="https://static.cloudflareinsights.com/beacon.min.js/v8b253dfea2ab4077af8c6f58422dfbfd1689876627854"></script>
+    <script
+        src="https://static.cloudflareinsights.com/beacon.min.js/v8b253dfea2ab4077af8c6f58422dfbfd1689876627854"></script>
 </body>
 
 </html>
-
-<script>
-</script>
-</head>

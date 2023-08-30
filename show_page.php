@@ -95,7 +95,7 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
     <title>UCC REAP</title>
     <link rel="icon" href="dist/image/UCC.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="dist/font.css">
+    <link rel="stylesheet" href="dist/css/font.css">
     <link rel="stylesheet" href="dist/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -112,20 +112,23 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
         <div class="container">
             <a class="navbar-brand" href="search_engine.php">
                 <img src="dist/image/UCC.png" alt="UCC Logo" width="50" class="mr-2">
-                <span class="full">UCC ReaP</span>
+                <span class="full">UCC Research and Publication Online</span>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <?php if ($_SESSION['photo'] == "") { ?>
                                 <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
-                            <?php  } else { ?>
-                                <img src="<?php echo "webimg/" . $_SESSION['photo'] ?>" alt="User Profile" width="50" class="user-profile">
+                            <?php } else { ?>
+                                <img src="<?php echo "webimg/" . $_SESSION['photo'] ?>" alt="User Profile" width="50"
+                                    class="user-profile">
                             <?php } ?>
                         </a>
                         <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
@@ -142,7 +145,8 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
                                 <div class="join-sign-in">
                                     <a class="dropdown-item" href="register.php">Join now</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">Sign up</a>
+                                    <a class="dropdown-item" href="#" data-toggle="modal"
+                                        data-target="#exampleModalCenter">Sign in</a>
                                 </div>
                             <?php } ?>
                         </div>
@@ -153,7 +157,8 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
     </nav>
 
     <!-- sign in modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body p-5">
@@ -166,13 +171,15 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
                     <form>
                         <div class="email mb-3">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="username" placeholder="Username" aria-label="Email" aria-describedby="enevelope">
+                                <input type="text" class="form-control" id="username" placeholder="Username"
+                                    aria-label="Email" aria-describedby="enevelope">
                                 <span class="input-group-text" id="envelope"><i class="far fa-envelope"></i></span>
                             </div>
                         </div>
                         <div class="password mb-3">
                             <div class="input-group">
-                                <input type="password" class="form-control" id="pass" placeholder="Password" aria-label="Password" aria-describedby="lock">
+                                <input type="password" class="form-control" id="pass" placeholder="Password"
+                                    aria-label="Password" aria-describedby="lock">
                                 <span class="input-group-text" id="lock"><i class="fa-solid fa-lock"></i></span>
                             </div>
                         </div>
@@ -192,41 +199,55 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
         <div class="container">
             <div class="row">
                 <div class="col-sm-8">
-                    <div class="title">
-                        <label class="fw-semibold h2"><?php echo $thesisTitle ?></label>
+                    <div class="research-title">
+                        <label class="h2">
+                            <?php echo $thesisTitle ?>
+                        </label>
                     </div>
                     <div class="date">
-                        <label class="fst-italic"><?php echo $thesisDate ?></label>
+                        <label class="font-italic text-muted">
+                            <?php echo $thesisDate ?>
+                        </label>
                     </div>
-                    <div class="researchers mb-4">
+                    <div class="researchers">
                         <ul class="list-inline">
-                            <li class="list-inline-item">&bull; <?php echo $thesisAuthor ?> </li>
+                            <li class="list-inline-item">&bull;
+                                <?php echo $thesisAuthor ?>
+                            </li>
                         </ul>
                     </div>
-                    <div class="card p-4 rounded-0 mb-4">
-                        <div class="abstract-text">
-                            <label class="fw-semibold fs-5 mb-3">ABSTRACT</label>
+                    <div class="card p-4 mb-4">
+                        <div class="abstract-text mb-2">
+                            <label>ABSTRACT</label>
                         </div>
                         <div class="abstract-body">
                             <?php if ($abstractType == 1) { ?>
                                 <label>
-                                    <?php echo $abstract = $_SESSION['stdno'] == "" ?  substr($abstract, 0, 100) . "...." : $abstract ?>
+                                    <?php echo $abstract = $_SESSION['stdno'] == "" ? substr($abstract, 0, 100) . "...." : $abstract ?>
                                     <?php if ($_SESSION['stdno'] == "") { ?>
-                                        <div> <a class="text-muted d-flex justify-content-center" href="" data-toggle="modal" data-target="#exampleModalCenter">See more.</a></div>
+                                        <div class="see-more">
+                                            <a class="text-muted d-flex justify-content-center" href="" data-toggle="modal"
+                                                data-target="#exampleModalCenter">See more.</a>
+                                        </div>
                                     <?php } ?>
                                 </label>
-                                <?php } elseif ($abstractType == 2) {
+                            <?php } elseif ($abstractType == 2) {
                                 if ($_SESSION['stdno'] == "") { ?>
-                                    <img src="<?php echo "webimg/" . $abstract ?>" alt="Image" style="max-width: 100%; height: auto;" class="blur-image">
-                                    <div> <a class="text-muted d-flex justify-content-center" href="" data-toggle="modal" data-target="#exampleModalCenter">See more.</a></div>
+                                    <img src="<?php echo "webimg/" . $abstract ?>" alt="Image"
+                                        style="max-width: 100%; height: auto;" class="blur-image">
+                                    <div class="see-more">
+                                        <a class="text-muted d-flex justify-content-center" href="" data-toggle="modal"
+                                            data-target="#exampleModalCenter">See more.</a>
+                                    </div>
                                 <?php } else { ?>
-                                    <img src="<?php echo "webimg/" . $abstract ?>" alt="Image" style="max-width: 100%; height: auto;">
-                            <?php  }
+                                    <img src="<?php echo "webimg/" . $abstract ?>" alt="Image"
+                                        style="max-width: 100%; height: auto;">
+                                <?php }
                             } ?>
                         </div>
                     </div>
 
-                    <div class="citation text-muted">
+                    <div class="citation text-muted font-italic">
                         <label>Citation:</label> <br>
                         <ul class="list-inline">
                             <li class="list-inline-item" id="authors">
@@ -240,9 +261,9 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
                                 $publicationYear = date("Y", strtotime($thesisDate));
                                 $abstractTitle = $thesisTitle;
                                 $websiteURL = "https://www.your-website.com/abstract-page"; // Update this URL
-
+                                
                                 // Count authors and format according to APA style
-
+                                
                                 $websiteCitation = generateAPAWebsiteCitation($authorsForCitation, $publicationYear, $abstractTitle, $websiteURL);
 
                                 echo "<p class='apa-citation'>$websiteCitation</p>";
@@ -258,15 +279,17 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
 
                 <div class="col-sm-4">
                     <div class="related-studies">
-                        <label class="text-muted fs-4 mb-3">RELATED STUDIES</label>
+                        <label class="text-muted h4 mb-3">RELATED STUDIES</label>
                     </div>
                     <?php while ($row = $stmt1->fetch(PDO::FETCH_ASSOC)) { ?>
-                        <div class="card p-1 rounded-0 mb-4">
+                        <div class="card p-1 mb-4">
                             <div class="card p-3 border-0">
-                                <a href=<?php echo "show_page.php?name=" . urlencode($row['title']); ?> class="research-title fw-semibold fs-5">
+                                <a href=<?php echo "show_page.php?name=" . urlencode($row['title']); ?>
+                                    class="research-title fw-semibold fs-5">
                                     <?php echo $row['title']; ?>
                                 </a>
-                                <a href=<?php echo "show_page.php?name=" . urlencode($row['title']); ?> class="date fst-italic text-muted">
+                                <a href=<?php echo "show_page.php?name=" . urlencode($row['title']); ?>
+                                    class="date fst-italic text-muted">
                                     <?php echo date("F j, Y", strtotime($row['date'])); ?>
                                 </a>
                             </div>
@@ -279,7 +302,8 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
 
     <footer class="bg-white text-center text-muted border">
         <div class="text-center p-3">
-            <strong>Copyright &copy; 2023-2024. <a href="https://www.ucc-caloocan.edu.ph/" class="link text-muted">University of Caloocan City</a>.
+            <strong>Copyright &copy; 2023-2024. <a href="https://www.ucc-caloocan.edu.ph/"
+                    class="link text-muted">University of Caloocan City</a>.
             </strong> All rights reserved.
         </div>
     </footer>
@@ -306,10 +330,10 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
                     payload: JSON.stringify(payload),
                     setFunction: 'checkUserDb'
                 },
-                success: function(response) {
+                success: function (response) {
                     data = JSON.parse(response);
                     swal.fire(data.title, data.message, data.icon);
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.location.reload();
                     }, 2000);
                 }

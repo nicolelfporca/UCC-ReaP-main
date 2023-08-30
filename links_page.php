@@ -68,65 +68,70 @@ $stmt->execute();
 
 <body class="bg-light">
 
-    <header style="background: rgb(53, 144, 53);">
-        <nav class="navbar navbar-expand-lg navbar-dark">
-            <div class="container">
-                <a class="navbar-brand fw-semibold" href="search_engine.php">
-                    <img src="dist/image/UCC.png" alt="UCC Logo" width="50" height="55" class="me-2">
-                    UCC ReaP
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-                    <ul class="navbar-nav mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <div class="input-group">
-                                <input class="form-control me-1 rounded-0" type="search" placeholder="Search..." value="<?php echo $value ?>" aria-label="Search" id="search">
-                                <span class="input-group-append">
-                                    <button class="btn bg-none rounded-5 text-white" type="button" id="search-button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <?php if ($_SESSION['photo'] == "") { ?>
-                                    <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
-                                <?php  } else { ?>
-                                    <img src="<?php echo "webimg/" . $_SESSION['photo'] ?>" alt="User Profile" width="50" class="user-profile">
-                                <?php } ?>
-                            </a>
-                            <div class="dropdown-menu text-center rounded-0" aria-labelledby="navbarDropdown">
-                                <!-- ito ibahin pag naka log in na -->
-                                <?php if ($_SESSION['stdno'] != "") { ?>
-                                    <div class="for-user">
-                                        <a class="dropdown-item" href="upload_form.php">Upload</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item text-danger" href="logout.php">Logout</a>
-                                    </div>
-                                <?php } else { ?>
-                                    <div class="join-sign-in">
-                                        <a class="dropdown-item" href="register.php">Join now</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">Sign up</a>
-                                    </div>
-                                <?php } ?>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="search_engine.php">
+                <img src="dist/image/UCC.png" alt="UCC Logo" width="50" height="55" class="mr-2">
+                UCC ReaP
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <div class="input-group">
+                            <input class="form-control me-1 rounded-0" type="search" placeholder="Search..."
+                                value="<?php echo $value ?>" aria-label="Search" id="search">
+                            <span class="input-group-append">
+                                <button class="btn text-white" type="button" id="search-button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <?php if ($_SESSION['photo'] == "") { ?>
+                                <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
+                            <?php } else { ?>
+                                <img src="<?php echo "webimg/" . $_SESSION['photo'] ?>" alt="User Profile" width="50"
+                                    class="user-profile">
+                            <?php } ?>
+                        </a>
+                        <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                            <!-- ito ibahin pag naka log in na -->
+                            <?php if ($_SESSION['stdno'] != "") { ?>
+                                <div class="for-user">
+                                    <a class="dropdown-item" href="upload_form.php">Upload</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger" href="logout.php">Logout</a>
+                                </div>
+                            <?php } else { ?>
+                                <div class="join-sign-in">
+                                    <a class="dropdown-item" href="register.php">Join now</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" data-toggle="modal"
+                                        data-target="#exampleModalCenter">Sign in</a>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
     <!-- sign in modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body p-5">
@@ -139,13 +144,15 @@ $stmt->execute();
                     <form>
                         <div class="email mb-3">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="username" placeholder="Username" aria-label="Email" aria-describedby="enevelope">
+                                <input type="text" class="form-control" id="username" placeholder="Student no."
+                                    aria-label="Email" aria-describedby="enevelope">
                                 <span class="input-group-text" id="envelope"><i class="far fa-envelope"></i></span>
                             </div>
                         </div>
                         <div class="password mb-3">
                             <div class="input-group">
-                                <input type="password" class="form-control" id="pass" placeholder="Password" aria-label="Password" aria-describedby="lock">
+                                <input type="password" class="form-control" id="pass" placeholder="Password"
+                                    aria-label="Password" aria-describedby="lock">
                                 <span class="input-group-text" id="lock"><i class="fa-solid fa-lock"></i></span>
                             </div>
                         </div>
@@ -163,31 +170,24 @@ $stmt->execute();
 
     <div class="mt-4" id="links_page">
         <div class="container">
-            <div class="results mb-4">
-                <label>4 Results for "Search..."</label>
-            </div>
-
-
-
             <?php
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo '<div class="card p-3 rounded-0 mb-4">';
-                echo '<div class="card p-3 border-0">';
-                echo '<a href="show_page.php?name=' . urldecode($row['title']) . '" class="research-title fw-semibold fs-5 mb-2">' . $row['title'] . '</a>';
-                echo '<div class=" text-black mb-2">' . substr($row['abstract'], 0, 20) . "'...'" . '</div>';
-                echo '<div class=" fst-italic text-muted">' . $row['date'] . '</div>';
-                echo '</div>';
+                echo '<div class="card p-2 mb-4">';
+                echo '  <div class="card p-3 border-0">';
+                echo '      <a href="show_page.php?name=' . urldecode($row['title']) . '" class="research-title mb-1">' . $row['title'] . '</a>';
+                echo '      <div class="abstract-body mb-1">' . substr($row['abstract'], 0, 20) . "'...'" . '</div>';
+                echo '      <div class="date font-italic text-muted">' . $row['date'] . '</div>';
+                echo '  </div>';
                 echo '</div>';
             }
             ?>
-
-
         </div>
     </div>
 
     <footer class="bg-white text-center text-muted border">
         <div class="text-center p-3">
-            <strong>Copyright &copy; 2023-2024. <a href="https://www.ucc-caloocan.edu.ph/" class="link text-muted">University of Caloocan City</a>.
+            <strong>Copyright &copy; 2023-2024. <a href="https://www.ucc-caloocan.edu.ph/"
+                    class="link text-muted">University of Caloocan City</a>.
             </strong> All rights reserved.
         </div>
     </footer>
@@ -198,20 +198,19 @@ $stmt->execute();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             const searchInput = $("#search");
 
             // Perform search when Enter key is pressed in the search input
-            searchInput.on("keypress", function(event) {
+            searchInput.on("keypress", function (event) {
                 if (event.key === "Enter") {
                     performSearch();
                 }
             });
 
             // Perform search when the search button is clicked
-            $("#search-button").on("click", function() {
+            $("#search-button").on("click", function () {
                 performSearch();
             });
 
@@ -241,10 +240,10 @@ $stmt->execute();
                     payload: JSON.stringify(payload),
                     setFunction: 'checkUserDb'
                 },
-                success: function(response) {
+                success: function (response) {
                     data = JSON.parse(response);
                     swal.fire(data.title, data.message, data.icon);
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.location.reload();
                     }, 2000);
                 }
@@ -252,8 +251,6 @@ $stmt->execute();
 
         };
     </script>
-
-
 </body>
 
 

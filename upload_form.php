@@ -52,18 +52,18 @@ if (!isset($_SESSION['stdno'])) {
     <div class="container card-container">
         <label class="h3 font-weight-normal mb-4 text-muted">Upload Form</label>
         <div class="row">
-            <div class="card w-100 rounded-0 p-4">
+            <div class="card w-100 p-4">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="publish-date mb-2">
                             <label>Publish Date <span class="text-danger">*</span></label>
-                            <input type="date" name="thesisDate" class="form-control rounded-0">
+                            <input type="date" name="thesisDate" class="form-control">
                         </div>
                     </div>
                 </div>
                 <div class="title mb-2">
                     <label>Title <span class="text-danger">*</span></label>
-                    <input type="text" name="titleName" class="form-control rounded-0" placeholder="Enter title">
+                    <input type="text" name="titleName" class="form-control" placeholder="Enter title">
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
@@ -73,7 +73,7 @@ if (!isset($_SESSION['stdno'])) {
                                 <div class="row mb-2">
                                     <div class="col-sm-12">
                                         <div class="input-group">
-                                            <input type="text" id="authorName" class="form-control rounded-0 authorName"
+                                            <input type="text" id="authorName" class="form-control authorName"
                                                 placeholder="Enter name (surname, first name)"
                                                 onkeydown="handleAuthorInput(event)">
                                             <button class="btn add-btn" type="button" onclick="addAuthor()">
@@ -92,7 +92,7 @@ if (!isset($_SESSION['stdno'])) {
                                 <div class="row mb-2">
                                     <div class="col-sm-12">
                                         <div class="input-group">
-                                            <input type="text" class="form-control rounded-0 keywords"
+                                            <input type="text" class="form-control keywords"
                                                 placeholder="Enter keyword" onkeydown="handleKeywordInput(event)">
                                             <button class="btn add-btn" type="button" onclick="addKeyword()">
                                                 <i class="fa-solid fa-plus"></i>
@@ -106,14 +106,14 @@ if (!isset($_SESSION['stdno'])) {
                 </div>
                 <div class="abstract mb-2">
                     <label>Abstract <span class="text-danger">*</span></label>
-                    <select class="form-control rounded-0" id="selectUI" onchange="showUI()">
+                    <select class="form-control" id="selectUI" onchange="showUI()">
                         <option value="0">Select Abstract</option>
                         <option value="1">Plain Text</option>
                         <option value="2">Upload Photo</option>
                     </select>
                 </div>
                 <div class="plain-text mb-1" id="plainAbsUi">
-                    <textarea rows="8" name="abstractText" class="form-control rounded-0"></textarea>
+                    <textarea rows="8" name="abstractText" class="form-control"></textarea>
                 </div>
                 <div class="upload-photo mb-1" id="PicAbsUi">
                     <label class="btn btn-secondary">

@@ -15,35 +15,34 @@
 <body class="login-body">
 
     <div class="container">
-        <div class="card login-card rounded-0 p-4">
+        <div class="card login-card p-4">
             <div class="logo text-center mb-4">
                 <img src="dist/image/UCC.png" alt="UCC Logo" width="100">
             </div>
             <form>
                 <div class="email mb-3">
                     <div class="input-group">
-                        <input type="text" class="form-control rounded-0" id="username" placeholder="Student no."
+                        <input type="text" class="form-control" id="username" placeholder="Student no."
                             aria-label="Email" aria-describedby="enevelope">
-                        <span class="input-group-text rounded-0" id="envelope"><i class="far fa-envelope"></i></span>
+                        <span class="input-group-text" id="envelope"><i class="far fa-envelope"></i></span>
                     </div>
                 </div>
                 <div class="password mb-3">
                     <div class="input-group">
-                        <input type="password" class="form-control rounded-0" id="pass" placeholder="Password"
+                        <input type="password" class="form-control" id="pass" placeholder="Password"
                             aria-label="Password" aria-describedby="lock">
-                        <span class="input-group-text rounded-0" id="lock"><i class="fa-solid fa-lock"></i></span>
+                        <span class="input-group-text" id="lock"><i class="fa-solid fa-lock"></i></span>
                     </div>
                 </div>
             </form>
             <div class="login-button mb-3">
-                <button class="btn btn-primary w-100 rounded-0" onclick="login()">Login</button>
+                <button class="btn btn-primary w-100" onclick="login()">Login</button>
             </div>
             <div class="register-link text-center">
                 <a href="register.php" class="text-muted">Register here.</a>
             </div>
         </div>
     </div>
-
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>

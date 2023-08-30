@@ -72,7 +72,7 @@ foreach ($datas1 as $data1) {
         <label class="h3 font-weight-normal mb-4 text-muted">Profile Settings</label>
         <div class="row">
             <div class="col-sm-4 left-column">
-                <div class="card rounded-0 p-4">
+                <div class="card p-4">
                     <div class="profile-picture text-center mb-2">
                         <?php if ($_SESSION['photo'] == "") { ?>
                             <img src="dist/image/unknown.jpg" alt="Profile Picture" width="150" class="user-profile">
@@ -101,7 +101,7 @@ foreach ($datas1 as $data1) {
                 </div>
             </div>
             <div class="col-sm-8">
-                <div class="card rounded-0">
+                <div class="card">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
@@ -117,7 +117,7 @@ foreach ($datas1 as $data1) {
                             <div class="col-sm-6">
                                 <div class="current-password mb-2">
                                     <label>Current Password <span class="text-danger">*</span></label>
-                                    <input type="password" id="pass" class="form-control rounded-0" placeholder="Enter current password">
+                                    <input type="password" id="pass" class="form-control" placeholder="Enter current password">
                                 </div>
                             </div>
                         </div>
@@ -126,13 +126,13 @@ foreach ($datas1 as $data1) {
                             <div class="col-sm-6">
                                 <div class="new-password mb-2">
                                     <label>New Password <span class="text-danger">*</span></label>
-                                    <input type="password" id="new_pass" class="form-control rounded-0" placeholder="Enter new password">
+                                    <input type="password" id="new_pass" class="form-control" placeholder="Enter new password">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="confirm-password mb-3">
                                     <label>Confirm Password <span class="text-danger">*</span></label>
-                                    <input type="password" id="con_pass" class="form-control rounded-0" placeholder="Enter confirm password">
+                                    <input type="password" id="con_pass" class="form-control" placeholder="Enter confirm password">
                                 </div>
                             </div>
                         </div>
@@ -150,7 +150,6 @@ foreach ($datas1 as $data1) {
             </div>
         </div>
     </div>
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>

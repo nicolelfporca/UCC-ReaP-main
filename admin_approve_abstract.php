@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 if (!isset($_SESSION['admin_user'])) {
     header('Location: login.php');
@@ -14,7 +14,7 @@ if (!isset($_SESSION['admin_user'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UCC REAP</title>
     <link rel="icon" href="dist/image/UCC.png">
-    <link rel="stylesheet" href="dist/css/all.css">
+    <link rel="stylesheet" href="dist/css/font.css">
     <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="https://adminlte.io/themes/v3/dist/css/adminlte.min.css?v=3.2.0">
     <link rel="stylesheet" href="https://adminlte.io/themes/v3/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
@@ -44,11 +44,12 @@ if (!isset($_SESSION['admin_user'])) {
                     style="opacity: .8">
                 <span class="brand-text font-weight-light">UCC ReaP</span>
             </a>
-
             <div class="sidebar">
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="info">
-                        <a href="#" class="d-block"><?php echo $_SESSION['admin_user'] ?></a>
+                        <a href="#" class="d-block">
+                            <?php echo strtoupper($_SESSION['admin_user']) ?>
+                        </a>
                     </div>
                 </div>
 
@@ -57,22 +58,20 @@ if (!isset($_SESSION['admin_user'])) {
                         data-accordion="false">
                         <li class="nav-item">
                             <a href="admin_approve_abstract.php" class="nav-link active">
-                                <i class="nav-icon fas fa-cog"></i>
-                                <p>PENDING</p>
+                                <i class="nav-icon fas fa-clock"></i>
+                                Pending
                             </a>
                         </li>
-
                         <li class="nav-item">
-                            <a href="admin_adding_courses.php" class="nav-link ">
-                                <i class="nav-icon fas fa-cog"></i>
-                                <p>Courses</p>
+                            <a href="admin_adding_courses.php" class="nav-link">
+                                <i class="nav-icon fas fa-bookmark"></i>
+                                Courses
                             </a>
                         </li>
-
                         <li class="nav-item">
-                            <a href="admin_add_account.php" class="nav-link ">
-                                <i class="nav-icon fas fa-cog"></i>
-                                <p>Account</p>
+                            <a href="admin_add_account.php" class="nav-link">
+                                <i class="nav-icon fas fa-user-plus"></i>
+                                Account
                             </a>
                         </li>
                     </ul>
@@ -83,79 +82,71 @@ if (!isset($_SESSION['admin_user'])) {
         <div class="content-wrapper">
             <div class="content-header">
                 <div class="container">
-                    <h1 class="font-weight-normal">Dashboard</h1>
+                    <h1 class="font-weight-normal text-muted">Pending</h1>
                 </div>
             </div>
-
             <section class="content">
                 <div class="container">
                     <div class="card p-3 rounded-0">
-                        <!-- <div class="print-button mb-3">
-                            <button class="btn btn-primary">Print</button>
-                        </div> -->
-
                         <div class="card p-3 rounded-0">
-                            <table id="Pending_abstacts" class="table table-striped table-bordered" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Title</th>
-                                        <th>Author</th>
-                                        <th>Uploaded By:</th>
-                                        <th>Status</th>
-                                        <th>Action</th>     
-                                    </tr>
-                                </thead>
-                              
-                            </table>
+                            <div class="table-responsive">
+                                <table id="Pending_abstacts" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Author</th>
+                                            <th>Uploaded by</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
         </div>
+    </div>
 
-        
-        <!-- edit details modal -->
-        <div class="modal fade" id="update" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Details</h5>
+    <!-- edit details modal -->
+    <div class="modal fade" id="update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Details</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="title mb-2">
+                        <label>Title <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="Update_title" placeholder="Enter title" disabled>
                     </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-
-                            <label for="">Title:</label>
-                            <input type="text" class="form-control" id="Update_title"
-                        disabled>
-
-                            <label for="" class="mt-2">Status:</label>
-                            <select class="form-control" name="" id="update_status">
-                                <option value="" readonly>Select</option>
-                                <option value="1">Approved</option>
-                                <option value="0">PENDING</option>
-                            </select>
-                        </div>
+                    <div class="status">
+                        <label>Status <span class="text-danger">*</span></label>
+                        <select class="form-control" name="" id="update_status">
+                            <option value="" readonly>Select Status</option>
+                            <option value="1">Approved</option>
+                            <option value="0">Pending</option>
+                        </select>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal"
-                            onclick="update1()">Update</button>
-                        <input type="hidden" id="hiddendata">
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        onclick="update1()">Update</button>
+                    <input type="hidden" id="hiddendata">
                 </div>
             </div>
         </div>
-
-
-        <footer class="main-footer">
-            <strong>Copyright &copy; 2023-2024.
-                <a href="https://www.ucc-caloocan.edu.ph/" class="text-muted" target="blank">
-                    University of Caloocan City
-                </a>.
-            </strong> All rights reserved.
-        </footer>
     </div>
+
+    <footer class="main-footer">
+        <strong>Copyright &copy; 2023-2024.
+            <a href="https://www.ucc-caloocan.edu.ph/" class="text-muted" target="blank">
+                University of Caloocan City
+            </a>.
+        </strong> All rights reserved.
+    </footer>
 
     <script src="https://adminlte.io/themes/v3/plugins/jquery/jquery.min.js"></script>
     <script src="https://adminlte.io/themes/v3/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -166,9 +157,9 @@ if (!isset($_SESSION['admin_user'])) {
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
     <script>
-  $(document).ready(function () {
+        $(document).ready(function () {
 
-        $('#Pending_abstacts').DataTable({
+            $('#Pending_abstacts').DataTable({
                 'serverside': true,
                 'processing': true,
                 'paging': true,
@@ -178,7 +169,7 @@ if (!isset($_SESSION['admin_user'])) {
                 'ajax': {
                     'url': 'pending_abstract_tbl.php',
                     'type': 'post',
-                
+
                 },
             });
         });
@@ -190,7 +181,7 @@ if (!isset($_SESSION['admin_user'])) {
                 var userid = JSON.parse(data);
                 $('#Update_title').val(userid.title);
                 $('#update_status option[value="' + userid.status + '"]').prop('selected', true); // Use this line
-              
+
             });
             $('#update').modal("show");
         }
@@ -201,7 +192,7 @@ if (!isset($_SESSION['admin_user'])) {
             var hiddendata = $('#hiddendata').val();
 
             $.post("admin_update_status.php", {
-                 status: status,  hiddendata: hiddendata
+                status: status, hiddendata: hiddendata
             }, function (data, status) {
                 var jsons = JSON.parse(data);
                 status = jsons.status;
@@ -209,7 +200,6 @@ if (!isset($_SESSION['admin_user'])) {
                     var update = $('#Pending_abstacts').DataTable().ajax.reload();
                 }
             });
-        
         }
     </script>
 </body>
