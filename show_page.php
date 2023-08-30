@@ -33,6 +33,7 @@ if ($stmt === false) {
     }
     $thesisDate = date("F j, Y", strtotime($thesisDate));
     $newKeywordArray = explode(",", $thesisKeyword);
+    $arrayAuthor = explode(',',$thesisAuthor);
 
     foreach ($newKeywordArray as $keyword) {
         $sql[] = "keywords LIKE '%" . $keyword . "%'";
@@ -211,9 +212,11 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
                     </div>
                     <div class="researchers">
                         <ul class="list-inline">
+                            <?php foreach($arrayAuthor as $individualAuthor){ ?>
                             <li class="list-inline-item">&bull;
-                                <?php echo $thesisAuthor ?>
+                                <?php echo $individualAuthor ?>
                             </li>
+                            <?php } ?>
                         </ul>
                     </div>
                     <div class="card p-4 mb-4">

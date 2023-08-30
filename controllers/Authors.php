@@ -75,7 +75,7 @@ function addKeywords($request = null)
 function uploadToDb($request = null)
 {
     $msg = array();
-    $userid = $_SESSION['id'];
+    $userName =  $_SESSION['fname'].' '. $_SESSION['mname'].' '. $_SESSION['lname']; 
 
     $title = $request->titleName;
     $thesisDate = $request->thesisDate;
@@ -152,7 +152,7 @@ function uploadToDb($request = null)
                         ':date' => $thesisDate,
                         ':keywords' => $commaSeparatedStringKeyword,
                         ':abstract' => $newImageName,
-                        ':userid' => $userid,
+                        ':userid' => $userName,
                         ':type' => $type
                     )
                 );
@@ -194,7 +194,7 @@ function uploadToDb($request = null)
                     ':date' => $thesisDate,
                     ':keywords' => $commaSeparatedStringKeyword,
                     ':abstract' => $abstractText,
-                    ':userid' => $userid,
+                    ':userid' => $userName,
                     ':type' => $type
                 )
             );
