@@ -46,7 +46,7 @@ function checkUserDb($request = null)
         $numRows = $stmt->rowCount();
 
         if ($numRows == 0) {
-            $msg['title'] = "Waning";
+            $msg['title'] = "Warning";
             $msg['message'] = "There's no such user";
             $msg['icon'] = "info";
             echo json_encode($msg);

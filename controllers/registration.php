@@ -25,8 +25,6 @@ function regisToDb($request = null)
     $email = $request->email;
     $pass = $request->pass;
     $hashedPassword = sha1($pass);
-   
-  
 
     $pdo = Database::connection();
     $sql = 'INSERT INTO login (username,password,role) VALUES(:username, :password, :role)';
@@ -45,8 +43,7 @@ function regisToDb($request = null)
         $msg['title'] = "Error";
         $msg['message'] = $errorMsg;
         $msg['icon'] = "error";
-    } else {
-
+    } else {    
         $sql1 = 'INSERT INTO user_profile (campus,first_name,middle_name,last_name,course_id,ac_year,student_no,email) VALUES(:campus, :fname, :mname, :lname, :course, :acadyear, :stdno, :email)';
         $stmt = $pdo->prepare($sql1);
         $stmt->execute(

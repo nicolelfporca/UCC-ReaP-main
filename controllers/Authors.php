@@ -29,7 +29,7 @@ function addAuthors($request = null)
                                 <div class='col-sm-12'>
                                     <div class='input-group'>
                                         <input type='text' id='authorName' name='authorName' class='form-control authorName' value = '" . htmlspecialchars($author->value) . "' placeholder='Enter name (surname, first name)'>
-                                        <button class='btn minus-btn' type='button' data-key='" . htmlspecialchars($author->value) . "'><i class='fas fa-minus'></i></button>
+                                        <button class='btn minus-btn minus-button-author' type='button' data-key='" . htmlspecialchars($author->value) . "'><i class='fas fa-minus'></i></button>
                                     </div>
                                 </div>
                             </div>";
@@ -55,7 +55,7 @@ function addKeywords($request = null)
                 <div class='col-sm-12'>
                     <div class='input-group'>
                         <input type='text' class='form-control keywords' name='keywordData' value = '" . htmlspecialchars($keyword->val) . "' placeholder='Enter keyword'>
-                        <button class='btn minus-btn' type='button' data-keyword='" . htmlspecialchars($keyword->val) . "'><i class='fas fa-minus'></i></button>
+                        <button class='btn minus-btn minus-button-keyword' type='button' data-keyword='" . htmlspecialchars($keyword->val) . "'><i class='fas fa-minus'></i></button>
                     </div>
                 </div>
             </div>";
@@ -75,7 +75,7 @@ function addKeywords($request = null)
 function uploadToDb($request = null)
 {
     $msg = array();
-    $userName =  $_SESSION['fname'].' '. $_SESSION['mname'].' '. $_SESSION['lname']; 
+    $userName =  $_SESSION['fname'] . ' ' . $_SESSION['mname'] . ' ' . $_SESSION['lname'];
 
     $title = $request->titleName;
     $thesisDate = $request->thesisDate;
