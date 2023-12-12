@@ -81,6 +81,7 @@ function uploadToDb($request = null)
     $thesisDate = $request->thesisDate;
     $abstractText = $request->abstractText;
     $type = $request->type;
+    $coverVal = $request->coverVal;
 
     $authors = $request->authors;
     $commaSeparatedArray = [];
@@ -143,7 +144,7 @@ function uploadToDb($request = null)
                 // Image uploaded successfully
                 // ... Your existing database insertion logic ...
                 $pdo = Database::connection();
-                $sql = 'INSERT INTO user (title,author,date,keywords,abstract,uploaded_by,type) VALUES(:title, :author, :date, :keywords, :abstract, :userid, :type)';
+                $sql = 'INSERT INTO user (title,author,date,keywords,abstract,uploaded_by,type,cover_id) VALUES(:title, :author, :date, :keywords, :abstract, :userid, :type, :cover_id)';
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute(
                     array(
@@ -153,7 +154,9 @@ function uploadToDb($request = null)
                         ':keywords' => $commaSeparatedStringKeyword,
                         ':abstract' => $newImageName,
                         ':userid' => $userName,
-                        ':type' => $type
+                        ':type' => $type,
+                        ':cover_id' => $coverVal
+
                     )
                 );
                 $datas  = $stmt->fetchAll();
@@ -185,7 +188,7 @@ function uploadToDb($request = null)
             $abstractText = addcslashes($abstractText, '\'\\');
             // code for abstract text here
             $pdo = Database::connection();
-            $sql = 'INSERT INTO user (title,author,date,keywords,abstract,uploaded_by,type) VALUES(:title, :author, :date, :keywords, :abstract, :userid, :type)';
+            $sql = 'INSERT INTO user (title,author,date,keywords,abstract,uploaded_by,type,cover_id) VALUES(:title, :author, :date, :keywords, :abstract, :userid, :type, :cover_id)';
             $stmt = $pdo->prepare($sql);
             $stmt->execute(
                 array(
@@ -195,7 +198,8 @@ function uploadToDb($request = null)
                     ':keywords' => $commaSeparatedStringKeyword,
                     ':abstract' => $abstractText,
                     ':userid' => $userName,
-                    ':type' => $type
+                    ':type' => $type,
+                    ':cover_id' => $coverVal
                 )
             );
             if ($stmt->errorCode() !== '00000') {

@@ -1,3 +1,34 @@
+<?php
+include './includes/config.php';
+session_start();
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(0);
+
+
+$pdo = Database::connection();
+
+
+
+
+//$sql = "SELECT $column FROM user WHERE (title LIKE :search_query OR keywords LIKE :search_query OR abstract LIKE :search_query OR author = :search_query) AND status = :status";
+$sql = "SELECT * FROM cover_title";
+
+$stmt = $pdo->prepare($sql);
+
+
+$stmt->execute();
+
+
+
+
+
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <!-- helloworld -->
 <html lang="en">
@@ -52,11 +83,11 @@
                         <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
                             <!-- ito ibahin pag naka log in na -->
                             <!-- <div class="for-user"> -->
-                                <a class="dropdown-item" href="upload_form.php">Upload</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-danger" href="logout.php">Logout</a>
+                            <a class="dropdown-item" href="upload_form.php">Upload</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="logout.php">Logout</a>
                             <!-- </div> -->
                             <div class="join-sign-in" hidden>
                                 <a class="dropdown-item" href="register.php">Join now</a>
@@ -109,22 +140,17 @@
             </div>
         </div>
     </div>
-
-    <div class="mt-4" id="links_page">
-        <div class="container">
-            <div class="card p-2 mb-4">
-                <div class="card p-3 border-0">
-                    <a href="#" class="research-title mb-1">SCIENCE</a>
-                    <div class="abstract-body mb-1">
-                        <labe>Ediwow</label>
-                    </div>
-                    <div class="date font-italic text-muted">
-                        <label>December 12, 2023</label>
+    <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
+        <div class="mt-4" id="links_page">
+            <div class="container">
+                <div class="card p-2 mb-4">
+                    <div class="card p-3 border-0">
+                        <a href="<?php echo 'links_page.php?/='.$row['cover_title'] ?>" class="research-title mb-1"><?php echo $row['cover_title'] ?></a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    <?php } ?>
 
     <footer class="bg-white text-center text-muted border">
         <div class="text-center p-3">

@@ -318,10 +318,10 @@ if (!isset($_SESSION['stdno'])) {
                 titleName: titleName,
                 thesisDate: thesisDate,
                 abstractText: abstractText,
-                authors: authors,
-                keywordsValue: keywordsValue,
-                type: num,
-                coverVal:coverVal
+                authors: authors, 
+                keywordsValue: keywordsValue, 
+                type: num, 
+                coverVal: coverVal
             };
 
             // Create a new FormData object

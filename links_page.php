@@ -1,9 +1,9 @@
 <?php
 include './includes/config.php';
 session_start();
-ini_set('display_errors', 0);
-ini_set('display_startup_errors', 0);
-error_reporting(0);
+// ini_set('display_errors', 0);
+// ini_set('display_startup_errors', 0);
+// error_reporting(0);
 
 
 $pdo = Database::connection();
@@ -20,23 +20,24 @@ $value = $search_query;
 
 $search_query = '%' . $search_query . '%';
 $status = 1;
-$column = "title, keywords, abstract, date";
+$column = "user.title, user.keywords, user.abstract, user.date, cover_title.cover_title,";
+// echo $search_query;
 
 
-
-//$sql = "SELECT $column FROM user WHERE (title LIKE :search_query OR keywords LIKE :search_query OR abstract LIKE :search_query OR author = :search_query) AND status = :status";
 $sql = "
-    SELECT $column,
-    CASE
-        WHEN title LIKE :search_query THEN 3
-        WHEN keywords LIKE :search_query THEN 2
-        WHEN author LIKE :search_query THEN 1
-        ELSE 0
-    END AS relevance
-    FROM user
-    WHERE (title LIKE :search_query OR keywords LIKE :search_query OR author LIKE :search_query)
-    AND status = :status
-    ORDER BY relevance DESC";
+SELECT $column
+CASE
+    WHEN user.title LIKE :search_query THEN 3
+    WHEN user.keywords LIKE :search_query THEN 2
+    WHEN user.author LIKE :search_query THEN 1
+    WHEN cover_title.cover_title LIKE :search_query THEN 1
+    ELSE 0
+END AS relevance
+FROM user
+INNER JOIN cover_title ON user.cover_id = cover_title.id
+WHERE (user.title LIKE :search_query OR user.keywords LIKE :search_query OR user.author LIKE :search_query OR cover_title.cover_title LIKE :search_query)
+AND user.status = :status
+ORDER BY relevance DESC";
 
 $stmt = $pdo->prepare($sql);
 
