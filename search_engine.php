@@ -19,34 +19,51 @@ error_reporting(0);
 </head>
 
 <body>
-    <div class="dropdown d-flex justify-content-end mt-2">
-        <button class="btn dropdown-toggle text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <?php if ($_SESSION['photo'] == "") { ?>
-                <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
-            <?php } else { ?>
-                <img src="<?php echo "webimg/" . $_SESSION['photo'] ?>" alt="User Profile" width="50" class="user-profile">
-            <?php } ?>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand ml-3" href="cover-page.php">Cover Page</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="dropdown-menu border-0 rounded-0 text-center" aria-labelledby="dropdownMenuButton">
-            <!-- ito ibahin pag naka log in na -->
-            <?php if ($_SESSION['stdno'] != "") { ?>
-                <div class="for-user">
-                    <a class="dropdown-item" href="upload_form.php">Upload</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-danger" href="logout.php">Logout</a>
-                </div>
-            <?php } else { ?>
-                <div class="join-sign-in">
-                    <a class="dropdown-item" href="register.php">Join now</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">Sign in</a>
-                </div>
-            <?php } ?>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <div class="dropdown d-flex justify-content-end mt-2">
+                        <button class="btn dropdown-toggle text-white" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <?php if ($_SESSION['photo'] == "") { ?>
+                                <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
+                            <?php } else { ?>
+                                <img src="<?php echo "webimg/" . $_SESSION['photo'] ?>" alt="User Profile" width="50"
+                                    class="user-profile">
+                            <?php } ?>
+                        </button>
+
+                        <div class="dropdown-menu border-0 rounded-0 text-center" aria-labelledby="dropdownMenuButton">
+                            <!-- ito ibahin pag naka log in na -->
+                            <?php if ($_SESSION['stdno'] != "") { ?>
+                                <div class="for-user">
+                                    <a class="dropdown-item" href="upload_form.php">Upload</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger" href="logout.php">Logout</a>
+                                </div>
+                            <?php } else { ?>
+                                <div class="join-sign-in">
+                                    <a class="dropdown-item" href="register.php">Join now</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" data-toggle="modal"
+                                        data-target="#exampleModalCenter">Sign in</a>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </div>
+    </nav>
 
     <!-- sign in modal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"

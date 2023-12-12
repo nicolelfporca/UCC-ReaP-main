@@ -75,6 +75,12 @@ if (!isset($_SESSION['admin_user'])) {
                                 Account
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="admin_cover-page.php" class="nav-link">
+                                <i class="nav-icon fas fa-book"></i>
+                                Cover Page
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>

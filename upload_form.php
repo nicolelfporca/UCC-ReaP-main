@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 
 if (!isset($_SESSION['stdno'])) {
@@ -61,6 +61,31 @@ if (!isset($_SESSION['stdno'])) {
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="category mb-2">
+                            <label>Cover Title <span class="text-danger">*</span></label>
+                            <select class="form-control" id="coverVal">
+                                <option value="" readonly>Select Cover Title</option>
+                                <?php
+                                include 'includes/config.php';
+                                $pdo = DATABASE::connection();
+                                // Fetch data from the covers table
+                                $sql = "SELECT * from cover_title WHERE status = 1";
+                                $result = $conn->query($sql);
+
+                                // Build the dropdown options
+                                while ($row = $result->fetch_assoc()) {
+                                    echo '<option value="' . $row['id'] . '">' . $row['cover_title'] . '</option>';
+                                }
+
+                                // Close the database connection
+                                $conn->close();
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="title mb-2">
                     <label>Title <span class="text-danger">*</span></label>
                     <input type="text" name="titleName" class="form-control" placeholder="Enter title">
@@ -92,8 +117,8 @@ if (!isset($_SESSION['stdno'])) {
                                 <div class="row mb-2">
                                     <div class="col-sm-12">
                                         <div class="input-group">
-                                            <input type="text" class="form-control keywords"
-                                                placeholder="Enter keyword" onkeydown="handleKeywordInput(event)">
+                                            <input type="text" class="form-control keywords" placeholder="Enter keyword"
+                                                onkeydown="handleKeywordInput(event)">
                                             <button class="btn add-btn" type="button" onclick="addKeyword()">
                                                 <i class="fa-solid fa-plus"></i>
                                             </button>
@@ -267,6 +292,7 @@ if (!isset($_SESSION['stdno'])) {
             var titleName = $("input[name='titleName']").val();
             var thesisDate = $("input[name='thesisDate']").val();
             var abstractText = $("#plainAbsUi textarea[name='abstractText']").val();
+            var coverVal = $("#coverVal").val();
             var num = $('#selectUI').val();
             var authors = [];
             $(".authorName").each(function () {
@@ -294,7 +320,8 @@ if (!isset($_SESSION['stdno'])) {
                 abstractText: abstractText,
                 authors: authors,
                 keywordsValue: keywordsValue,
-                type: num
+                type: num,
+                coverVal:coverVal
             };
 
             // Create a new FormData object

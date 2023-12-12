@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 if (!isset($_SESSION['admin_user'])) {
     header('Location: login.php');
     exit;
@@ -63,7 +64,7 @@ if (!isset($_SESSION['admin_user'])) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="admin_adding_courses.php" class="nav-link active">
+                            <a href="admin_adding_courses.php" class="nav-link">
                                 <i class="nav-icon fas fa-bookmark"></i>
                                 Courses
                             </a>
@@ -75,7 +76,7 @@ if (!isset($_SESSION['admin_user'])) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="admin_cover-page.php" class="nav-link">
+                            <a href="admin_cover-page.php" class="nav-link active">
                                 <i class="nav-icon fas fa-book"></i>
                                 Cover Page
                             </a>
@@ -88,24 +89,24 @@ if (!isset($_SESSION['admin_user'])) {
         <div class="content-wrapper">
             <div class="content-header">
                 <div class="container">
-                    <h1 class="font-weight-normal text-muted">Courses</h1>
+                    <h1 class="font-weight-normal text-muted">Cover Page</h1>
                 </div>
             </div>
             <section class="content">
                 <div class="container">
                     <div class="card p-3 rounded-0">
                         <div class="print-button mb-3">
-                            <button class="btn btn-primary" id="add-department" data-toggle="modal"
-                                data-target="#add_course">Add Course</button>
+                            <button class="btn btn-primary" id="add_account_admin" data-toggle="modal"
+                                data-target="#add_account">Add Cover Page</button>
                         </div>
                         <div class="card p-3 rounded-0">
                             <div class="table-responsive">
-                                <table id="Course" class="table table-striped table-bordered">
+                                <table id="title_dt" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Course</th>
+                                            <th>Title</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -117,60 +118,61 @@ if (!isset($_SESSION['admin_user'])) {
         </div>
     </div>
 
-    <!-- add course modal -->
-    <div class="modal fade" id="add_course" tabindex="-1" role="dialog" aria-labelledby="addDepartmentModalLabel"
+    <!-- add account modal -->
+    <div class="modal fade" id="add_account" tabindex="-1" role="dialog" aria-labelledby="addDepartmentModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addDepartmentModalLabel">Add Courses</h5>
+                    <h5 class="modal-title" id="addDepartmentModalLabel">Add Cover Page</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="course">
-                        <label>Course <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="course" placeholder="Enter course name">
+                    <div class="cover-title mb-2">
+                        <label>Cover Title <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" placeholder="Enter cover title" id="title">
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal"
-                            onclick="Add_courses()">Add</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        onclick="Add_Title()">Add</button>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 
     <!-- edit details modal -->
-    <div class="modal fade" id="update_course" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="update_title" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Details</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Cover Page</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="course mb-2">
-                        <label>Course <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="update_coursess"
-                            placeholder="Enter new course name">
+                    <div class="cover-title mb-2">
+                        <label>Cover Title <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" placeholder="Enter new cover title" id="edit_title">
                     </div>
-                    <div class="status">
+                    <div class="status mb-2">
                         <label>Status <span class="text-danger">*</span></label>
-                        <select class="form-control" name="" id="update_course_status">
-                            <option value="" readonly selected disabled>Select Status</option>
-                            <option value="1">Available</option>
-                            <option value="0">Closed</option>
+                        <select class="form-control" id="edit_status">
+                            <option value="">Select Status</option>
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
                         </select>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal"
-                        onclick="course_update()">Update</button>
-                    <input type="hidden" id="hiddendata_course">
+                        onclick="title_update()">Update</button>
+                    <input type="hidden" id="hiddendata_title">
                 </div>
             </div>
         </div>
     </div>
+
 
     <footer class="main-footer">
         <strong>Copyright &copy; 2023-2024.
@@ -191,7 +193,7 @@ if (!isset($_SESSION['admin_user'])) {
     <script>
         $(document).ready(function () {
 
-            $('#Course').DataTable({
+            $('#title_dt').DataTable({
                 'serverside': true,
                 'processing': true,
                 'paging': true,
@@ -199,65 +201,68 @@ if (!isset($_SESSION['admin_user'])) {
                     { "className": "dt-center", "targets": "_all" },
                 ],
                 'ajax': {
-                    'url': 'admin_course_tbl.php',
+                    'url': 'title_tbl.php',
                     'type': 'post',
 
                 },
             });
         });
 
-        function Add_courses() {
-            $.ajax({
-                url: 'admin_add_course.php',
-                method: 'POST',
-                data: {
-                    course: $('#course').val(),
-                },
-                success: function (response) {
-                    var data = JSON.parse(response);
-                    if (data.status == 'data_exist') {
-                        alert('Data already exists.');
-                    } else if (data.status == 'success') {
-                        var c = $('#Course').DataTable().ajax.reload();
-                        alert('Data added successfully.');
-                    } else {
-                        alert('Failed to add data.');
+        function Add_Title() {
+            var title = $('#title').val(); 
+                $.ajax({
+                    url: "admin_add_title.php",
+                    type: 'post',
+                    data: {
+                        title: title,
+                      
+                    },
+                    success: function (data) {
+                        var data = JSON.parse(data);
+                        if (data.status == 'data_exist') {
+                            alert('Data already exists.');
+                            $('#title').val("");
+                        } else if (data.status == 'success') {
+                            $('#title_dt').DataTable().ajax.reload();
+                            // alert('Data added successfully.');
+                            $('#title').val("");
+                        } else {
+                            alert('Failed to add data.');
+                        }
                     }
-                    $('#course').val('');
-                },
-                error: function (xhr, status, error) {
-                    alert('Error: ' + error);
-                }
-            });
+                })
+           
         }
 
-        function update_c(update) {
-            $('#hiddendata_course').val(update);
-            $.post("admin_update_course.php", { update: update }, function (data,
+        function Edit_title(id) {
+            $('#hiddendata_title').val(id);
+            $.post("admin_update_title.php", { id: id }, function (data,
                 status) {
                 var userids = JSON.parse(data);
-                $('#update_coursess').val(userids.course_name);
-                $('#update_course_status option[value="' + userids.status + '"]').prop('selected', true); // Use this line
+                $('#edit_title').val(userids.cover_title);
+                $('#edit_status option[value="' + userids.status + '"]').prop('selected', true); // Use this line
+
 
             });
-            $('#update_course').modal("show");
+            $('#update_title').modal("show");
         }
 
-        function course_update(status) {
-            var status = $('#update_course_status').val()
-            var course = $('#update_coursess').val();
-            var hiddendata = $('#hiddendata_course').val();
+        function title_update(status) {
+            var update_title = $('#edit_title').val();
+            var status = $('#edit_status').val();
+            var hiddendata = $('#hiddendata_title').val();
 
 
-            $.post("admin_update_course.php", {
-                status: status, hiddendata: hiddendata, course: course
-            }, function (data, status) {
-                var jsons = JSON.parse(data);
-                status = jsons.status;
-                if (status == 'success') {
-                    var update = $('#Course').DataTable().ajax.reload();
-                }
-            });
+                $.post("admin_update_title.php", {
+                    update_title: update_title, hiddendata: hiddendata, status: status
+                }, function (data, status) {
+                    var jsons = JSON.parse(data);
+                    status = jsons.status;
+                    if (status == 'success') {
+                        var update = $('#title_dt').DataTable().ajax.reload();
+                    }
+                });
+        
         }
     </script>
 </body>
