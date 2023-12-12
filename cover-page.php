@@ -7,14 +7,24 @@ error_reporting(0);
 
 
 $pdo = Database::connection();
-
-
-
-
 //$sql = "SELECT $column FROM user WHERE (title LIKE :search_query OR keywords LIKE :search_query OR abstract LIKE :search_query OR author = :search_query) AND status = :status";
-$sql = "SELECT * FROM cover_title";
+
+
+if(isset($_GET["/"])) {
+    $searchTerm = $_GET["/"];
+    $sql = "SELECT * FROM cover_title WHERE cover_title LIKE :searchTerm";
+} else {
+    $sql = "SELECT * FROM cover_title";
+}
 
 $stmt = $pdo->prepare($sql);
+
+if(isset($_GET["/"])) {
+    $stmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
+}
+
+
+// $stmt = $pdo->prepare($sql);
 
 
 $stmt->execute();
@@ -166,6 +176,33 @@ $stmt->execute();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+         $(document).ready(function () {
+            // console.log("ready")
+            const searchInput = $("#search");
+
+            // Perform search when Enter key is pressed in the search input
+            searchInput.on("keypress", function (event) {
+                if (event.key === "Enter") {
+                    performSearch();
+                }
+            });
+
+            // Perform search when the search button is clicked
+            $("#search-button").on("click", function () {
+                performSearch();
+            });
+
+            function performSearch() {
+                const value = searchInput.val().trim(); // Trim whitespace from the input
+                if (value !== "") {
+                    // Redirect to the search results page with the user's input as a query parameter
+                    window.location.href = "cover-page.php?/=" + encodeURIComponent(value);
+
+                }
+            }
+        });
+    </script>
 </body>
 
 
