@@ -39,7 +39,7 @@ if (!isset($_SESSION['admin_user'])) {
         </nav>
 
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="search_engine.php" class="brand-link">
+            <a href="index.php" class="brand-link">
                 <img src="dist/image/UCC.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
                 <span class="brand-text font-weight-light">UCC ReaP</span>

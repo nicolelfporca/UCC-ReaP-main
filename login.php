@@ -72,7 +72,7 @@
                     if (data.role == 1) {
                         swal.fire(data.title, data.message, data.icon);
                         setTimeout(function () {
-                            window.location.href = "search_engine.php"
+                            window.location.href = "index.php"
                         }, 2000);
                     } else if (data.role == 2) {
                         Swal.fire(

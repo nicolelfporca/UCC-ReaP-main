@@ -3,7 +3,7 @@ session_start();
 require('./includes/config.php');
 
 if (!isset($_SESSION['stdno'])) {
-    header('Location: search_engine.php');
+    header('Location: index.php');
     exit;
 }
 $id = $_SESSION['id'];
@@ -93,7 +93,7 @@ foreach ($datas1 as $data1) {
 
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="search_engine.php">
+            <a class="navbar-brand" href="index.php">
                 <img src="dist/image/UCC.png" alt="UCC Logo" width="50" class="mr-2">
                 <span class="full">UCC Research and Publication Online</span>
             </a>

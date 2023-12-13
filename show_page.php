@@ -33,7 +33,7 @@ if ($stmt === false) {
     }
     $thesisDate = date("F j, Y", strtotime($thesisDate));
     $newKeywordArray = explode(",", $thesisKeyword);
-    $arrayAuthor = explode(',',$thesisAuthor);
+    $arrayAuthor = explode(',  ',$thesisAuthor);
 
     foreach ($newKeywordArray as $keyword) {
         $sql[] = "keywords LIKE '%" . $keyword . "%'";
@@ -111,7 +111,7 @@ function generateAPAWebsiteCitation($authors, $year, $title, $url)
 
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="search_engine.php">
+            <a class="navbar-brand" href="index.php">
                 <img src="dist/image/UCC.png" alt="UCC Logo" width="50" class="mr-2">
                 <span class="full">UCC Research and Publication Online</span>
             </a>

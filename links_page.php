@@ -75,7 +75,7 @@ $stmt->execute();
 
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="search_engine.php">
+            <a class="navbar-brand" href="index.php">
                 <img src="dist/image/UCC.png" alt="UCC Logo" width="50" height="55" class="mr-2">
                 UCC ReaP
             </a>
@@ -250,7 +250,7 @@ $stmt->execute();
                     if (data.role == 1) {
                         swal.fire(data.title, data.message, data.icon);
                         setTimeout(function () {
-                            window.location.href = "search_engine.php"
+                            window.location.href = "index.php"
                         }, 2000);
                     } else if (data.role == 2) {
                         Swal.fire(
