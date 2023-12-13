@@ -10,7 +10,7 @@ $pdo = Database::connection();
 //$sql = "SELECT $column FROM user WHERE (title LIKE :search_query OR keywords LIKE :search_query OR abstract LIKE :search_query OR author = :search_query) AND status = :status";
 
 
-if(isset($_GET["/"])) {
+if (isset($_GET["/"])) {
     $searchTerm = $_GET["/"];
     $sql = "SELECT * FROM cover_title WHERE cover_title LIKE :searchTerm";
 } else {
@@ -19,7 +19,7 @@ if(isset($_GET["/"])) {
 
 $stmt = $pdo->prepare($sql);
 
-if(isset($_GET["/"])) {
+if (isset($_GET["/"])) {
     $stmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
 }
 
@@ -71,10 +71,8 @@ $stmt->execute();
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item">
                         <div class="input-group">
-                            <!-- <input class="form-control me-1 rounded-0" type="search" placeholder="Search..."
-                                value="<?php echo $value ?>" aria-label="Search" id="search"> -->
                             <input class="form-control me-1 rounded-0" type="search" placeholder="Search..."
-                                aria-label="Search" id="search">
+                                value="<?php echo $value ?>" aria-label="Search" id="search">
                             <span class="input-group-append">
                                 <button class="btn text-white" type="button" id="search-button">
                                     <i class="fa fa-search"></i>
@@ -87,24 +85,31 @@ $stmt->execute();
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
-                            <!-- <img src="" alt="User Profile" width="50" class="user-profile"> -->
+                            <?php if ($_SESSION['photo'] == "") { ?>
+                                <img src="dist/image/unknown.jpg" alt="User Profile" width="50" class="user-profile">
+                            <?php } else { ?>
+                                <img src="<?php echo "webimg/" . $_SESSION['photo'] ?>" alt="User Profile" width="50"
+                                    class="user-profile">
+                            <?php } ?>
                         </a>
                         <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
                             <!-- ito ibahin pag naka log in na -->
-                            <!-- <div class="for-user"> -->
-                            <a class="dropdown-item" href="upload_form.php">Upload</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="logout.php">Logout</a>
-                            <!-- </div> -->
-                            <div class="join-sign-in" hidden>
-                                <a class="dropdown-item" href="register.php">Join now</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal"
-                                    data-target="#exampleModalCenter">Sign in</a>
-                            </div>
+                            <?php if ($_SESSION['stdno'] != "") { ?>
+                                <div class="for-user">
+                                    <a class="dropdown-item" href="upload_form.php">Upload</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="settings_personal_info.php">Profile</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger" href="logout.php">Logout</a>
+                                </div>
+                            <?php } else { ?>
+                                <div class="join-sign-in">
+                                    <a class="dropdown-item" href="register.php">Join now</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" data-toggle="modal"
+                                        data-target="#exampleModalCenter">Sign in</a>
+                                </div>
+                            <?php } ?>
                         </div>
                     </li>
                 </ul>
@@ -141,7 +146,7 @@ $stmt->execute();
                         </div>
                     </form>
                     <div class="login-button mb-3">
-                        <button class="btn btn-primary w-100">Login</button>
+                        <button class="btn btn-primary w-100" onclick="login()">Login</button>
                     </div>
                     <div class="register-link text-center">
                         <a href="register.php" class="text-muted">Register here.</a>
@@ -150,12 +155,16 @@ $stmt->execute();
             </div>
         </div>
     </div>
+
+
     <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
         <div class="mt-4" id="links_page">
             <div class="container">
                 <div class="card p-2 mb-4">
                     <div class="card p-3 border-0">
-                        <a href="<?php echo 'links_page.php?/='.$row['cover_title'] ?>" class="research-title mb-1"><?php echo $row['cover_title'] ?></a>
+                        <a href="<?php echo 'links_page.php?/=' . $row['cover_title'] ?>" class="research-title mb-1">
+                            <?php echo $row['cover_title'] ?>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -177,7 +186,7 @@ $stmt->execute();
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-         $(document).ready(function () {
+        $(document).ready(function () {
             // console.log("ready")
             const searchInput = $("#search");
 
@@ -201,7 +210,48 @@ $stmt->execute();
 
                 }
             }
+
         });
+
+        function login() {
+            var username = $("#username").val();
+            var pass = $("#pass").val();
+
+            var payload = {
+                username: username,
+                pass: pass
+            };
+
+            $.ajax({
+                type: "POST",
+                url: 'controllers/login_controller.php',
+                data: {
+                    payload: JSON.stringify(payload),
+                    setFunction: 'checkUserDb'
+                },
+                success: function (response) {
+                    data = JSON.parse(response);
+                    if (data.role == 1) {
+                        swal.fire(data.title, data.message, data.icon);
+                        setTimeout(function () {
+                            window.location.href = "search_engine.php"
+                        }, 2000);
+                    } else if (data.role == 2) {
+                        Swal.fire(
+                            'Welcome',
+                            'Successfully login',
+                            'success'
+                        )
+                        setTimeout(function () {
+                            window.location.href = "admin_approve_abstract.php"
+                        }, 2000);
+                    } else {
+                        swal.fire(data.title, data.message, data.icon);
+                    }
+                }
+            });
+
+        };
     </script>
 </body>
 
